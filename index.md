@@ -9,3 +9,4 @@ Anyone is free to create own configuration, publish it as Linked Open Data and l
 ### Sample knowledge graph visualisations
 
 - [European Commissioners from Czechia and Germany](https://kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/czech-and-german-european-commissioners.kgvb)
+- [Signatories of Charter 77](https://kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/charter-77-signatories.kgvb)
