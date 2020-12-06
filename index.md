@@ -19,3 +19,4 @@ Start with famous personalities:
 - [European Commissioners from Czechia and Germany](https://kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/czech-and-german-european-commissioners.kgvb)
 - [Signatories of Charter 77](https://kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/charter-77-signatories.kgvb)
 - [Marie Curie-Skłodowská's family and work](https://kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/curie-family-and-work.kgvb)
+- [Chemical elements in the periodic table and their discoverers](https://kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/periodic-table.kgvb)
