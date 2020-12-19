@@ -24,5 +24,6 @@ Start with famous personalities:
 - [What do Madeleine Albright, Bill Clinton, George W. Bush, Táňa Fischerová, Miloš Zeman, Mick Jagger, Charlie Watts, Keith Richards have in common?](https://kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/common-albright-clinton-bush-fischerova-zeman-jagger-richards-watts.kgvb)
 
 You can also try to explore Members of the Chamber of Deputies of the Parliament of Czechia
+
 -[Aristocratic members of the Chamber](https://kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/aristocratic-members-of-chamber-of-deputies-of-czechia.kgvb)
 -[Moviemakers and writters in th Chamber](https://kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/moviemakers-and-writers-as-members-of-chamber-of-deputies.kgvb)
