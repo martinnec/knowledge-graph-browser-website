@@ -1,0 +1,507 @@
+@prefix browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/> .
+@prefix a: <https://slovník.gov.cz/agendový/104/pojem/> .
+
+# https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/vdf
+# https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style-sheet
+# https://rpp-opendata.egon.gov.cz/odrpp/zdroj/agenda/A1046
+
+#####################################
+# Configurations
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/vdf> a browser:Configuration ;
+  dct:title "Konfigurace procházení definic pro VDF"@cs ;
+  browser:autocomplete <https://raw.githubusercontent.com/martinnec/kgbrowser/master/configurations/rpp-autocomplete.json> ;
+  browser:hasViewSet <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/vdf/agenda>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/vdf/objekt-nebo-subjekt-údajů>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/vdf/údaj>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/vdf/datová-sada> .
+
+#####################################
+# ViewSets
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/vdf/agenda> a browser:ViewSet ;
+  dct:title "Pohledy na agendy"@cs ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/vdf/sdružené-údaje-agendy> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/rpp/sdružené-údaje-agendy> ;
+  browser:hasCondition """PREFIX a: <https://slovník.gov.cz/agendový/104/pojem/>
+ASK {
+  [] a:sdružuje-údaje-vedené-nebo-vytvářené-v-rámci-agendy ?node .
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> .
+     
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/vdf/objekt-nebo-subjekt-údajů> a browser:ViewSet ;
+  dct:title "Pohledy na subjekty a objekty práva"@cs ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/vdf/objekt-nebo-subjekt-údajů/struktura> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/vdf/objekt-nebo-subjekt-údajů/struktura> ;
+  browser:hasCondition """PREFIX a: <https://slovník.gov.cz/agendový/104/pojem/>
+ASK {
+  ?node a a:objekt-nebo-subjekt-údajů .    
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/vdf/údaj> a browser:ViewSet ;
+  dct:title "Pohledy na údaje vedené v agendách"@cs ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/vdf/údaj/datová-sada> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/vdf/údaj/číselníkdatová-sada> ;
+  browser:hasCondition """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/>
+ASK {
+  ?node a l:údaj .    
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/vdf/datová-sada> a browser:ViewSet ;
+  dct:title "Pohledy na datové sady"@cs ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/vdf/datová-sada/údaje> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/vdf/datová-sada/údaje> ;
+  browser:hasCondition """PREFIX dcat: <http://www.w3.org/ns/dcat#>
+ASK {
+  ?node a dcat:Dataset .    
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> .
+
+#####################################
+# Views
+#####################################
+    
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/vdf/sdružené-údaje-agendy> a browser:View ;
+  dct:title "Sdružené údaje agendy"@cs ;
+  dct:description "Pohled na agendu zobrazující údaje vedené nebo vytvářené v rámci výkonu agendy. Nejsou zobrazeny přímo údaje, ale subjetků nebo objektů údajů, do kterých jsou údaje sdruženy."@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/vdf/sdružené-údaje-agendy> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/vdf/název-agendy> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/vdf/agenda> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/vdf/objekt-nebo-subjekt-údajů/struktura> a browser:View ;
+  dct:title "Objekty a subjekty údajů a sdružené údaje"@cs ;
+  dct:description "Pohled na objekt nebo subjekt údajů tvořený údaji, které sdružuje a agendou, která tyto údaje vede."@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/vdf/objekt-nebo-subjekt-údajů/struktura> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/vdf/objekt-nebo-subjekt-údajů/základ> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/vdf/objekt-nebo-subjekt-údajů/základ> .
+   
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/vdf/údaj/datová-sada> a browser:View ;
+  dct:title "Datové sady s údajem"@cs ;
+  dct:description "Pohled na údaj tvořený datovými sadami s údajem."@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/vdf/údaj/datová-sada> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/vdf/údaj/základ> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/vdf/údaj/základ> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/vdf/datová-sada/údaje> a browser:View ;
+  dct:title "Údaje reprezentované datovou sadou"@cs ;
+  dct:description "Pohled na datovou sadu tvořený údaji reprezentovanými datovou sadou."@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/vdf/datová-sada/údaje> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/vdf/datová-sada/základ> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/vdf/datová-sada/základ> .
+  
+#####################################
+# Queries
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/vdf/sdružené-údaje-agendy> a browser:ExpansionQuery ;
+  dct:title "Sdružené údaje agendy" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> ;
+  browser:query """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/>
+PREFIX a: <https://slovník.gov.cz/agendový/104/pojem/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/> 
+
+CONSTRUCT {
+  ?entita a a:objekt-nebo-subjekt-údajů ;
+    rdfs:label ?label ;
+    a:sdružuje-údaje-vedené-nebo-vytvářené-v-rámci-agendy ?node  ;
+    browser:class "entita" .
+  a:sdružuje-údaje-vedené-nebo-vytvářené-v-rámci-agendy browser:class "sdruzujeudaje" .
+} WHERE {  
+
+  ?entita a:sdružuje-údaje-vedené-nebo-vytvářené-v-rámci-agendy ?node ;
+    a:má-název-objektu-nebo-subjektu-údajů ?nazev ; 
+    a:má-kód-objektu-nebo-subjektu-údajů ?kod .
+  FILTER (LANG(?nazev ) = "cs")
+  
+  BIND(CONCAT(?kod , " - ", ?nazev ) AS ?label)
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/vdf/název-agendy> a browser:PreviewQuery ;
+  dct:title "Název agendy" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/rpp> ;
+  browser:query """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node a l:agenda ;
+    rdfs:label ?label ;
+    browser:class "agenda" .
+} WHERE {
+  ?node l:má-název-agendy ?nazev ; 
+    l:má-kód-agendy ?kod .
+  FILTER (LANG(?nazev) = "cs")
+  
+  BIND(CONCAT(?kod, " - ", ?nazev) AS ?label) 
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/vdf/agenda> a browser:DetailQuery ;
+  dct:title "Základní detail agendy s názvem a kódem" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/rpp> ;
+  browser:query """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/> 
+
+CONSTRUCT {
+  ?node l:má-název-agendy ?nazev ;
+    l:má-kód-agendy ?kod .
+} WHERE {
+  ?node l:má-název-agendy ?nazev ; 
+    l:má-kód-agendy ?kod .
+  FILTER (LANG(?nazev) = "cs")   
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/vdf/objekt-nebo-subjekt-údajů/struktura> a browser:ExpansionQuery ;
+  dct:title "Údaje sdružené objektem nebo subjektem údajů a agenda, ve které jsou údaje vedeny" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> ;
+  browser:query """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/>
+PREFIX a: <https://slovník.gov.cz/agendový/104/pojem/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/> 
+
+CONSTRUCT {
+  ?node a:má-údaj ?udaj .
+  a:má-údaj browser:class "maudaj" .
+  ?udaj a l:údaj ;
+    rdfs:label ?labelUdaje ;
+    browser:class "udaj" .
+} WHERE {  
+  
+  ?node a:má-údaj ?udaj .
+
+  ?udaj a:má-název-údaje ?nazevUdaje ; 
+    a:má-kód-údaje ?kodUdaje .
+  FILTER (LANG(?nazevUdaje ) = "cs")
+  
+  BIND(CONCAT(?kodUdaje , " - ", ?nazevUdaje ) AS ?labelUdaje)
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/vdf/objekt-nebo-subjekt-údajů/základ> a browser:PreviewQuery ;
+  dct:title "Název objektu nebo subjektu údajů" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> ;
+  browser:query """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/>
+PREFIX a: <https://slovník.gov.cz/agendový/104/pojem/> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node a a:objekt-nebo-subjekt-údajů ;
+    rdfs:label ?label ;
+    browser:class "entita" .
+} WHERE {
+  ?node a:má-název-objektu-nebo-subjektu-údajů ?nazev ; 
+    a:má-kód-objektu-nebo-subjektu-údajů ?kod .
+  FILTER (LANG(?nazev) = "cs")
+  
+  BIND(CONCAT(?kod, " - ", ?nazev) AS ?label) 
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/vdf/objekt-nebo-subjekt-údajů/základ> a browser:DetailQuery ;
+  dct:title "Základní detail objektu nebo subjektu údajů s názvem a kódem" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> ;
+  browser:query """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/>
+PREFIX a: <https://slovník.gov.cz/agendový/104/pojem/> 
+
+CONSTRUCT {
+  ?node a:má-název-objektu-nebo-subjektu-údajů ?nazev ; 
+    a:má-kód-objektu-nebo-subjektu-údajů ?kod .
+} WHERE {
+  ?node a:má-název-objektu-nebo-subjektu-údajů ?nazev ; 
+    a:má-kód-objektu-nebo-subjektu-údajů ?kod .
+  FILTER (LANG(?nazev) = "cs")   
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/vdf/údaj/datová-sada> a browser:ExpansionQuery ;
+  dct:title "Údaj ve VDF" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> ;
+  browser:query """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/>
+PREFIX a: <https://slovník.gov.cz/agendový/104/pojem/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+PREFIX v: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/rpp/> 
+
+CONSTRUCT {
+  ?node v:je-kódován-číselníkem ?ciselnik ;
+        v:je-publikován-v-datové-sadě ?datovaSada .
+
+  ?ciselnik a dcat:Dataset ;
+    rdfs:label ?nazevCiselniku ;
+    browser:class "datovasada" .
+
+  ?datovaSada a dcat:Dataset ;
+    rdfs:label ?nazevDatoveSady ;
+    browser:class "datovasada" .
+
+  v:je-kódován-číselníkem browser:class ?classC .
+  v:je-publikován-v-datové-sadě browser:class ?classD .
+} WHERE {  
+
+  OPTIONAL {
+    ?node a:je-kódován-číselníkem ?ciselnik .
+    ?ciselnik dct:title ?nazevCiselniku .
+    FILTER (LANG(?nazevCiselniku) = "cs")
+    BIND("kodovan" AS ?classC)
+  }
+
+  OPTIONAL {
+    ?node a:je-publikován-v-datové-sadě ?datovaSada .
+    ?datovaSada dct:title ?nazevDatoveSady .
+    FILTER (LANG(?nazevDatoveSady) = "cs")
+    BIND("publikovan" AS ?classD)
+  }
+
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/vdf/údaj/základ> a browser:PreviewQuery ;
+  dct:title "Název údaje" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> ;
+  browser:query """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/>
+PREFIX a: <https://slovník.gov.cz/agendový/104/pojem/> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node a l:údaj ;
+    rdfs:label ?label ;
+    browser:class "udaj" .
+} WHERE {
+  ?node a:má-název-údaje ?nazev ; 
+    a:má-kód-údaje ?kod .
+  FILTER (LANG(?nazev ) = "cs")
+  
+  BIND(CONCAT(?kod, " - ", ?nazev) AS ?label) 
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/vdf/údaj/základ> a browser:DetailQuery ;
+  dct:title "Základní detail objektu nebo subjektu údajů s názvem a kódem" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> ;
+  browser:query """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/>
+PREFIX a: <https://slovník.gov.cz/agendový/104/pojem/> 
+
+CONSTRUCT {
+  ?node a:má-název-údaje ?nazev ; 
+    a:má-kód-údaje ?kod .
+} WHERE {
+  ?node a:má-název-údaje ?nazev ; 
+    a:má-kód-údaje ?kod .
+  FILTER (LANG(?nazev) = "cs")   
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/vdf/datová-sada/údaje> a browser:ExpansionQuery ;
+  dct:title "Údaje reprezentované v datové sadě" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> ;
+  browser:query """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/>
+PREFIX a: <https://slovník.gov.cz/agendový/104/pojem/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+PREFIX v: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/rpp/> 
+
+CONSTRUCT {
+  ?udajC v:je-kódován-číselníkem ?node .
+
+  ?udajC a l:údaj ;
+    rdfs:label ?labelUdajeC ;
+    browser:class "udaj" .
+
+  ?udajD v:je-publikován-v-datové-sadě ?node .
+
+  ?udajD a l:údaj ;
+    rdfs:label ?labelUdajeD ;
+    browser:class "udaj" .
+
+  v:je-kódován-číselníkem browser:class ?classC .
+  v:je-publikován-v-datové-sadě browser:class ?classD .
+} WHERE {
+  {
+    ?udajC a:je-kódován-číselníkem ?node .
+    ?udajC a:má-název-údaje ?nazevUdajeC ; 
+      a:má-kód-údaje ?kodUdajeC .
+    FILTER (LANG(?nazevUdajeC) = "cs")
+    
+    BIND(CONCAT(?kodUdajeC , " - ", ?nazevUdajeC) AS ?labelUdajeC)
+    BIND("kodovan" AS ?classC)
+  } UNION {
+    ?udajD a:je-publikován-v-datové-sadě ?node .
+    ?udajD a:má-název-údaje ?nazevUdajeD ; 
+      a:má-kód-údaje ?kodUdajeD .
+    FILTER (LANG(?nazevUdajeD) = "cs")
+    
+    BIND(CONCAT(?kodUdajeD , " - ", ?nazevUdajeD ) AS ?labelUdajeD)
+    BIND("publikovan" AS ?classD)
+  }
+
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/vdf/datová-sada/základ> a browser:PreviewQuery ;
+  dct:title "Základní přehled datové sady" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> ;
+  browser:query """PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+CONSTRUCT {
+  ?node a dcat:Dataset ;
+    rdfs:label ?label ;
+    browser:class "datovasada" .
+} WHERE {
+  ?node dct:title ?label .
+  FILTER (LANG(?nazev ) = "cs")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/vdf/datová-sada/základ> a browser:DetailQuery ;
+  dct:title "Základní detail datové sady" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> ;
+  browser:query """PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+
+CONSTRUCT {
+  ?node dct:title ?nazev ; 
+    dct:description ?popis ;
+    dcat:downloadURL ?downloadURL .
+} WHERE {
+  ?node dct:title ?nazev ; 
+    dct:description ?popis ;
+    dcat:distribution/dcat:downloadURL ?downloadURL .
+  FILTER (LANG(?nazev) = "cs")   
+  FILTER (LANG(?popis) = "cs")   
+}""" .
+
+#####################################
+# Datasets
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/vdf> a void:Dataset ;
+  dct:title "Registr práv a povinností" ;
+  void:sparqlEndpoint <https://skod.opendata.cz/sparql> .
+
+#####################################
+# View vocabularies
+#####################################
+
+<https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/rpp/je-kódován-číselníkem> a owl:ObjectProperty ;
+  rdfs:label "kódován číselníkem"@cs ;
+  rdfs:comment "Číselník, kterým jsou kódovány hodnoty údaje."@cs ;
+  rdfs:domain l:údaj ;
+  rdfs:range <http://www.w3.org/ns/dcat#Dataset> .
+
+<https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/rpp/je-publikován-v-datové-sadě> a owl:ObjectProperty ;
+  rdfs:label "reprezentován v datové sadě"@cs ;
+  rdfs:comment "Datová sada, ve které jsou reprezentována data odpovídající údaji."@cs ;
+  rdfs:domain l:údaj ;
+  rdfs:range <http://www.w3.org/ns/dcat#Dataset> .
+
+#####################################
+# Visual styles
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style-sheet> a browser:VisualStyleSheet ;
+  browser:hasVisualStyle <https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/slovník.gov.cz/legislativní/sbírka/111/2009/pojem/agenda>,
+        <https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/vdf/entita>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/slovník.gov.cz/legislativní/sbírka/111/2009/pojem/údaj>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/slovník.gov.cz/legislativní/sbírka/111/2009/pojem/datová-sada>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/vdf/sdružuje-údaje-vedené-nebo-vytvářené-v-rámci-agendy>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/vdf/má-údaj>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/vdf/kodován>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/vdf/publikován>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/node>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/edge> .  
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/slovník.gov.cz/legislativní/sbírka/111/2009/pojem/agenda> a browser:VisualStyle ;
+  browser:background-color "#FEEF92" ;
+  browser:border-color "#BD7500" ; 
+  browser:color "#BD7500" ;
+  browser:font-size "8px" ;
+  browser:text-outline-color "#FEEF92" ;
+  browser:shape "pentagon" ;
+  browser:width "50px" ;
+  browser:height "50px" ;
+  browser:hasSelector ".agenda" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/vdf/entita> a browser:VisualStyle ;
+  browser:background-color "#B9F1D4" ;
+  browser:border-color "#2C6E49" ;
+  browser:color "#2C6E49" ;
+  browser:font-size "8px" ;
+  browser:text-outline-color "#B9F1D4" ;
+  browser:shape "star" ;
+  browser:width "50px" ;
+  browser:height "50px" ;
+  browser:hasSelector ".entita" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/slovník.gov.cz/legislativní/sbírka/111/2009/pojem/údaj> a browser:VisualStyle ;
+  browser:background-color "#A6F4F6" ;
+  browser:border-color "#218199" ;
+  browser:color "#218199" ;
+  browser:font-size "8px" ;
+  browser:text-outline-color "#A6F4F6" ;
+  browser:shape "star" ;
+  browser:width "40px" ;
+  browser:height "40px" ;
+  browser:hasSelector ".udaj" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/slovník.gov.cz/legislativní/sbírka/111/2009/pojem/datová-sada> a browser:VisualStyle ;
+  browser:background-color "#df2ffa" ;
+  browser:border-color "#730085" ;
+  browser:color "#730085" ;
+  browser:font-size "8px" ;
+  browser:text-outline-color "#df2ffa" ;
+  browser:shape "concave-hexagon" ;
+  browser:width "label" ;
+  browser:height "30px" ;
+  browser:hasSelector ".datovasada" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/vdf/sdružuje-údaje-vedené-nebo-vytvářené-v-rámci-agendy> a browser:VisualStyle ;
+  browser:line-color "#C2836E" ;
+  browser:line-style "dashed" ;
+  browser:hasSelector ".sdruzujeudaje" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/vdf/má-údaj> a browser:VisualStyle ;
+  browser:line-color "#6A92A6" ;
+  browser:line-style "solid" ;
+  browser:hasSelector ".maudaj" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/vdf/kodován> a browser:VisualStyle ;
+  browser:line-color "#6A92A6" ;
+  browser:line-style "solid" ;
+  browser:hasSelector ".kodovan" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/vdf/publikován> a browser:VisualStyle ;
+  browser:line-color "#6A92A6" ;
+  browser:line-style "solid" ;
+  browser:hasSelector ".publikovan" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/node> a browser:VisualStyle ;
+  browser:border-width "2px" ;
+  browser:text-outline-width "1px" ;
+  browser:text-wrap "wrap";
+  browser:text-max-width "90px";
+  browser:label "data(label)" ;
+  browser:padding "2px" ;
+  browser:text-halign "center" ;
+  browser:text-valign "center" ;
+  
+  browser:background-color "#A9A5A7" ;
+  browser:border-color "#544B50" ;
+  browser:color "black" ;
+  browser:shape "rectangle" ;
+  browser:hasSelector "node" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/vdf/style/edge> a browser:VisualStyle ;
+  browser:width "1px";
+  browser:label "data(label)" ;
+  browser:target-arrow-shape "triangle" ;
+  browser:curve-style "straight" ;
+  browser:font-size "6px" ;
+  browser:hasSelector "edge" .

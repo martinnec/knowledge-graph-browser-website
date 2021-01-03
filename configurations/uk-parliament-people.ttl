@@ -1,0 +1,18 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX : <https://id.parliament.uk/schema/>
+PREFIX id: <https://id.parliament.uk/>
+PREFIX psch: <https://id.parliament.uk/schema/>
+
+SELECT ?position ?positionName
+WHERE {
+  id:hy2NFfe8 psch:governmentPersonHasGovernmentIncumbency ?governmentIncumbency .
+  
+  ?governmentIncumbency psch:incumbencyHasPosition ?position .
+  
+  ?position psch:name ?positionName .
+  
+}
+LIMIT 5
+
+
+

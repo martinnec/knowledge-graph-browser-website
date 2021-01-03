@@ -1,0 +1,430 @@
+@prefix browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xkos: <http://rdf-vocabulary.ddialliance.org/xkos#> .
+@prefix browser-csu: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/čsú/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+
+
+# https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/čsú-klasifikace
+# https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style-sheet
+# https://csu.opendata.cz/zdroj/klasifikace/CZ-NACE/R2/85420
+
+#####################################
+# Configurations
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/čsú-klasifikace> a browser:Configuration ;
+  dct:title "Klasifikace ČSÚ"@cs,
+    "Czech Statistical Office classification"@en;
+  browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style-sheet>;
+  browser:startingNode <https://csu.opendata.cz/zdroj/klasifikace/CZ-NACE/R2/A>;
+  browser:hasViewSet <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/čsú-klasifikace/klasifikace>, <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/čsú-klasifikace/úroveň>, <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/čsú-klasifikace/prvek> .
+
+#####################################
+# ViewSets
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/čsú-klasifikace/klasifikace> a browser:ViewSet ;
+  dct:title "Pohledy na klasifikaci"@cs ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/čsú-klasifikace/klasifikace> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/čsú-klasifikace/klasifikace> ;
+  browser:hasCondition """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xkos: <http://rdf-vocabulary.ddialliance.org/xkos#>
+ASK {
+  ?node a skos:ConceptScheme ;
+    xkos:levels [] .
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/čsú> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/čsú-klasifikace/úroveň> a browser:ViewSet ;
+  dct:title "Pohledy na úroveň klasifikace"@cs ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/čsú-klasifikace/úroveň> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/čsú-klasifikace/úroveň> ;
+  browser:hasCondition """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xkos: <http://rdf-vocabulary.ddialliance.org/xkos#>
+ASK {
+  ?node a xkos:ClassificationLevel .
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/čsú> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/čsú-klasifikace/prvek> a browser:ViewSet ;
+  dct:title "Pohledy na prvek"@cs ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/čsú-klasifikace/prvek/základní>, <https://linked.opendata.cz/resource/knowledge-graph-browser/view/čsú-klasifikace/prvek/podřazené> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/čsú-klasifikace/prvek> ;
+  browser:hasCondition """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+ASK {
+  ?node a skos:Concept .
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/čsú> .
+
+#####################################
+# Views
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/čsú-klasifikace/klasifikace> a browser:View ;
+  dct:title "Základ klasifikace"@cs ;
+  dct:description "Pohled na klasifikaci zahrnující úrovně klasifikace."@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/čsú-klasifikace/klasifikace> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/čsú-klasifikace/klasifikace> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/čsú-klasifikace/klasifikace> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/čsú-klasifikace/úroveň> a browser:View ;
+  dct:title "Základ úrovně"@cs ;
+  dct:description "Pohled na úroveň klasifikace zahrnující klasifikaci a nadřazenou a podřazenou úroveň."@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/čsú-klasifikace/úroveň> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/čsú-klasifikace/úroveň> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/čsú-klasifikace/úroveň> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/čsú-klasifikace/prvek/základní> a browser:View ;
+  dct:title "Základ prvku"@cs ;
+  dct:description "Pohled na prvek zahrnující jeho úroveň a nadřazené prvky."@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/čsú-klasifikace/prvek/základní> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/čsú-klasifikace/prvek/základní> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/čsú-klasifikace/prvek/základní> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/čsú-klasifikace/prvek/podřazené> a browser:View ;
+  dct:title "Podřazené prvky"@cs ;
+  dct:description "Pohled na prvek zahrnující jeho podřazené prvky."@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/čsú-klasifikace/prvek/podřazené> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/čsú-klasifikace/prvek/základní> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/čsú-klasifikace/prvek/základní> .
+    
+#####################################
+# Queries
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/čsú-klasifikace/klasifikace> a browser:ExpansionQuery ;
+  dct:title "Expanze základního pohledu na klasifikaci" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/čsú> ;
+  browser:query """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xkos: <http://rdf-vocabulary.ddialliance.org/xkos#>
+PREFIX browser-csu: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/čsú/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node browser-csu:má-úroveň ?level .
+  
+  ?level a browser-csu:Úroveň ;
+    skos:prefLabel ?levelLabel ;
+    browser-csu:má-nadřazenou-úroveň ?levelMinus1 ;
+    browser:class "uroven" .
+  
+  browser-csu:má-úroveň browser:class "mauroven" .
+  browser-csu:má-nadřazenou-úroveň browser:class ?maNadrazenouUrovenClass .  
+} WHERE {
+  ?node xkos:levels/rdf:rest*/rdf:first ?level .
+  
+  ?level skos:prefLabel ?levelLabel .
+
+  OPTIONAL {
+    ?node xkos:levels/rdf:rest*/rdf:first ?levelMinus1 .
+    ?levelMinus1 xkos:depth ?depthMinus1 .
+    ?level xkos:depth ?depth .
+    FILTER (?depthMinus1 = ?depth-1)
+    BIND("manadrazenouuroven" AS ?maNadrazenouUrovenClass)
+  }
+
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/čsú-klasifikace/klasifikace> a browser:PreviewQuery ;
+  dct:title "Náhled základního pohledu na klasifikaci" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/čsú> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX browser-csu: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/čsú/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node a browser-csu:Klasifikace ;
+    skos:prefLabel ?label ;
+    browser:class "klasifikace" .
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER (LANG(?label) = "cs")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/čsú-klasifikace/klasifikace> a browser:DetailQuery ;
+  dct:title "Detail základního pohledu na klasifikaci" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/čsú> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+CONSTRUCT {
+  ?node skos:prefLabel ?label .
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER (LANG(?label) = "cs")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/čsú-klasifikace/úroveň> a browser:ExpansionQuery ;
+  dct:title "Expanze základního pohledu na úroveň klasifikace" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/čsú> ;
+  browser:query """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xkos: <http://rdf-vocabulary.ddialliance.org/xkos#>
+PREFIX browser-csu: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/čsú/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?klasifikace a browser-csu:Klasifikace ;
+    skos:prefLabel ?klasifikaceLabel ;
+    browser-csu:má-úroveň ?node ;
+    browser:class "klasifikace" .
+    
+  ?node browser-csu:má-nadřazenou-úroveň ?levelMinus1 .
+  
+  browser-csu:má-úroveň browser:class "mauroven" .
+  browser-csu:má-nadřazenou-úroveň browser:class ?maNadrazenouUrovenClass .
+
+} WHERE {
+
+  ?klasifikace xkos:levels/rdf:rest*/rdf:first ?node ;
+    skos:prefLabel ?klasifikaceLabel .
+  FILTER (LANG(?klasifikaceLabel) = "cs")
+
+  OPTIONAL {
+    ?klasifikace xkos:levels/rdf:rest*/rdf:first ?levelMinus1 .
+    ?levelMinus1 xkos:depth ?depthMinus1 .
+    ?node xkos:depth ?depth .
+    FILTER (?depthMinus1 = ?depth-1)
+    BIND("manadrazenouuroven" AS ?maNadrazenouUrovenClass)
+  }
+
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/čsú-klasifikace/úroveň> a browser:PreviewQuery ;
+  dct:title "Náhled základního pohledu na úroveň klasifikace" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/čsú> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xkos: <http://rdf-vocabulary.ddialliance.org/xkos#>
+PREFIX browser-csu: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/čsú/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node a browser-csu:Úroveň ;
+    skos:prefLabel ?label ;
+    browser:class "uroven" .
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER (LANG(?label) = "cs")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/čsú-klasifikace/úroveň> a browser:DetailQuery ;
+  dct:title "Detail základního pohledu na úroveň klasifikace" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/čsú> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+CONSTRUCT {
+  ?node skos:prefLabel ?label .
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER (LANG(?label) = "cs")
+}""" .
+
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/čsú-klasifikace/prvek/základní> a browser:ExpansionQuery ;
+  dct:title "Expanze základního pohledu na prvek" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/čsú> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser-csu: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/čsú/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?level a browser-csu:Úroveň ;
+    skos:prefLabel ?levelLabel ;
+    browser-csu:člen ?node ;
+    browser:class "uroven" .
+    
+  ?parentNode browser-csu:užší ?node .
+  
+  ?parentNode a browser-csu:Položka ;
+    skos:prefLabel ?parentNodeLabel ;
+    browser:class "prvek" .
+  
+  browser-csu:člen browser:class "clen" .
+  browser-csu:užší browser:class ?narrowerClass .
+} WHERE {
+
+  ?level skos:member ?node ;
+    skos:prefLabel ?levelLabel .
+  FILTER (LANG(?levelLabel) = "cs")
+
+  OPTIONAL {
+    ?parentNode skos:narrower ?node ;
+      skos:prefLabel ?parentNodeLabel .
+    FILTER (LANG(?parentNodeLabel) = "cs")
+    BIND("uzsi" AS ?narrowerClass)
+  }
+
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/čsú-klasifikace/prvek/základní> a browser:PreviewQuery ;
+  dct:title "Náhled základního pohledu na prvek" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/čsú> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser-csu: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/čsú/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node a browser-csu:Položka ;
+    skos:prefLabel ?label ;
+    browser:class "prvek" .
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER (LANG(?label) = "cs")
+  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/čsú-klasifikace/prvek/základní> a browser:DetailQuery ;
+  dct:title "Náhled základního pohledu na prvek" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/čsú> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+CONSTRUCT {
+  ?node skos:prefLabel ?label .
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER (LANG(?label) = "cs")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/čsú-klasifikace/prvek/podřazené> a browser:ExpansionQuery ;
+  dct:title "Expanze pohledu na prvek s podřazenými prvky" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/čsú> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser-csu: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/čsú/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?childNode a browser-csu:Položka ;
+    skos:prefLabel ?childNodeLabel ;
+    browser:class "prvek" .
+    
+  ?node browser-csu:užší ?childNode .
+    
+  browser-csu:užší browser:class ?narrowerClass .
+} WHERE {
+  ?node skos:narrower ?childNode .
+  
+  ?childNode skos:prefLabel ?childNodeLabel .
+  FILTER (LANG(?childNodeLabel) = "cs")
+  
+  BIND("uzsi" AS ?narrowerClass)
+}""" .
+
+
+#####################################
+# Datasets
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/čsú> a void:Dataset ;
+  dct:title "Český statistický úřad" ;
+  void:sparqlEndpoint <https://csu.opendata.cz/sparql> .
+
+#####################################
+# View vocabularies
+#####################################
+
+browser-csu:má-úroveň a owl:ObjectProperty ;
+  rdfs:label "úrovně"@cs .
+    
+browser-csu:má-nadřazenou-úroveň a owl:ObjectProperty ;
+  rdfs:label "nadřazená úroveň"@cs .
+  
+browser-csu:člen a owl:ObjectProperty ;
+  rdfs:label "člen"@cs .
+  
+browser-csu:užší a owl:ObjectProperty ;
+  rdfs:label "užší"@cs .
+
+browser-csu:Položka a owl:Class ;
+  rdfs:label "Položka"@cs .
+  
+browser-csu:Úroveň a owl:Class ;
+  rdfs:label "Úroveň klasifikace"@cs .
+  
+browser-csu:Klasifikace a owl:Class ;
+  rdfs:label "Klasifikace"@cs .
+
+#####################################
+# Visual styles
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style-sheet> a browser:VisualStyleSheet ;
+  browser:hasVisualStyle
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/klasifikace>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/uroven>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/prvek>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/clen>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/node>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/nadrazeny>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/mauroven>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/manadrazenouuroven>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/edge> .  
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/klasifikace> a browser:VisualStyle ;
+  browser:shape "round-rectangle" ;
+  browser:background-color "#EDD382" ;
+  browser:border-color "#8F7014" ;
+  browser:hasSelector ".klasifikace" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/uroven> a browser:VisualStyle ;
+  browser:shape "round-rectangle" ;
+  browser:background-color "#FED2AF" ;
+  browser:border-color "#A24A02" ;
+  browser:hasSelector ".uroven" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/prvek> a browser:VisualStyle ;
+  browser:shape "round-rectangle" ;
+  browser:background-color "#C9E4CD" ;
+  browser:border-color "#305F37" ;
+  browser:hasSelector ".prvek" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/clen> a browser:VisualStyle ;
+  browser:line-color "#63865B" ;
+  browser:line-style "solid" ;
+  browser:hasSelector ".clen" .
+  
+  <https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/nadrazeny> a browser:VisualStyle ;
+  browser:line-color "#296654" ;
+  browser:line-style "solid" ;
+  browser:hasSelector ".nadrazeny" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/mauroven> a browser:VisualStyle ;
+  browser:line-color "#8F7014" ;
+  browser:line-style "solid" ;
+  browser:hasSelector ".mauroven" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/manadrazenouuroven> a browser:VisualStyle ;
+  browser:line-color "#A24A02" ;
+  browser:line-style "solid" ;
+  browser:hasSelector ".manadrazenouuroven" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/node> a browser:VisualStyle ;
+  browser:border-width "3px" ;
+  browser:text-wrap "ellipsis";
+  browser:text-max-width "360px";
+  browser:label "data(label)" ;
+  browser:width "label" ;
+  browser:height "label" ;
+  browser:padding "6px" ;
+  browser:font-size "10px" ;
+  browser:text-halign "center" ;
+  browser:text-valign "center" ;
+  browser:background-color "#A9A5A7" ;
+  browser:border-color "#544B50" ;
+  browser:color "black" ;
+  browser:shape "rectangle" ;
+  browser:hasSelector "node" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/čsú-klasifikace/style/edge> a browser:VisualStyle ;
+  browser:font-size "8px" ;
+  browser:line-color "#303633" ;
+  browser:line-style "solid" ;
+  browser:curve-style "straight" ;
+  browser:width "1px" ;
+  browser:source-arrow-shape "none" ;
+  browser:target-arrow-shape "triangle" ;
+  browser:hasSelector "edge" .

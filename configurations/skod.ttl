@@ -1,0 +1,238 @@
+@prefix browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/> .
+@prefix browser-rpp: <https://linked.opendata.cz/ontology/knowledge-graph-browser/rpp/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix l: <https://slovník.gov.cz/legislativní/sbírka/90/1995/pojem/> .
+@prefix a: <https://slovník.gov.cz/agendový/sgov/pojem/> .
+
+#####################################
+# Configurations
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/skod> a browser:Configuration ;
+  dct:title "Semantic National Open Data Catalog"@en,
+    "Sémantický Národní katalog otevřených dat"@cs ;
+  browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style-sheet>;
+  browser:hasViewSet <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/skod/dataset>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/sgov-full-simplified/object>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/sgov-full-simplified/attribute>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/sgov-full-simplified/relation> .
+
+#####################################
+# ViewSets
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/skod/dataset> a browser:ViewSet ;
+  dct:title "Pohledy na datovou sadu"@cs ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/skod/dataset/annotations-objects>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/skod/dataset/annotations-attributes>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/skod/dataset/annotations-relations> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/skod/dataset/annotations-objects> ;
+  browser:hasCondition """PREFIX dcat: <http://www.w3.org/ns/dcat#>
+ASK {  
+  ?node a dcat:Dataset .
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/skod> .
+
+#####################################
+# Views
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/skod/dataset/annotations-objects> a browser:View ;
+  dct:title "Anotace"@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/skod/dataset/annotations-objects> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/skod/dataset> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/skod/dataset> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/skod/dataset/annotations-attributes> a browser:View ;
+  dct:title "Anotace"@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/skod/dataset/annotations-attributes> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/skod/dataset> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/skod/dataset> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/skod/dataset/annotations-relations> a browser:View ;
+  dct:title "Anotace"@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/skod/dataset/annotations-relations> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/skod/dataset> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/skod/dataset> .
+  
+
+  
+#####################################
+# Queries
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/skod/dataset/annotations> a browser:ExpansionQuery ;
+  dct:title "Anotace"@cs ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/skod> ;
+  browser:query """""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/object-type/complete> a browser:PreviewQuery ;
+  dct:title "Basic object type preview" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> ;
+  browser:query """""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/object-type/complete> a browser:DetailQuery ;
+  dct:title "Basic object type detail" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> ;
+  browser:query """""" .
+
+#####################################
+# Datasets
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/skod> a void:Dataset ;
+  dct:title "SKOD SPARQL endpoint" ;
+  void:sparqlEndpoint <https://skod.opendata.cz/sparql> ;
+  browser:accept "text/turtle" .
+
+#####################################
+# View vocabularies
+#####################################
+    
+browser-rpp:vocabularyLabel a owl:DatatypeProperty ;
+  rdfs:label "slovník"@cs ;
+  rdfs:comment "Název slovníku, do kterého pojem patří."@cs ;
+  rdfs:domain skos:Concept ;
+  rdfs:range rdfs:Literal .
+  
+#####################################
+# Visual styles
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style-sheet> a browser:VisualStyleSheet ;
+  browser:hasVisualStyle <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/object-type>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/trobe-type>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/relation-type>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/type>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/zsgov>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/vsgov>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/lsgov>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/asgov>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/www.w3.org/2004/02/skos/core/scheme>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/node>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/rdfs/subClassOf>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/rdfs/domain>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/rdfs/range>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/edge> .
+    
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/type> a browser:VisualStyle ;
+  browser:shape "rectangle" ;
+  browser:width "60px" ;
+  browser:height "30px" ;
+  browser:font-size "10px" ;
+  browser:hasSelector ".type" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/object-type> a browser:VisualStyle ;
+  browser:shape "round-rectangle" ;
+  browser:height "24px" ;
+  browser:font-size "12px" ;
+  browser:hasSelector ".object-type" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/trobe-type> a browser:VisualStyle ;
+  browser:shape "ellipse" ;
+  browser:width "20px" ;
+  browser:height "20px" ;
+  browser:text-wrap "wrap";
+  browser:font-size "8px" ;
+  browser:hasSelector ".trobe-type" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/relation-type> a browser:VisualStyle ;
+  browser:shape "cut-rectangle" ;
+  browser:height "16px" ;
+  browser:font-size "10px" ;
+  browser:hasSelector ".relation-type" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/zsgov> a browser:VisualStyle ;
+  browser:background-color "#944654" ;
+  browser:border-color "#c49aa1" ;
+  browser:color "#000000" ;
+  #browser:color "#c49aa1" ;
+  #browser:text-outline-color "#944654" ;
+  browser:hasSelector ".zsgov" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/vsgov> a browser:VisualStyle ;
+  browser:background-color "#a05c7b" ;
+  browser:border-color "#cba6b7" ;
+  browser:color "#000000" ;
+  #browser:color "#cba6b7" ;
+  #browser:text-outline-color "#a05c7b" ;
+  browser:hasSelector ".vsgov" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/lsgov> a browser:VisualStyle ;
+  browser:background-color "#a6f4dc" ;
+  browser:border-color "#6a9c8c" ;
+  browser:color "#000000" ;
+  #browser:color "#6a9c8c" ;
+  #browser:text-outline-color "#a6f4dc" ;
+  browser:hasSelector ".lsgov" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/asgov> a browser:VisualStyle ;
+  browser:background-color "#85ff9e" ;
+  browser:border-color "#55a365" ;
+  browser:color "#000000" ;
+  #browser:color "#55a365" ;
+  #browser:text-outline-color "#85ff9e" ;
+  browser:hasSelector ".asgov" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/www.w3.org/2004/02/skos/core/scheme> a browser:VisualStyle ;
+  browser:background-color "#90e0f3" ;
+  browser:border-color "#76b8c7" ;
+  browser:color "#76b8c7" ;
+  browser:text-outline-color "#90e0f3" ;
+  browser:text-wrap "wrap";
+  browser:text-max-width "78px";
+  browser:width "80px" ;
+  browser:height "32px" ;
+  browser:hasSelector ".scheme" .  
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/node> a browser:VisualStyle ;
+  browser:border-width "3px" ;
+  browser:text-wrap "ellipsis";
+  browser:text-max-width "180px";
+  browser:label "data(label)" ;
+  browser:padding "2px" ;
+  browser:width "label" ;
+  browser:height "10px" ;
+  browser:text-halign "center" ;
+  browser:text-valign "center" ;
+  browser:background-color "#A9A5A7" ;
+  browser:border-color "#544B50" ;
+  browser:color "black" ;
+  browser:shape "rectangle" ;
+  browser:hasSelector "node" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/rdfs/subClassOf> a browser:VisualStyle ;
+  browser:target-arrow-shape "triangle" ;
+  browser:target-arrow-fill "hollow" ;
+  browser:target-arrow-color "#303633" ;
+  browser:arrow-scale "1.5";
+  browser:hasSelector ".sub-class-of" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/rdfs/domain> a browser:VisualStyle ;
+  browser:target-arrow-shape "vee" ;
+  browser:target-arrow-color "#303633" ;
+  browser:hasSelector ".domain" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/rdfs/range> a browser:VisualStyle ;
+  browser:target-arrow-shape "vee" ;
+  browser:target-arrow-color "#303633" ;
+  browser:hasSelector ".range" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/edge> a browser:VisualStyle ;
+  browser:font-size "6px" ;
+  browser:line-color "#303633" ;
+  browser:line-style "solid" ;
+  browser:curve-style "straight" ;
+  browser:width "1px" ;
+  browser:source-arrow-shape "none" ;
+  browser:target-arrow-shape "none" ;
+  browser:hasSelector "edge" .
+  
+#https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/sgov
+#https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style-sheet
+

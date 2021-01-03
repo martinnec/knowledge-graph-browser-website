@@ -1,0 +1,285 @@
+@prefix browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/> .
+@prefix a: <https://slovník.gov.cz/agendový/104/pojem/> .
+
+# https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/sgov-skos
+# https://linked.opendata.cz/resource/knowledge-graph-browser/sgov-skos/style-sheet
+# https://slovník.gov.cz/generický/turistické-cíle/pojem/turistický-cíl 
+
+#####################################
+# Configurations
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/sgov-skos> a browser:Configuration ;
+  dct:title "Konfigurace procházení slovníku vyjádřeného jako SKOS"@cs ;
+  browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov-skos/style-sheet>;
+  browser:startingNode <https://slovník.gov.cz/generický/turistické-cíle/pojem/turistický-cíl>;
+  browser:hasViewSet <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/sgov-skos/scheme>, <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/sgov-skos/concept> .
+
+#####################################
+# ViewSets
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/sgov-skos/scheme> a browser:ViewSet ;
+  dct:title "Pohledy na schéma konceptů"@cs ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov-skos/scheme> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov-skos/scheme> ;
+  browser:hasCondition """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+ASK {
+  ?node a skos:ConceptScheme .
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/sgov-skos/concept> a browser:ViewSet ;
+  dct:title "Pohledy na koncept"@cs ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov-skos/concept> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov-skos/concept> ;
+  browser:hasCondition """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+ASK {
+  ?node a skos:Concept .
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> .
+
+#####################################
+# Views
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov-skos/scheme> a browser:View ;
+  dct:title "Schéma konceptů"@cs ;
+  dct:description "Pohled na schéma konceptů vyjádřené ve slovníku SKOS."@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/sgov-skos/scheme> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/sgov-skos/scheme> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/sgov-skos/scheme> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov-skos/concept> a browser:View ;
+  dct:title "Koncept"@cs ;
+  dct:description "Pohled na koncept vyjádřený ve slovníku SKOS."@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/sgov-skos/concept> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/sgov-skos/concept> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/sgov-skos/concept> .
+    
+#####################################
+# Queries
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/sgov-skos/scheme> a browser:ExpansionQuery ;
+  dct:title "Kompletní schéma konceptů" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+PREFIX z-sgov: <https://slovník.gov.cz/základní/pojem/>
+
+CONSTRUCT {
+  ?concept skos:inScheme ?node ;
+    skos:prefLabel ?conceptLabel ;
+    skos:broader ?broaderConcept ;
+    browser:class "concept", ?class .
+    
+  ?broaderConcept skos:prefLabel ?broaderLabel ;
+    browser:class "concept", ?broaderClass . 
+  
+} WHERE {
+  ?concept skos:inScheme ?node ;
+    skos:prefLabel ?conceptLabel .
+  FILTER (LANG(?conceptLabel) = "cs")
+  
+  OPTIONAL {
+    ?concept skos:broader ?broaderConcept .
+    ?broaderConcept skos:prefLabel ?broaderLabel .
+  }
+  
+  OPTIONAL {
+    VALUES (?broaderSgovType ?broaderClass) {(z-sgov:typ-objektu "object-type") (z-sgov:typ-vlastnosti "trobe-type")  (z-sgov:typ-vztahu "relation-type")  (z-sgov:typ-události "event-type") }
+    ?broaderConcept rdf:type/rdfs:subClassOf* ?broaderSgovType .
+  }
+  
+  OPTIONAL {
+    VALUES (?sgovType ?class) {(z-sgov:typ-objektu "object-type") (z-sgov:typ-vlastnosti "trobe-type")  (z-sgov:typ-vztahu "relation-type")  (z-sgov:typ-události "event-type") }
+    ?concept rdf:type/rdfs:subClassOf* ?sgovType .
+  }
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/sgov-skos/scheme> a browser:PreviewQuery ;
+  dct:title "SKOS schéma konceptů" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node a skos:ConceptScheme ;
+    skos:prefLabel ?label ;
+    browser:class "scheme" .
+} WHERE {
+  ?node rdfs:label ?label .
+  FILTER (LANG(?label) = "cs")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/sgov-skos/scheme> a browser:DetailQuery ;
+  dct:title "Základní detail SKOS schématu konceptů" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node skos:prefLabel ?label .
+} WHERE {
+  ?node rdfs:label ?label .
+  FILTER (LANG(?label) = "cs")
+}""" .
+
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/sgov-skos/concept> a browser:ExpansionQuery ;
+  dct:title "Nadřazený SKOS koncept" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+PREFIX z-sgov: <https://slovník.gov.cz/základní/pojem/>
+
+CONSTRUCT {
+  ?scheme skos:prefLabel ?schemeLabel ;
+    browser:class "scheme" .
+  
+  ?node skos:inScheme ?scheme ;
+    skos:broader ?broaderConcept .
+  
+  ?broaderConcept skos:prefLabel ?broaderLabel ;
+    browser:class "concept", ?broaderClass . 
+  
+} WHERE {
+  ?node a skos:Concept .
+
+  OPTIONAL {
+    ?node skos:inScheme ?scheme .
+    
+    ?scheme rdfs:label ?schemeLabel .
+    FILTER (LANG(?schemeLabel) = "cs") 
+  }
+    
+  OPTIONAL {
+    ?node skos:broader ?broaderConcept .
+    ?broaderConcept skos:prefLabel ?broaderLabel .
+  }
+  
+  OPTIONAL {
+    VALUES (?broaderSgovType ?broaderClass) {(z-sgov:typ-objektu "object-type") (z-sgov:typ-vlastnosti "trobe-type")  (z-sgov:typ-vztahu "relation-type")  (z-sgov:typ-události "event-type") }
+    ?broaderConcept rdf:type/rdfs:subClassOf* ?broaderSgovType .
+  }
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/sgov-skos/concept> a browser:PreviewQuery ;
+  dct:title "SKOS koncept" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+PREFIX z-sgov: <https://slovník.gov.cz/základní/pojem/>
+
+CONSTRUCT {
+  ?node a skos:Concept ;
+    skos:prefLabel ?label ;
+    browser:class "concept", ?class .
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER (LANG(?label) = "cs")
+  
+  OPTIONAL {
+    VALUES (?sgovType ?class) {(z-sgov:typ-objektu "object-type") (z-sgov:typ-vlastnosti "trobe-type")  (z-sgov:typ-vztahu "relation-type")  (z-sgov:typ-události "event-type") }
+    ?node rdf:type/rdfs:subClassOf* ?sgovType .
+  }
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/sgov-skos/concept> a browser:DetailQuery ;
+  dct:title "Základní detail SKOS koncept" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node skos:prefLabel ?label .
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER (LANG(?label) = "cs")
+}""" .
+
+#####################################
+# View vocabularies
+#####################################
+
+#####################################
+# Visual styles
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov-skos/style-sheet> a browser:VisualStyleSheet ;
+  browser:hasVisualStyle
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/www.w3.org/2004/02/skos/core/scheme>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/www.w3.org/2004/02/skos/core/concept>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/www.w3.org/2004/02/skos/core/broader>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/object-type>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/trobe-type>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/relation-type>,    
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/node>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/edge> .  
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/www.w3.org/2004/02/skos/core/scheme> a browser:VisualStyle ;
+  browser:background-color "#90e0f3" ;
+  browser:border-color "#76b8c7" ;
+  browser:color "#76b8c7" ;
+  browser:text-outline-color "#90e0f3" ;
+  browser:text-wrap "wrap";
+  browser:text-max-width "78px";
+  browser:width "80px" ;
+  browser:height "32px" ;
+  browser:hasSelector ".scheme" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/www.w3.org/2004/02/skos/core/concept> a browser:VisualStyle ;
+  browser:background-color "#f5b7bb" ;
+  browser:border-color "#a82a33" ;
+  browser:color "#a82a33" ;
+  browser:text-outline-color "#f5b7bb" ;
+  browser:text-wrap "wrap";
+  browser:text-max-width "56px";
+  browser:width "60px" ;
+  browser:height "32px" ;
+  browser:hasSelector ".concept" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/www.w3.org/2004/02/skos/core/broader> a browser:VisualStyle ;
+  browser:line-color "#9ff5d5" ;
+  browser:line-style "solid" ;
+  browser:hasSelector ".katalogizuje" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/node> a browser:VisualStyle ;
+  browser:border-width "2px" ;
+  browser:text-outline-width "1px" ;
+  browser:text-wrap "ellipsis";
+  browser:text-max-width "98px";
+  browser:shape "round-rectangle" ;
+  browser:width "100px" ;
+  browser:height "12px" ;
+  browser:label "data(label)" ;
+  browser:padding "2px" ;
+  browser:text-halign "center" ;
+  browser:text-valign "center" ;
+  browser:font-size "8px" ;
+  browser:background-color "#A9A5A7" ;
+  browser:border-color "#544B50" ;
+  browser:color "black" ;
+  browser:hasSelector "node" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/edge> a browser:VisualStyle ;
+  browser:width "1px" ;
+  browser:line-color "black" ;
+  browser:line-style "solid" ;
+  browser:curve-style "straight" ;
+  browser:hasSelector "edge" .

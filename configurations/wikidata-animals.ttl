@@ -1,0 +1,334 @@
+@prefix browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/> .
+@prefix wdab: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/animals/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix l: <https://slovník.gov.cz/legislativní/sbírka/90/1995/pojem/> .
+@prefix a: <https://slovník.gov.cz/agendový/wikidata/animals/pojem/> .
+
+#####################################
+# Configurations
+#
+# Configuration is the entry point which defines the behavior of the visual browser.
+# It consists of one or more view sets.
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/animals> a browser:Configuration ;
+  dct:title "Taxonomy of animals and plants"@en,
+   "Taxonomie rostlin a živočichů"@cs;
+  dct:description "Classification of all organisms, plants and animals, into taxa."@en,
+   "Možnost procházet sítí taxonů všech zvířat a rostil jež jsou na Wikipedii."@cs;
+  browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style-sheet>;
+  browser:startingNode <http://www.wikidata.org/entity/Q7377>,
+   <http://www.wikidata.org/entity/Q192154>;
+  browser:resourceIriPattern "^http://www\\.wikidata\\.org/entity/Q[1-9][0-9]*$";
+  browser:hasViewSet <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/animals/taxon> .
+
+#####################################
+# ViewSets
+#
+# A view set is a set of views which can be applied on a node which satisfies a condition defined for the view set.
+# For example, the view set <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/animals/taxon> below  can be applied on any node which satisfies:
+# ?node wdt:P31 ?type . FILTER(?type IN (wd:Q16521, wd:Q713623))
+# Each view then defines how a node satisfying the condition is visualized.
+# It is expected that the client calls the server operation /view-sets which takes an IRI of a node as a parameter and returns views from the view sets whose condition is satisfied by the node.
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/animals/taxon> a browser:ViewSet ;
+  dct:title "Views of taxons"@en ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/animals/taxon/broader>, <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/animals/taxon/narrower> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/animals/taxon/broader> ;
+  browser:hasCondition """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+ASK {  
+  ?node wdt:P31 ?type .
+  FILTER(?type IN (wd:Q16521, wd:Q713623))
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> .
+
+#####################################
+# Views
+#
+# A view defines how a node satisfying the condition is visualized. It consists of three parts:
+# - expansion defines the neighbourhood of the node which is shown when the user wants to expand the node; expansion is requested by the client by calling the /expand operation with the IRI of the expanded node as a parameter
+# - preview defines data used to show the body of the node in the visualization (typically its label); preview is requested by the client by calling the /preview operation with the IRI of the previewed node as a parameter
+# - detail defines data used to show the detail information about the node; detail is requested by the client by calling the /detail operation with the IRI of the detailed node as a parameter
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/animals/taxon/broader> a browser:View ;
+  dct:title "Parent taxons"@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/animals/taxon/broader> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/animals/taxon/basic> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/animals/taxon/basic> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/animals/taxon/narrower> a browser:View ;
+  dct:title "Child taxons"@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/animals/taxon/narrower> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/animals/taxon/basic> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/animals/taxon/basic> .  
+  
+#####################################
+# Queries
+#####################################
+
+#####################################
+# Expansion example
+#
+# Expansion of the node is defined by the query and dataset on which the query is executed. The expansion query is a SPARQL query which returns the neighbourhood of the node which shall be visualized after the expansion. It shall return all informaton necessary to display visually the nodes in the neighbourhood so that the client does not need to request the preview operation for each node in the neighbourhood.
+#####################################
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/animals/taxon/broader> a browser:ExpansionQuery ;
+  dct:title "Parent taxons" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdab: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/animals/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?parentTaxon a wdab:taxon ;
+    rdfs:label ?parentTaxonLabel ;
+    browser:class "taxon", ?parentTaxonClass .
+    
+  ?node wdab:broader ?parentTaxon .
+  
+  wdab:broader browser:class "broader" .  
+} WHERE {
+
+  ?node wdt:P171 ?parentTaxon .
+    
+  OPTIONAL { 
+    ?parentTaxon wdt:P105 ?parentTaxonRank .
+    ?parentTaxonRank rdfs:label ?parentTaxonRankLabel .
+    FILTER(lang(?parentTaxonRankLabel) = "en")
+    BIND(IF(?parentTaxonRank IN (wd:Q7432, wd:Q34740, wd:Q35409, wd:Q36602, wd:Q37517, wd:Q38348, wd:Q36732, wd:Q146481), ?parentTaxonRankLabel, "unsupportedTaxon") AS ?parentTaxonClass)
+  }
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/animals/taxon/narrower> a browser:ExpansionQuery ;
+  dct:title "Child taxons" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdab: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/animals/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?childTaxon a wdab:taxon ;
+    rdfs:label ?childTaxonLabel ;
+    wdab:broader ?node ;
+    browser:class "taxon", ?childTaxonClass .
+  
+  wdab:broader browser:class "broader" .  
+} WHERE {
+  
+  ?childTaxon wdt:P171 ?node .
+  
+  OPTIONAL { 
+    ?childTaxon wdt:P105 ?childTaxonRank .
+    ?childTaxonRank rdfs:label ?childTaxonRankLabel .
+    FILTER(lang(?childTaxonRankLabel) = "en")
+    BIND(IF(?childTaxonRank IN (wd:Q7432, wd:Q34740, wd:Q35409, wd:Q36602, wd:Q37517, wd:Q38348, wd:Q36732, wd:Q146481), ?childTaxonRankLabel, "unsupportedTaxon") AS ?childTaxonClass)
+  }
+      
+  #FILTER(?childTaxonRank IN (wd:Q7432, wd:Q34740, wd:Q35409, wd:Q36602, wd:Q37517, wd:Q38348, wd:Q36732, wd:Q146481))
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+  
+}""" .
+
+#####################################
+# Preview example
+#
+# Preview of the node is defined by the query and dataset on which the query is executed. The preview query is a SPARQL query which returns basic information which is necessary to display the node visually.
+#####################################
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/animals/taxon/basic> a browser:PreviewQuery ;
+  dct:title "Taxon basic overview" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdab: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/animals/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?node a wdab:taxon ;
+    rdfs:label ?nodeLabel ;
+    browser:class "taxon", ?taxonClass .  
+} WHERE {
+  ?node wdt:P105 ?taxonRank .
+  
+  ?taxonRank rdfs:label ?taxonRankLabel .
+  FILTER(lang(?taxonRankLabel) = "en")
+  
+  BIND(IF(?taxonRank IN (wd:Q7432, wd:Q34740, wd:Q35409, wd:Q36602, wd:Q37517, wd:Q38348, wd:Q36732, wd:Q146481), ?taxonRankLabel, "unsupportedTaxon") AS ?taxonClass)
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } 
+  
+}""" .
+
+#####################################
+# Detail example
+#
+# Detail of the node is defined by the query and dataset on which the query is executed. The detail query is a SPARQL query which returns properties of the node which are displayed in the detail section for that node. Currently, we support only properties with primitive string values.
+#####################################
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/animals/taxon/basic> a browser:DetailQuery ;
+  dct:title "Taxon basic detail" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdab: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/animals/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?node rdfs:label ?nodeLabel ;
+    wdt:P225 ?p225 ;
+    wdt:P181 ?p181 ;
+    wdt:P18 ?p18 . 
+} WHERE {
+  ?node wdt:P31 wd:Q16521 .
+  
+  {
+    ?node wdt:P225 ?p225 .
+  } UNION {
+    ?node wdt:P181 ?p181 .
+  } UNION {
+    ?node wdt:P18 ?p18 .
+  }
+    
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+  
+}""" .
+
+#####################################
+# Datasets
+#
+# This defines a SPARQL endpoint on which queries from the configuration are executed. There may be more datasets in a single configuration.
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> a void:Dataset ;
+  dct:title "Wikidata SPARQL endpoint" ;
+  void:sparqlEndpoint <https://query.wikidata.org/sparql> ;
+  browser:accept "application/sparql-results+json" .
+
+#####################################
+# View vocabularies
+#####################################
+  
+<https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/animals/taxon> a owl:Class ;
+  rdfs:label "taxon"@en .
+  
+<https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/animals/broader> a owl:ObjectProperty ;
+  rdfs:label "parent taxon"@en ;
+  rdfs:domain wdab:taxon ;
+  rdfs:range wdab:taxon .
+
+#####################################
+# Visual styles
+#
+# Style sheet is the entry point which defines the visual look. Individual styles define how nodes and edges in the graph matching a given selector should look like. The power of Cytoscape.js styles is used here.
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style-sheet> a browser:VisualStyleSheet ;
+  browser:hasVisualStyle <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/taxon>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/species>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/genus>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/family>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/order>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/class>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/phylum>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/kingdom>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/domain>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/unsupported-taxon>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/broader>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/node>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/edge> .
+    
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/taxon> a browser:VisualStyle ;
+  browser:border-width "2px" ;
+  browser:shape "octagon" ;
+  browser:label "data(label)" ;
+  browser:width "20px" ;
+  browser:height "20px" ;
+  browser:padding "2px" ;
+  browser:text-halign "center" ;
+  browser:text-valign "bottom" ;
+  browser:text-margin-y "2px" ;
+  browser:hasSelector ".taxon" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/species> a browser:VisualStyle ;
+  browser:background-color "#ff8000" ;  
+  browser:hasSelector ".species" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/genus> a browser:VisualStyle ;
+  browser:background-color "#ffbf00" ;  
+  browser:hasSelector ".genus" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/family> a browser:VisualStyle ;
+  browser:background-color "#bfff00" ;  
+  browser:hasSelector ".family" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/order> a browser:VisualStyle ;
+  browser:background-color "#00ff40" ;  
+  browser:hasSelector ".order" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/class> a browser:VisualStyle ;
+  browser:background-color "#00ffbf" ;  
+  browser:hasSelector ".class" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/phylum> a browser:VisualStyle ;
+  browser:background-color "#00bfff" ;  
+  browser:hasSelector ".phylum" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/kingdom> a browser:VisualStyle ;
+  browser:background-color "#8000ff" ;  
+  browser:hasSelector ".kingdom" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/domain> a browser:VisualStyle ;
+  browser:background-color "#ff00bf" ;  
+  browser:hasSelector ".domain" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/unsupported-taxon> a browser:VisualStyle ;
+  browser:background-color "#444444" ;  
+  browser:hasSelector ".unsupportedTaxon" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/broader> a browser:VisualStyle ;
+  browser:width "1";
+  browser:curve-style "straight" ;
+  browser:line-color "#7dd181" ;
+  browser:line-style "solid" ;
+  browser:label "data(label)" ;
+  browser:font-size "6px" ;
+  browser:target-arrow-shape "triangle" ;
+  browser:curve-style "straight" ;
+  browser:hasSelector ".broader" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/node> a browser:VisualStyle ;
+  browser:background-color "#A9A5A7" ;
+  browser:border-color "#544B50" ;
+  browser:border-width "2px" ;
+  browser:color "black" ;
+  browser:shape "rectangle" ;
+  browser:label 'data(label)' ;
+  browser:text-valign "center" ;
+  browser:text-halign "left" ;
+  browser:width "16" ;
+  browser:height "16" ;
+  browser:hasSelector "node" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style/edge> a browser:VisualStyle ;
+  browser:width "1";
+  browser:line-color "red";
+  browser:hasSelector "edge" .
+  
+#https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/animals
+#https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style-sheet
+
+#http://www.wikidata.org/entity/Q135022

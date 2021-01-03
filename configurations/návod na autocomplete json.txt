@@ -1,0 +1,22 @@
+SPARQL na https://slovník.gov.cz/sparql
+
+PREFIX zsgov: <https://slovník.gov.cz/základní/pojem/>
+
+SELECT ?id ?label ?type
+WHERE {
+  VALUES ?type {zsgov:typ-objektu zsgov:typ-vztahu zsgov:typ-vlastnosti zsgov:typ-události}
+  ?id a ?type ;
+    skos:prefLabel ?pojemLabel ;
+    skos:inScheme/dct:title ?slovnikTitle .
+
+  FILTER (LANG(?pojemLabel)="cs")
+  FILTER (LANG(?slovnikTitle)="cs")
+
+  BIND(LCASE(CONCAT(STR(?pojemLabel), " - ", ?slovnikTitle)) AS ?label)
+}
+
+Replace v PSPadu
+
+^"([^"]+)","([^"]+)","([^"]+)"$
+
+{"@id":"$1","label":"$2","type":"$3"},

@@ -1,0 +1,184 @@
+@prefix browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/> .
+@prefix wdab: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/hierarchical-entities/> .
+
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+
+#####################################
+# Configurations
+#####################################
+
+#####################################
+# ViewSets
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/hierarchical-entities/hierarchical-entity> a browser:ViewSet ;
+  dct:title "Hierarchical thing"@en ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/hierarchical-entities/hierarchical-entity/has-parts>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/hierarchical-entities/hierarchical-entity/part-of> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/discovery> ;
+  browser:hasCondition """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+ASK {  
+  {
+    [] wdt:P361 ?node .
+  } UNION {
+    [] wdt:P279 ?node .
+  } UNION {
+    ?node wdt:P361 [] .
+  } UNION {
+    ?node wdt:P279 [] .
+  }
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> .
+
+#####################################
+# Views
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/hierarchical-entities/hierarchical-entity/has-parts> a browser:View ;
+  dct:title "Composition"@en ;
+  dct:description "Composed thing."@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/hierarchical-entities/hierarchical-entity/has-parts> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/hierarchical-entities/hierarchical-entity> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/hierarchical-entities/hierarchical-entity> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/hierarchical-entities/hierarchical-entity/part-of> a browser:View ;
+  dct:title "Part"@en ;
+  dct:description "Thing which is a part of another thing"@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/hierarchical-entities/hierarchical-entity/part-of> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/hierarchical-entities/hierarchical-entity> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/hierarchical-entities/hierarchical-entity> .
+
+#####################################
+# Queries
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/hierarchical-entities/hierarchical-entity/has-parts> a browser:ExpansionQuery ;
+  dct:title "Parts of a composition"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdab: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/hierarchical-entities/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {  
+  ?part a wdab:entity ;
+    rdfs:label ?partLabel ;
+    browser:class "entity" .
+    
+  ?node wdab:narrower ?part .
+  wdab:narrower browser:class "part" .  
+} WHERE {
+
+  {
+    ?part wdt:P361 ?node .
+  } UNION {
+    ?part wdt:P279 ?node .
+  }
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,cs". }
+  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/hierarchical-entities/hierarchical-entity/part-of> a browser:ExpansionQuery ;
+  dct:title "Composition of parts"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdab: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/hierarchical-entities/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {  
+  ?composite a wdab:entity ;
+    rdfs:label ?compositeLabel ;
+    browser:class "entity" .
+    
+  ?composite wdab:narrower ?node .
+  wdab:narrower browser:class "part" .  
+} WHERE {
+
+  {
+    ?node wdt:P361 ?composite .
+  } UNION {
+    ?node wdt:P279 ?composite .
+  }
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,cs". }
+  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/hierarchical-entities/hierarchical-entity> a browser:PreviewQuery ;
+  dct:title "Hierarchical thing preview"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdab: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/hierarchical-entities/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?node a wdab:entity ;
+    rdfs:label ?nodeLabel ;
+    browser:class "entity" .  
+} WHERE {
+  
+  BIND(COALESCE(?type, wdab:entity) AS ?finalType)
+  BIND(COALESCE(?class, "entity") AS ?finalClass)
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,cs". } 
+  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/hierarchical-entities/hierarchical-entity> a browser:DetailQuery ;
+  dct:title "Hierarchical thing detail"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX wdab: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/hierarchical-entities/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?node rdfs:label ?nodeLabel ;
+    dct:description ?description ;
+    wdt:P18 ?p18 .
+} WHERE {
+  OPTIONAL {
+    ?node schema:description ?description .
+    FILTER (LANG(?description) = "cs" || LANG(?description) = "en")
+  }
+  OPTIONAL {
+    ?node wdt:P18 ?p18 .
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,cs". } 
+}""" .
+
+#####################################
+# Datasets
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> a void:Dataset ;
+  dct:title "Wikidata SPARQL endpoint" ;
+  void:sparqlEndpoint <https://query.wikidata.org/sparql> ;
+  browser:accept "application/sparql-results+json" .
+
+#####################################
+# View vocabularies
+#####################################
+
+<https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/hierarchical-entities/narrower> a owl:ObjectProperty ;
+  rdfs:label "has part"@cs ;
+  rdfs:comment "A thing which is a part of another thing."@cs ;
+  rdfs:domain wdab:entity ;
+  rdfs:range wdab:entity . 
+
+#####################################
+# Visual styles
+#####################################

@@ -1,0 +1,334 @@
+@prefix browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/> .
+@prefix a: <https://slovník.gov.cz/agendový/104/pojem/> .
+
+#####################################
+# Configurations
+#####################################
+
+# https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/nkod
+# https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style-sheet
+# https://rpp-opendata.egon.gov.cz/odrpp/zdroj/orgán-veřejné-moci/00025593
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/nkod> a browser:Configuration ;
+  dct:title "Národní katalog otevřených dat"@cs,
+    "National Catalog of Open Data"@en ;
+  browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style-sheet>;
+  browser:startingNode <https://rpp-opendata.egon.gov.cz/odrpp/zdroj/orgán-veřejné-moci/00025593>;
+  browser:hasViewSet <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/nkod/katalog>, <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/nkod/poskytovatel>, <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/rpp/kategorieovm>, <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/rpp/ovm> .
+
+#####################################
+# ViewSets
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/nkod/katalog> a browser:ViewSet ;
+  dct:title "Pohledy na datové katalogy"@cs ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/nkod/katalog> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/nkod/katalog> ;
+  browser:hasCondition """PREFIX dcat: <http://www.w3.org/ns/dcat#>
+ASK {
+  ?node a dcat:Catalog .    
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/nkod> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/nkod/poskytovatel> a browser:ViewSet ;
+  dct:title "Pohledy na poskytovatele datových sad"@cs ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/nkod/poskytovatel> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/nkod/poskytovatel> ;
+  browser:hasCondition """PREFIX dct: <http://purl.org/dc/terms/>
+ASK {
+  [] dct:publisher ?publisher  .
+  
+  ?publisher owl:sameAs ?node .    
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/nkod> .
+
+#####################################
+# Views
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/nkod/poskytovatel> a browser:View ;
+  dct:title "Datové katalogy poskytovatele"@cs ;
+  dct:description "Pohled na poskytovatele datových sad tvořený datovými katalogy, ve kterých poskytovatel katalogizuje svoje datové sady."@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/nkod/katalogy-poskytovatele> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/rpp/název-ovm> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/nkod/poskytovatel> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/nkod/katalog> a browser:View ;
+  dct:title "Poskytovatelé v katalogu"@cs ;
+  dct:description "Pohled na datový katalog tvořený poskytovateli, kteří mají v katalogu katalogizovánu alespoň 1 datovou sadu."@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/nkod/poskytovatelé-v-katalogu> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/nkod/katalog> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/nkod/katalog> .
+  
+#####################################
+# Queries
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/nkod/katalogy-poskytovatele> a browser:ExpansionQuery ;
+  dct:title "Katalogy poskytovatele" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/nkod> ;
+  browser:query """PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX bnkod: <https://linked.opendata.cz/ontology/knowledge-graph-browser/nkod/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?katalog a dcat:Catalog ;
+    rdfs:label ?label ;
+    browser:class "katalog" .
+    
+  ?node bnkod:má-katalogizovány-datové-sady-v-katalogu ?katalog .
+    
+  bnkod:má-katalogizovány-datové-sady-v-katalogu browser:class "katalogizuje" . 
+  
+} WHERE {
+  GRAPH ?g {
+    ?katalog dcat:dataset/dct:publisher ?x .
+  }
+  
+  ?x owl:sameAs ?node .
+  
+  ?katalog dct:title ?label .
+  FILTER (LANG(?label) = "cs")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/nkod/poskytovatelé-v-katalogu> a browser:ExpansionQuery ;
+  dct:title "Poskytovatelé v katalogu" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/nkod> ;
+  browser:query """PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/>
+PREFIX bnkod: <https://linked.opendata.cz/ontology/knowledge-graph-browser/nkod/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node a dcat:Catalog .
+  
+  ?poskytovatel a l:orgán-veřejné-moci ; 
+    rdfs:label ?label ;
+    bnkod:má-katalogizovány-datové-sady-v-katalogu ?node ;
+    browser:class "poskytovatel" .
+    
+  bnkod:má-katalogizovány-datové-sady-v-katalogu browser:class "katalogizuje" .
+     
+} WHERE {
+  GRAPH ?g {
+    ?node dcat:dataset/dct:publisher ?x .
+    ?x foaf:name ?label .
+    FILTER (LANG(?label) = "cs")
+  }
+  ?x owl:sameAs ?poskytovatel .
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/nkod/katalog> a browser:PreviewQuery ;
+  dct:title "Katalog datových sad" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/nkod> ;
+  browser:query """PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node a dcat:Catalog ;
+    rdfs:label ?label ;
+    browser:class "katalog" .
+} WHERE {
+  ?node dct:title ?label .
+  FILTER (LANG(?label) = "cs")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/nkod/katalog> a browser:DetailQuery ;
+  dct:title "Základní detail katalogu datových sad" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/nkod> ;
+  browser:query """PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#> 
+PREFIX bnkod: <https://linked.opendata.cz/ontology/knowledge-graph-browser/nkod/>
+
+CONSTRUCT {
+  ?node dct:title ?label ;
+    bnkod:obsahuje-počet-datových-sad ?pocetDatovychSad ;
+    bnkod:obsahuje-počet-poskytovatelů ?pocetPoskytovatelu .
+} WHERE {
+  ?node dct:title ?label .
+  FILTER (LANG(?label) = "cs")
+  
+  {
+    SELECT ?node (COUNT(?dataset) AS ?pocetDatovychSad)
+    WHERE {
+      ?node dcat:dataset ?dataset .    
+    }
+    GROUP BY ?node 
+  }
+  
+  {
+    SELECT ?node (COUNT(DISTINCT ?publisher) AS ?pocetPoskytovatelu)
+    WHERE {
+      GRAPH ?g {
+        ?node dcat:dataset/dct:publisher ?publisher .
+      }
+    }
+    GROUP BY ?node 
+  }   
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/nkod/poskytovatel> a browser:DetailQuery ;
+  dct:title "Základní detail poskytovatele datových sad" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/nkod> ;
+  browser:query """PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX bnkod: <https://linked.opendata.cz/ontology/knowledge-graph-browser/nkod/>
+
+CONSTRUCT {
+  ?node dct:title ?label ;
+    bnkod:poskytuje-počet-datových-sad ?pocetDatovychSad .
+} WHERE {
+  ?x owl:sameAs ?node ;
+    foaf:name ?label .
+  FILTER (LANG(?label) = "cs")
+  
+  {
+    SELECT ?x (COUNT(?dataset) AS ?pocetDatovychSad)
+    WHERE {
+      ?dataset dct:publisher ?x .
+    }
+    GROUP BY ?x 
+  }
+}""" .
+
+#####################################
+# Datasets
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/rpp> a void:Dataset ;
+  dct:title "Registr práv a povinností" ;
+  void:sparqlEndpoint <https://rpp-opendata.egon.gov.cz/odrpp/sparql> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/nkod> a void:Dataset ;
+  dct:title "Národní katalog otevřených dat" ;
+  void:sparqlEndpoint <https://data.gov.cz/sparql> .
+
+#####################################
+# View vocabularies
+#####################################
+  
+<https://linked.opendata.cz/ontology/knowledge-graph-browser/nkod/má-katalogizovány-datové-sady-v-katalogu> a owl:ObjectProperty ;
+  rdfs:label "katalogizuje v"@cs ;
+  rdfs:comment "Katalog, ve kterém poskytovatel katalogizuje své datové sady."@cs ;
+  rdfs:domain l:orgán-veřejné-moci ;
+  rdfs:range dcat:Catalog .
+  
+<https://linked.opendata.cz/ontology/knowledge-graph-browser/nkod/obsahuje-počet-poskytovatelů> a owl:DatatypeProperty ;
+  rdfs:label "obsahuje počet poskytovatelů"@cs ;
+  rdfs:comment "Počet subjektů, které mají v katalogu zaregistrován alespoň jeden katalogizační záznam."@cs ;
+  rdfs:domain dcat:Catalog ;
+  rdfs:range rdfs:Literal .
+  
+<https://linked.opendata.cz/ontology/knowledge-graph-browser/nkod/obsahuje-počet-datových-sad> a owl:DatatypeProperty ;
+  rdfs:label "obsahuje počet datových sad"@cs ;
+  rdfs:comment "Počet datových sad, které jsou v katalogu katalogizovány."@cs ;
+  rdfs:domain dcat:Catalog ;
+  rdfs:range rdfs:Literal .
+  
+<https://linked.opendata.cz/ontology/knowledge-graph-browser/nkod/poskytuje-počet-datových-sad> a owl:DatatypeProperty ;
+  rdfs:label "poskytuje počet datových sad"@cs ;
+  rdfs:comment "Počet datových sad, které poskytovatel poskytuje prostřednictvím katalogizačních záznamů v katalogu."@cs ;
+  rdfs:domain l:orgán-veřejné-moci ;
+  rdfs:range rdfs:Literal .
+
+#####################################
+# Visual styles
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style-sheet> a browser:VisualStyleSheet ;
+  browser:hasVisualStyle <https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/www.w3.org/ns/dcat/Catalog>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/slovník.gov.cz/legislativní/sbírka/111/2009/pojem/orgán-veřejné-moci>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/poskytovatel>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/rpp/style/slovník.gov.cz/legislativní/sbírka/111/2009/pojem/agenda>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/slovník.gov.cz/legislativní/sbírka/111/2009/pojem/kategorie-orgánů-veřejné-moci>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/má-katalogizovány-datové-sady-v-katalogu>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/rpp/style/slovník.gov.cz/legislativní/sbírka/111/2009/pojem/ohlašuje-agendu>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/rpp/style/slovník.gov.cz/legislativní/sbírka/111/2009/pojem/vykonává-agendu>,    
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/node>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/edge> .  
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/www.w3.org/ns/dcat/Catalog> a browser:VisualStyle ;
+  browser:background-color "#90e0f3" ;
+  browser:border-color "#76b8c7" ;
+  browser:color "#76b8c7" ;
+  browser:text-outline-color "#90e0f3" ;
+  browser:text-wrap "wrap";
+  browser:text-max-width "78px";
+  browser:width "80px" ;
+  browser:height "32px" ;
+  browser:hasSelector ".katalog" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/slovník.gov.cz/legislativní/sbírka/111/2009/pojem/orgán-veřejné-moci> a browser:VisualStyle ;
+  browser:background-color "#f5b7bb" ;
+  browser:border-color "#a82a33" ;
+  browser:color "#a82a33" ;
+  browser:text-outline-color "#f5b7bb" ;
+  browser:text-wrap "wrap";
+  browser:text-max-width "56px";
+  browser:width "60px" ;
+  browser:height "32px" ;
+  browser:hasSelector ".ovm" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/poskytovatel> a browser:VisualStyle ;
+  browser:background-color "#abd7ca" ;
+  browser:border-color "#0f513d" ;
+  browser:color "#0f513d" ;
+  browser:text-outline-color "#abd7ca" ;
+  browser:text-wrap "wrap";
+  browser:text-max-width "56px";
+  browser:width "60px" ;
+  browser:height "32px" ;
+  browser:hasSelector ".poskytovatel" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/slovník.gov.cz/legislativní/sbírka/111/2009/pojem/kategorie-orgánů-veřejné-moci> a browser:VisualStyle ;
+  browser:background-color "#fcefd2" ;
+  browser:border-color "#a19780" ;
+  browser:color "#a19780" ;
+  browser:text-outline-color "#fcefd2" ;
+  browser:hasSelector ".kategorieovm" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/má-katalogizovány-datové-sady-v-katalogu> a browser:VisualStyle ;
+  browser:line-color "#9ff5d5" ;
+  browser:line-style "solid" ;
+  browser:hasSelector ".katalogizuje" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/node> a browser:VisualStyle ;
+  browser:border-width "2px" ;
+  browser:text-outline-width "1px" ;
+  browser:text-wrap "ellipsis";
+  browser:text-max-width "98px";
+  browser:shape "round-rectangle" ;
+  browser:width "100px" ;
+  browser:height "12px" ;
+  browser:label "data(label)" ;
+  browser:padding "2px" ;
+  browser:text-halign "center" ;
+  browser:text-valign "center" ;
+  browser:font-size "8px" ;
+  browser:background-color "#A9A5A7" ;
+  browser:border-color "#544B50" ;
+  browser:color "black" ;
+  browser:hasSelector "node" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/nkod/style/edge> a browser:VisualStyle ;
+  browser:width "1px" ;
+  browser:line-color "black" ;
+  browser:line-style "solid" ;
+  browser:curve-style "straight" ;
+  browser:font-size "6px" ;
+  browser:hasSelector "edge" .

@@ -1,0 +1,365 @@
+@prefix browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/> .
+@prefix av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/people-by-groups/> .
+@prefix wdav: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/personalities/> .
+
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+
+#####################################
+# Configurations
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/people-by-groups> a browser:Configuration ;
+  dct:title "People by groups"@en, "Lidé podle skupin"@cs;
+  dct:description "Explore people by different groups they belong to."@en, "Objevujte lidi dle různých skupin, do kterých patří."@cs;
+  browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/people-by-groups/style-sheet>;
+  browser:startingNode <http://dbpedia.org/resource/Category:19th_century_in_the_Austrian_Empire>,
+    <http://dbpedia.org/resource/Category:Women_scientists_by_field>,
+    <http://dbpedia.org/resource/Category:European_Commissioners>,
+    <http://dbpedia.org/resource/Category:Academy_Award_winners>,
+    <http://www.wikidata.org/entity/Q23434>,
+    <http://www.wikidata.org/entity/Q36233>,
+    <http://www.wikidata.org/entity/Q78492> ;
+  #browser:resourceIriPattern "^http://www\\.wikidata\\.org/entity/Q[1-9][0-9]*$";
+  browser:hasViewSet
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/people-by-groups/group>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/people-by-groups/person>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/personalities/work>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/personalities/award>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/personalities/discovery> .
+
+#####################################
+# ViewSets
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/people-by-groups/group> a browser:ViewSet ;
+  dct:title "Group of people"@en ;
+  browser:hasView
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/people-by-groups/group/broader>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/people-by-groups/group/narrower>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/people-by-groups/group/people> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/people-by-groups/group/broader> ;
+  browser:hasCondition """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dct: <http://purl.org/dc/terms/>
+
+ASK {
+  ?node skos:prefLabel ?label .
+  FILTER(LANG(?label) = "en")
+
+  FILTER EXISTS {
+    ?person a dbo:Person .
+   
+    {
+      ?person dct:subject ?node .
+    } UNION {
+      ?person dct:subject/skos:broader ?node .
+    } UNION {
+      ?person dct:subject/skos:broader/skos:broader ?node .
+    }
+  }
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/dbpedia> .  
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/people-by-groups/person> a browser:ViewSet ;
+  dct:title "Person"@en ;
+  browser:hasView
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/people-by-groups/person/basic>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/family>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/author>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/awarded-person>,
+    #<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/influenced-person>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/discoverer>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/filmmaker>;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/people-by-groups/person/basic> ;
+  browser:hasCondition """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+ASK {
+  ?node wdt:P31 wd:Q5 .  
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> .
+
+#####################################
+# Views
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/people-by-groups/group/broader> a browser:View ;
+  dct:title "Child group"@en ;
+  dct:description ""@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/people-by-groups/group/broader> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/people-by-groups/group> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/people-by-groups/group> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/people-by-groups/group/narrower> a browser:View ;
+  dct:title "Parent group"@en ;
+  dct:description ""@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/people-by-groups/group/narrower> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/people-by-groups/group> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/people-by-groups/group> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/people-by-groups/group/people> a browser:View ;
+  dct:title "Group of people"@en ;
+  dct:description ""@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/people-by-groups/group/people> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/people-by-groups/group> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/people-by-groups/group> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/people-by-groups/person/basic> a browser:View ;
+  dct:title "Personality in groups"@en ;
+  dct:description ""@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/people-by-groups/person/groups> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/personalities/person> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/personalities/person> .
+#####################################
+# Queries
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/people-by-groups/group/broader> a browser:ExpansionQuery ;
+  dct:title "Broader groups" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/dbpedia> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/people-by-groups/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?broader a av:group-of-people ;
+    skos:prefLabel ?broaderLabel ;
+    browser:class "groupOfPeople" .
+  ?node skos:broader ?broader .
+  skos:broader browser:class "broader" .
+} WHERE {
+  ?node skos:broader ?broader .
+  ?broader skos:prefLabel ?broaderLabel .
+  FILTER(LANG(?broaderLabel) = "en")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/people-by-groups/group/narrower> a browser:ExpansionQuery ;
+  dct:title "Narrower groups" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/dbpedia> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/people-by-groups/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?narrower a av:group-of-people ;
+    skos:prefLabel ?narrowerLabel ;
+    browser:class "groupOfPeople" .
+  ?narrower skos:broader ?node .
+  skos:broader browser:class "broader" .
+} WHERE {
+  ?narrower skos:broader ?node ;
+    skos:prefLabel ?narrowerLabel .
+  FILTER(LANG(?narrowerLabel) = "en")
+
+  FILTER EXISTS {
+    ?person a dbo:Person ;
+      owl:sameAs ?personwd .
+    FILTER(STRSTARTS(STR(?personwd), "http://www.wikidata.org/entity/"))
+   
+    {
+      ?person dct:subject ?narrower .
+    } UNION {
+      ?person dct:subject/skos:broader ?narrower .
+    } UNION {
+      ?person dct:subject/skos:broader/skos:broader ?narrower .
+    }
+  }
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/people-by-groups/group/people> a browser:ExpansionQuery ;
+  dct:title "People in the group" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/dbpedia> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/people-by-groups/>
+PREFIX wdav: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/personalities/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?personwd a wdav:personality ;
+    skos:prefLabel ?name ;
+    av:belongsTo ?node ;
+    browser:class "personality" . 
+  av:belongsTo browser:class "belongsTo" .
+} WHERE {
+  ?person a dbo:Person ;
+    owl:sameAs ?personwd ;
+    dct:subject ?node ;
+    foaf:name ?name .
+  FILTER(STRSTARTS(STR(?personwd), "http://www.wikidata.org/entity/"))
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/people-by-groups/person/groups> a browser:ExpansionQuery ;
+  dct:title "Groups of the person" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/dbpedia> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/people-by-groups/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?group a av:group-of-people ;
+    skos:prefLabel ?label ;
+    browser:class "groupOfPeople" .
+  ?node av:belongsTo ?group .
+  av:belongsTo browser:class "belongsTo" .
+} WHERE {
+  ?person owl:sameAs ?node ;
+    dct:subject ?group .
+
+  ?group skos:prefLabel ?label .
+  FILTER(LANG(?label ) = "en")    
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/people-by-groups/group> a browser:PreviewQuery ;
+  dct:title "Group of people preview" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/dbpedia> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/people-by-groups/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node a av:group-of-people ;
+    skos:prefLabel ?label ;
+    browser:class "groupOfPeople" .
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER(LANG(?label) = "en")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/people-by-groups/group> a browser:DetailQuery ;
+  dct:title "Group of people detail" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/dbpedia> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/people-by-groups/>
+
+CONSTRUCT {
+  ?node skos:prefLabel ?label ;
+    av:number-of-people ?numberOfPeople .  
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER(LANG(?label) = "en")
+
+  OPTIONAL {
+    SELECT ?node (COUNT(*) AS ?numberOfPeople1)
+    WHERE {
+      ?person a dbo:Person ;
+        dct:subject ?node .
+    }
+    GROUP BY ?node
+  }
+  BIND(COALESCE(?numberOfPeople1, 0) AS ?numberOfPeople)
+}""" .
+
+
+
+#####################################
+# Datasets
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/dbpedia> a void:Dataset ;
+  dct:title "DBPedia SPARQL endpoint" ;
+  void:sparqlEndpoint <http://dbpedia.org/sparql/> .
+
+#####################################
+# View vocabularies
+#####################################
+  
+av:group-of-people a owl:Class ;
+  rdfs:label "group of people"@en ;
+  rdfs:comment "group of people"@en .
+
+av:number-of-people a owl:DatatypeProperty ;
+  rdfs:label "number of people"@en ;
+  rdfs:comment "number of people in the group"@cs ;
+  rdfs:domain av:group-of-people ;
+  rdfs:range rdfs:Literal .
+
+av:belongsTo a owl:ObjectProperty ;
+  rdfs:label "belongs to"@en ;
+  rdfs:comment "a person belongs to a group of people"@cs ;
+  rdfs:domain wdav:personality ;
+  rdfs:range av:group-of-people .
+
+#####################################
+# Visual styles
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/people-by-groups/style-sheet> a browser:VisualStyleSheet ;
+  browser:hasVisualStyle <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/groupOfPeople>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/broader>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/belongsTo>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/personality>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/work>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/award>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/discovery>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/father>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/mother>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/spouse>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/sibling>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/author>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/discoverer>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/receivedAward>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/actor>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/director>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/screenwriter>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/producer>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/node>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/edge> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/groupOfPeople> a browser:VisualStyle ;
+  browser:shape "barrel" ;
+  browser:width "90px" ;
+  browser:height "40px" ;
+  browser:background-color "#bbdcbc" ;
+  browser:border-color "#59775a" ;
+  browser:border-width "3px" ;
+  browser:padding "4px" ;
+  browser:text-halign "center" ;
+  browser:text-valign "center" ;
+  browser:text-wrap "wrap" ;
+  browser:text-max-width "80px" ;
+  browser:color "black" ;
+  browser:label "data(label)" ;
+  browser:font-size "9px" ;
+  browser:hasSelector ".groupOfPeople" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/broader> a browser:VisualStyle ;
+  browser:line-color "#207866";
+  browser:width "2";
+  browser:target-arrow-shape "triangle" ;
+  browser:target-arrow-fill "hollow" ;
+  browser:curve-style "straight" ;
+  browser:line-style "solid" ;
+  browser:label "data(label)" ;
+  browser:font-size "8px" ;
+  browser:curve-style "bezier" ;
+  browser:control-point-step-size "40" ;
+  browser:hasSelector ".broader" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/belongsTo> a browser:VisualStyle ;
+  browser:line-color "#207866";
+  browser:width "2";
+  browser:target-arrow-shape "triangle" ;
+  browser:target-arrow-fill "hollow" ;
+  browser:curve-style "straight" ;
+  browser:line-style "solid" ;
+  browser:label "data(label)" ;
+  browser:font-size "8px" ;
+  browser:curve-style "bezier" ;
+  browser:control-point-step-size "40" ;
+  browser:hasSelector ".belongsTo" .
