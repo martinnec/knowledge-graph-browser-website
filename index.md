@@ -1,5 +1,3 @@
-# Welcome to Knowledge Graph Browser
-
 Knowledge Graph Browser is a tool for visual exploration of knowledge graphs.
 The users may discover different knowledge graphs through different views defined by various browsing configurations.
 Real knowledge graphs are often too complex for human users and generic tools for knowledge graph visualisation and visual exploration are therefore quite hard to use.
