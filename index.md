@@ -14,14 +14,14 @@ They are interactive graph visualisations you can use as a starting point for yo
 
 Start with famous personalities:
 
-- [European Commissioners from Czechia and Germany](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/czech-and-german-european-commissioners.kgvb)
-- [Signatories of Charter 77](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/charter-77-signatories.kgvb)
-- [Marie Curie-Skłodowská's family and work](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/curie-family-and-work.kgvb)
-- [Chemical elements in the periodic table and their discoverers](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/periodic-table.kgvb)
-- [Family tree of Charles I of Austria](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/charles-I-of-austria-family-tree.kgvb)
-- [What do Madeleine Albright, Bill Clinton, George W. Bush, Táňa Fischerová, Miloš Zeman, Mick Jagger, Charlie Watts, Keith Richards have in common?](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/common-albright-clinton-bush-fischerova-zeman-jagger-richards-watts.kgvb)
+- [European Commissioners from Czechia and Germany](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/czech-and-german-european-commissioners.kgvb)
+- [Signatories of Charter 77](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/charter-77-signatories.kgvb)
+- [Marie Curie-Skłodowská's family and work](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/curie-family-and-work.kgvb)
+- [Chemical elements in the periodic table and their discoverers](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/periodic-table.kgvb)
+- [Family tree of Charles I of Austria](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/charles-I-of-austria-family-tree.kgvb)
+- [What do Madeleine Albright, Bill Clinton, George W. Bush, Táňa Fischerová, Miloš Zeman, Mick Jagger, Charlie Watts, Keith Richards have in common?](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/common-albright-clinton-bush-fischerova-zeman-jagger-richards-watts.kgvb)
 
 You can also try to explore Members of the Chamber of Deputies of the Parliament of Czechia
 
-- [Aristocratic members of the Chamber](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/aristocratic-members-of-chamber-of-deputies-of-czechia.kgvb)
-- [Moviemakers and writters in th Chamber](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/moviemakers-and-writers-as-members-of-chamber-of-deputies.kgvb)
+- [Aristocratic members of the Chamber](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/aristocratic-members-of-chamber-of-deputies-of-czechia.kgvb)
+- [Moviemakers and writters in th Chamber](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/moviemakers-and-writers-as-members-of-chamber-of-deputies.kgvb)
