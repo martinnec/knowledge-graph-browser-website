@@ -28,4 +28,13 @@ You can also try to explore Members of the Chamber of Deputies of the Parliament
 - [Aristocratic members of the Chamber](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/aristocratic-members-of-chamber-of-deputies-of-czechia.kgvb)
 - [Moviemakers and writters in the Chamber](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/moviemakers-and-writers-as-members-of-chamber-of-deputies.kgvb)
 
-If you are interested in raw visual configurations, 
+If you are interested in the raw visual configurations demonstrated in the paper, you can browse them using the links below:
+
+- animals: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-animals.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/animals)
+- persons: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-persons.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/personalities)
+- persons-in-groups: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-persons-in-groups.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/people-by-groups)
+- parliament: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-parliament-cz.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/psp)
+- cz-classficiations: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-cz-classifications.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/čsú-klasifikace)
+- cz-gov: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-cz-gov.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/rpp)
+- cz-gov-voc: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-cz-gov-voc.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/sgov-full-simplified)
+- cz-od: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-cz-od.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/nkod)
