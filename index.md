@@ -4,6 +4,8 @@ Real knowledge graphs are often too complex for human users and generic tools fo
 The basic idea behind the Knowledge Graph Browser is to enable knowledge graph experts to configure a set of simpler views on knowledge graph nodes which can be then used by non-experts for browsing a knowledge graph from given points of view defined by the experts.
 Anyone is free to create own configuration, publish it as Linked Open Data and let users to enjoy knowledge graph exploration.
 
+This website is an accompanying website for the paper titled "Interactive and iterative visual exploration of knowledge graphs based on shareable and reusable visual configurations" which is currently in the review process.
+
 You can start exploring knowledge graphs using our [demo](https://try.kgbrowser.opendata.cz).
 There are predefined configurations.
 Just choose one and start browsing.
@@ -24,4 +26,6 @@ Start with famous personalities:
 You can also try to explore Members of the Chamber of Deputies of the Parliament of Czechia
 
 - [Aristocratic members of the Chamber](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/aristocratic-members-of-chamber-of-deputies-of-czechia.kgvb)
-- [Moviemakers and writters in th Chamber](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/moviemakers-and-writers-as-members-of-chamber-of-deputies.kgvb)
+- [Moviemakers and writters in the Chamber](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/moviemakers-and-writers-as-members-of-chamber-of-deputies.kgvb)
+
+If you are interested in raw visual configurations, 
