@@ -25,7 +25,7 @@
 #####################################
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/ukparliament/government-position> a browser:ViewSet ;
-  dct:title "Vládní pozice"@cs, "Government position"@en ;
+  dct:title "Government position"@en ;
   browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/members-in-government-position> ;
   browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/members-in-government-position> ;
   browser:hasCondition """PREFIX ukp: <https://id.parliament.uk/schema/>
@@ -35,7 +35,7 @@ ASK {
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/ukparliament/member> a browser:ViewSet ;
-  dct:title "Člen parlamentu Spojeného království"@cs, "Member of UK Parliament"@en ;
+  dct:title "Member of UK Parliament"@en ;
   browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/government-positions-of-member> ;
   browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/government-positions-of-member> ;
   browser:hasCondition """PREFIX ukp: <https://id.parliament.uk/schema/>
@@ -50,13 +50,13 @@ ASK {
 #####################################
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/members-in-government-position> a browser:View ;
-  dct:title "Vládní pozice obsazená členy parlamentu Spojeného království"@cs, "Government position occupied by members of UK parliament"@en ;
+  dct:title "Government position occupied by members of UK parliament"@en ;
   browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/members-in-government-position> ;
   browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/government-position> ;
   browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/ukparliament/government-position> .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/government-positions-of-member> a browser:View ;
-  dct:title "Člen parlamentu Spojeného království ve vládních pozicích"@cs, "Member of UK parliament in government positions"@en ;
+  dct:title "Member of UK parliament in government positions"@en ;
   browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/government-positions-of-member> ;
   browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/member> ;
   browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/ukparliament/member> .
@@ -66,7 +66,7 @@ ASK {
 #####################################
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/members-in-government-position> a browser:ExpansionQuery ;
-  dct:title "Členové parlamentu Spojeného království ve vládní pozici"@cs, "Members of UK parliament in government position"@en ;
+  dct:title "Members of UK parliament in government position"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
   browser:query """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX ukp: <https://id.parliament.uk/schema/>
@@ -92,7 +92,7 @@ CONSTRUCT {
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/government-positions-of-member> a browser:ExpansionQuery ;
-  dct:title "Vládní pozice člena parlamentu Spojeného království"@cs, "Government positions of member of UK parliament"@en ;
+  dct:title "Government positions of member of UK parliament"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
   browser:query """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX ukp: <https://id.parliament.uk/schema/>
@@ -117,7 +117,7 @@ CONSTRUCT {
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/government-position> a browser:PreviewQuery ;
-  dct:title "Základní přehled vládní pozice"@cs, "Basic preview of government position"@en ;
+  dct:title "Basic preview of government position"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
   browser:query """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX ukp: <https://id.parliament.uk/schema/>
@@ -132,7 +132,7 @@ CONSTRUCT {
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/member> a browser:PreviewQuery ;
-  dct:title "Základní přehled člena parlamentu Spojeného království"@cs, "Basic preview of member of UK parliament"@en ;
+  dct:title "Basic preview of member of UK parliament"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
   browser:query """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX ukp: <https://id.parliament.uk/schema/>
@@ -151,7 +151,7 @@ CONSTRUCT {
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/ukparliament/government-position> a browser:DetailQuery ;
-  dct:title "Základní detail vládní pozice"@cs, "Basic detail of government position"@en ;
+  dct:title "Basic detail of government position"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
   browser:query """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX ukp: <https://id.parliament.uk/schema/>
@@ -168,7 +168,7 @@ CONSTRUCT {
 }""" . 
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/ukparliament/member> a browser:DetailQuery ;
-  dct:title "Základní detail člena parlamentu Spojeného království"@cs, "Basic detail of member of UK parliament"@en ;
+  dct:title "Basic detail of member of UK parliament"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
   browser:query """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX ukp: <https://id.parliament.uk/schema/>
@@ -203,7 +203,7 @@ CONSTRUCT {
 #####################################
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> a void:Dataset ;
-  dct:title "SPARQL endpoint of UK parliament" ;
+  dct:title "SPARQL endpoint of UK parliament"@en ;
   void:sparqlEndpoint <https://api.parliament.uk/sparql> ;
   browser:accept "text/turtle" .
 

@@ -11,7 +11,7 @@
 #####################################
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/psp> a browser:Configuration ;
-  dct:title "Česká poslanecká sněmovna"@cs,
+  dct:title "Poslanecká sněmovna ČR"@cs,
     "Czech Parliament - Chamber of Deputies"@en;
   dct:description "Prozkoumejte poslance parlamentu České republiky."@cs,
     "Explore members of the Czech Chamber of Deputies Parliament."@en;
@@ -26,7 +26,7 @@
 #####################################
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/psp/tisk> a browser:ViewSet ;
-  dct:title "Sněmovní tisk"@cs, "Document of the Chamber"@en ;
+  dct:title "Sněmovní tisk Poslanecké sněmovny ČR"@cs, "Document of Czech Parliament - Chamber of Deputies"@en ;
   browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/psp/předkladatel>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view/psp/zpravodaj> ;
   browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/psp/předkladatel> ;
@@ -37,7 +37,7 @@ ASK {
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/psp> .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/psp/poslanec> a browser:ViewSet ;
-  dct:title "Poslanec"@cs, "Member of the Chamber"@en ;
+  dct:title "Poslanec sněmovny ČR"@cs, "Member of Czech Parliament - Chamber of Deputies"@en ;
   browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/psp/předložené-tisky>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view/psp/tisky-kde-je-zpravodajem>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view/psp/poslanci-se-kterými-předložil-tisk> ;
@@ -58,36 +58,31 @@ ASK {
 #####################################
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view/psp/předkladatel> a browser:View ;
-  dct:title "Překladatel sněmovního tisku"@cs ;
-  dct:description "Pohled na sněmovní tisk zobrazující jeho předkladatele."@cs ;
+  dct:title "Překladatel"@cs, "Submitter"@en ;
   browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/psp/předkladatel-tisku> ;
   browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/psp/název-tisku> ;
   browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/psp/tisk> .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view/psp/zpravodaj> a browser:View ;
-  dct:title "Zpravodaj sněmovního tisku"@cs ;
-  dct:description "Pohled na sněmovní tisk zobrazující jeho zpravodaje."@cs ;
+  dct:title "Zpravodaj"@cs, "Rapporteur"@en ;
   browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/psp/zpravodaj-tisku> ;
   browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/psp/název-tisku> ;
   browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/psp/tisk> .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view/psp/předložené-tisky> a browser:View ;
-  dct:title "Sněmovní tisky předložené poslancem"@cs ;
-  dct:description "Pohled na poslance zobrazující sněmovní tisky, které předložil sám nebo ve skupině poslanců."@cs ;
+  dct:title "Předložené sněmovní tisky"@cs, "Submitted documents"@en ;
   browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/psp/předložené-tisky> ;
   browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/psp/jméno-osoby> ;
   browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/psp/poslanec> .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view/psp/tisky-kde-je-zpravodajem> a browser:View ;
-  dct:title "Sněmovní tisky, kde je poslanec zpravodajem"@cs ;
-  dct:description "Pohled na poslance zobrazující sněmovní tisky, které předložil sám nebo ve skupině poslanců."@cs ;
+  dct:title "Tisky, kde je poslanec zpravodajem"@cs, "Reported documents"@en ;
   browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/psp/tisky-kde-je-zpravodajem> ;
   browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/psp/jméno-osoby> ;
   browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/psp/poslanec> .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view/psp/poslanci-se-kterými-předložil-tisk> a browser:View ;
-  dct:title "Poslanci, se kterými poslanec předložil sněmovní tisk"@cs ;
-  dct:description "Pohled na poslance zobrazující jiné poslance, se kterými poslanec společně ve skupině předložil sněmovní tisk."@cs ;
+  dct:title "Spolupředkladatelé"@cs, "Co-submitters"@en ;
   browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/psp/poslanci-se-kterými-předložil-tisk> ;
   browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/psp/jméno-osoby> ;
   browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/psp/poslanec> .  
@@ -97,7 +92,7 @@ ASK {
 #####################################
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/psp/předkladatel-tisku> a browser:ExpansionQuery ;
-  dct:title "Předkladatel sněmovního tisku" ;
+  dct:title "Předkladatel sněmovního tisku"@cs ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/psp> ;
   browser:query """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
 PREFIX v: <https://slovník.gov.cz/veřejný-sektor/pojem/>
@@ -142,7 +137,7 @@ CONSTRUCT {
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/psp/zpravodaj-tisku> a browser:ExpansionQuery ;
-  dct:title "Zpravodaj sněmovního tisku" ;
+  dct:title "Zpravodaj sněmovního tisku"@cs ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/psp> ;
   browser:query """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
 PREFIX v: <https://slovník.gov.cz/veřejný-sektor/pojem/>
@@ -173,7 +168,7 @@ CONSTRUCT {
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/psp/předložené-tisky> a browser:ExpansionQuery ;
-  dct:title "Sněmovní tisky předložené poslancem" ;
+  dct:title "Sněmovní tisky předložené poslancem"@cs ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/psp> ;
   browser:query """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
 PREFIX v: <https://slovník.gov.cz/veřejný-sektor/pojem/>
@@ -249,7 +244,7 @@ CONSTRUCT {
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/psp/tisky-kde-je-zpravodajem> a browser:ExpansionQuery ;
-  dct:title "Sněmovní tisky, jejichž je poslanec zpravodajem" ;
+  dct:title "Sněmovní tisky, jejichž je poslanec zpravodajem"@cs ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/psp> ;
   browser:query """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
 PREFIX v: <https://slovník.gov.cz/veřejný-sektor/pojem/>
@@ -314,7 +309,7 @@ CONSTRUCT {
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/psp/poslanci-se-kterými-předložil-tisk> a browser:ExpansionQuery ;
-  dct:title "Poslanci, se kterými poslanec ve skupině předložil tisk" ;
+  dct:title "Poslanci, se kterými poslanec ve skupině předložil tisk"@cs ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/psp> ;
   browser:query """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
 PREFIX v: <https://slovník.gov.cz/veřejný-sektor/pojem/>
@@ -357,7 +352,7 @@ CONSTRUCT {
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/psp/název-tisku> a browser:PreviewQuery ;
-  dct:title "Název sněmovního tisku" ;
+  dct:title "Název sněmovního tisku"@cs ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/psp> ;
   browser:query """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/90/1995/pojem/>
 PREFIX d: <https://slovník.gov.cz/datový/psp/pojem/>
@@ -408,7 +403,7 @@ CONSTRUCT {
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/psp/jméno-osoby> a browser:PreviewQuery ;
-  dct:title "Jméno osoby" ;
+  dct:title "Jméno osoby"@cs ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/psp> ;
   browser:query """PREFIX a: <https://slovník.gov.cz/agendový/psp/pojem/>
 PREFIX v: <https://slovník.gov.cz/veřejný-sektor/pojem/>
@@ -428,7 +423,7 @@ CONSTRUCT {
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/psp/tisk> a browser:DetailQuery ;
-  dct:title "Základní detail sněmovního tisku" ;
+  dct:title "Základní detail sněmovního tisku"@cs ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/psp> ;
   browser:query """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/90/1995/pojem/>
 PREFIX a: <https://slovník.gov.cz/agendový/psp/pojem/>
@@ -446,7 +441,7 @@ CONSTRUCT {
 }""" . 
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/psp/poslanec> a browser:DetailQuery ;
-  dct:title "Základní detail poslance" ;
+  dct:title "Základní detail poslance"@cs ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/psp> ;
   browser:query """PREFIX a: <https://slovník.gov.cz/agendový/psp/pojem/>
 PREFIX v: <https://slovník.gov.cz/veřejný-sektor/pojem/>
@@ -471,7 +466,7 @@ CONSTRUCT {
 #####################################
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/psp> a void:Dataset ;
-  dct:title "Píseček OpenData.cz" ;
+  dct:title "Píseček OpenData.cz"@cs ;
   void:sparqlEndpoint <https://xn--pseek-zsa0u.opendata.cz/sparql> ;
   browser:accept "text/turtle" .
 
@@ -480,19 +475,19 @@ CONSTRUCT {
 #####################################
   
 <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/psp/navrhuje> a owl:ObjectProperty ;
-  rdfs:label "navrhuje"@cs ;
+  rdfs:label "navrhuje"@cs, "submits"@en ;
   rdfs:comment "Poslanec, skupina poslanců, Vláda nebo Senát ČR navrhuje předpis v podobě sněmovního tisku."@cs ;
   rdfs:domain l:navrhovatel ;
   rdfs:range l:sněmovní-tisk .
   
 <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/psp/má-zpravodaje-tisku> a owl:ObjectProperty ;
-  rdfs:label "má zpravodaje"@cs ;
+  rdfs:label "má zpravodaje"@cs, "has rapporteur"@en ;
   rdfs:comment "Zpravodaj sněmovního tisku."@cs ;
   rdfs:domain l:sněmovní-tisk ;
   rdfs:range a:osoba .
   
 <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/psp/společně-předložil-tisk-s> a owl:ObjectProperty ;
-  rdfs:label "společně předložil s"@cs ;
+  rdfs:label "společně předložil s"@cs, "co-submitted with"@en ;
   rdfs:comment "Poslanci, kteří společně předložili tisk ve skupině poslanců."@cs ;
   rdfs:domain a:osoba ;
   rdfs:range a:osoba .

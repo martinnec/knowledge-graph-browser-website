@@ -14,7 +14,7 @@
   dct:title "Poslanecké sněmovny"@cs,
     "Parliaments"@en;
   dct:description "Prozkoumejte poslance parlamentů různých zemí - aktuálně podporované jsou Spojené království a Česká republika. Poslance můžete prozkoumávat jak z pohledu údajů dostupných z jejich národních parlamentů, tak z pohledu faktografických údajů ve Wikidatech."@cs,
-    "Explore members of parliaments of different countries - currently supported: United Kingdom and Czechia. You can explore a MEP either from the point of view of data available from their national parliaments or from the point of view of facts about them in Wikidata."@en;
+    "Explore members of parliaments of different countries - currently supported: United Kingdom and Czechia. You can explore MEPs either from the point of view of data available from their national parliaments or from the point of view of facts about them in Wikidata."@en;
   browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/parliaments/style-sheet>;
   browser:startingNode <http://www.wikidata.org/entity/Q2382175>, <http://www.wikidata.org/entity/Q180589>;
   browser:hasViewSet <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/psp/tisk>,
