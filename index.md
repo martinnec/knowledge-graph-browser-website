@@ -23,10 +23,10 @@ Start with famous personalities:
 - [Family tree of Charles I of Austria](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/charles-I-of-austria-family-tree.kgvb)
 - [What do Madeleine Albright, Bill Clinton, George W. Bush, Táňa Fischerová, Miloš Zeman, Mick Jagger, Charlie Watts, Keith Richards have in common?](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/common-albright-clinton-bush-fischerova-zeman-jagger-richards-watts.kgvb)
 
-You can also try to explore Members of the Chamber of Deputies of the Parliament of Czechia
-
-- [Aristocratic members of the Chamber](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/aristocratic-members-of-chamber-of-deputies-of-czechia.kgvb)
-- [Moviemakers and writters in the Chamber](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/moviemakers-and-writers-as-members-of-chamber-of-deputies.kgvb)
+You can also try to explore MEPs
+- [London and Prague mayors who were or are MEPs in their national parliaments](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/london-prague-mayors-as-meps.kgvb)
+- [Aristocratic members of the Chamber of Deputies of the Czech Parliament](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/aristocratic-members-of-chamber-of-deputies-of-czechia.kgvb)
+- [Moviemakers and writters in the Chamber of Deputies of the Czech Parliament](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/moviemakers-and-writers-as-members-of-chamber-of-deputies.kgvb)
 
 If you are interested in the raw visual configurations demonstrated in the paper, you can browse them using the links below:
 
