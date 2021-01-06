@@ -3,8 +3,8 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix void: <http://rdfs.org/ns/void#> .
-@prefix l: <https://slovník.gov.cz/legislativní/sbírka/90/1995/pojem/> .
-@prefix a: <https://slovník.gov.cz/agendový/ukparliament/pojem/> .
+@prefix ukp: <https://id.parliament.uk/schema/> .
+@prefix ukpb: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/ukparliament/> .
 
 #####################################
 # Configurations
@@ -13,21 +13,21 @@
 <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/ukparliament> a browser:Configuration ;
   dct:title "Parlament Spojeného království"@cs,
     "UK Parliament"@en;
+  dct:description "Prozkoumejte poslance parlamentu Spojeného království."@cs,
+    "Explore members of the UK Parliament."@en;
   browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style-sheet>;
-  browser:startingNode <http://www.wikidata.org/entity/Q2079976>;
-  browser:resourceIriPattern "^https://ukparliament\\.opendata\\.cz/zdroj/";
-  browser:hasViewSet <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/ukparliament/position> ;
-  browser:hasViewSet <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/ukparliament/member> .
+  browser:startingNode <http://www.wikidata.org/entity/Q180589>, <http://www.wikidata.org/entity/Q332987>;
+  browser:hasViewSet <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/ukparliament/government-position>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/ukparliament/member> .
 
 #####################################
 # ViewSets
 #####################################
   
-<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/ukparliament/position> a browser:ViewSet ;
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/ukparliament/government-position> a browser:ViewSet ;
   dct:title "Vládní pozice"@cs, "Government position"@en ;
-  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/předkladatel>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/zpravodaj> ;
-  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/předkladatel> ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/members-in-government-position> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/members-in-government-position> ;
   browser:hasCondition """PREFIX ukp: <https://id.parliament.uk/schema/>
 ASK {
   ?node a ukp:GovernmentPosition .
@@ -36,13 +36,12 @@ ASK {
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/ukparliament/member> a browser:ViewSet ;
   dct:title "Člen parlamentu Spojeného království"@cs, "Member of UK Parliament"@en ;
-  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/předložené-tisky>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/positiony-kde-je-zpravodajem>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/poslanci-se-kterými-předložil-tisk> ;
-  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/předložené-tisky> ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/government-positions-of-member> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/government-positions-of-member> ;
   browser:hasCondition """PREFIX ukp: <https://id.parliament.uk/schema/>
 ASK {
-  ?node a ukp:Member .
+  ?person a ukp:Member .
+  ?node ukp:wikidataResourceHasEquivalentWikidataThing ?person .
 }""" ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> .
 
@@ -50,413 +49,153 @@ ASK {
 # Views
 #####################################
   
-<https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/předkladatel> a browser:View ;
-  dct:title "Překladatel sněmovního tisku"@cs ;
-  dct:description "Pohled na sněmovní tisk zobrazující jeho předkladatele."@cs ;
-  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/předkladatel-tisku> ;
-  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/název-tisku> ;
-  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/ukparliament/position> .
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/members-in-government-position> a browser:View ;
+  dct:title "Vládní pozice obsazená členy parlamentu Spojeného království"@cs, "Government position occupied by members of UK parliament"@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/members-in-government-position> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/government-position> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/ukparliament/government-position> .
   
-<https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/zpravodaj> a browser:View ;
-  dct:title "Zpravodaj sněmovního tisku"@cs ;
-  dct:description "Pohled na sněmovní tisk zobrazující jeho zpravodaje."@cs ;
-  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/zpravodaj-tisku> ;
-  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/název-tisku> ;
-  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/ukparliament/position> .
-  
-<https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/předložené-tisky> a browser:View ;
-  dct:title "Sněmovní tisky předložené poslancem"@cs ;
-  dct:description "Pohled na poslance zobrazující sněmovní tisky, které předložil sám nebo ve skupině poslanců."@cs ;
-  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/předložené-tisky> ;
-  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/jméno-osoby> ;
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/government-positions-of-member> a browser:View ;
+  dct:title "Člen parlamentu Spojeného království ve vládních pozicích"@cs, "Member of UK parliament in government positions"@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/government-positions-of-member> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/member> ;
   browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/ukparliament/member> .
-
-<https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/positiony-kde-je-zpravodajem> a browser:View ;
-  dct:title "Sněmovní tisky, kde je poslanec zpravodajem"@cs ;
-  dct:description "Pohled na poslance zobrazující sněmovní tisky, které předložil sám nebo ve skupině poslanců."@cs ;
-  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/positiony-kde-je-zpravodajem> ;
-  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/jméno-osoby> ;
-  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/ukparliament/member> .
-  
-<https://linked.opendata.cz/resource/knowledge-graph-browser/view/ukparliament/poslanci-se-kterými-předložil-tisk> a browser:View ;
-  dct:title "Poslanci, se kterými poslanec předložil sněmovní tisk"@cs ;
-  dct:description "Pohled na poslance zobrazující jiné poslance, se kterými poslanec společně ve skupině předložil sněmovní tisk."@cs ;
-  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/poslanci-se-kterými-předložil-tisk> ;
-  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/jméno-osoby> ;
-  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/ukparliament/member> .  
   
 #####################################
 # Queries
 #####################################
 
-<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/předkladatel-tisku> a browser:ExpansionQuery ;
-  dct:title "Předkladatel sněmovního tisku" ;
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/members-in-government-position> a browser:ExpansionQuery ;
+  dct:title "Členové parlamentu Spojeného království ve vládní pozici"@cs, "Members of UK parliament in government position"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
-  browser:query """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
-PREFIX v: <https://slovník.gov.cz/veřejný-sektor/pojem/>
-PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/90/1995/pojem/>
-PREFIX a: <https://slovník.gov.cz/agendový/ukparliament/pojem/>
-PREFIX pspb: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/ukparliament/>
+  browser:query """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ukp: <https://id.parliament.uk/schema/>
+PREFIX ukpb: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/ukparliament/>
 PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-
 CONSTRUCT {
-  ?osobawd a a:osoba ;
-    pspb:navrhuje ?node ;
-    rdfs:label ?celeJmeno ;
-    browser:class ?browserClass .
-  pspb:navrhuje browser:class "navrhuje" . 
+  ?personwd a ukp:Member ;
+    rdfs:label ?personName ;
+    ukpb:hasPosition ?node ;
+    browser:class "ukparliamentmember" .
+  ukpb:hasPosition browser:class "hasukgovernmentposition" .
 } WHERE {
-
-  ?podani a l:podání-návrhu ;
-    z:má-účastníka ?node .
-
-  ?podani z:je-vykonána ?navrhovatel .
-  {
-    ?navrhovatel a l:skupina-poslanců-jako-navrhovatel ;
-      a:má-člena-skupiny ?clen .
-    ?osoba a:je-členem-skupiny ?clen ;
-      owl:sameAs ?osobawd ;
-      v:má-jméno ?jmeno ;
-      v:má-příjmení ?prijmeni .
-    BIND("poslanec" AS ?browserClass)
-  } UNION {
-    ?navrhovatel a l:poslanec-jako-navrhovatel ;
-      owl:sameAs ?navrhovatelwd ;
-      v:má-jméno ?jmeno ;
-      v:má-příjmení ?prijmeni .
-    BIND(?navrhovatelwd AS ?osobawd)
-    BIND("poslanec" AS ?browserClass)
-  }
-
-  BIND(CONCAT(?jmeno, " ", ?prijmeni) AS ?celeJmeno)
-
-}""" .
-
-<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/zpravodaj-tisku> a browser:ExpansionQuery ;
-  dct:title "Zpravodaj sněmovního tisku" ;
-  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
-  browser:query """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
-PREFIX v: <https://slovník.gov.cz/veřejný-sektor/pojem/>
-PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/90/1995/pojem/>
-PREFIX a: <https://slovník.gov.cz/agendový/ukparliament/pojem/>
-PREFIX pspb: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/ukparliament/>
-PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-
-CONSTRUCT {
-  ?node pspb:má-zpravodaje-tisku ?zpravodajwd .
-  ?zpravodajwd a a:osoba ;
-    rdfs:label ?celeJmeno ;
-    browser:class ?browserClass .
-  pspb:má-zpravodaje-tisku browser:class "maZpravodaje" . 
-} WHERE {
-
-  ?node a:má-následný-tisk/l:má-zpravodaje-tisku ?zpravodaj .
-
-  ?zpravodaj owl:sameAs ?zpravodajwd ;
-      v:má-jméno ?jmeno ;
-      v:má-příjmení ?prijmeni .
-      
-  BIND("poslanec" AS ?browserClass)
-  BIND(CONCAT(?jmeno, " ", ?prijmeni) AS ?celeJmeno)
-
-}""" .
-
-<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/předložené-tisky> a browser:ExpansionQuery ;
-  dct:title "Sněmovní tisky předložené poslancem" ;
-  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
-  browser:query """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
-PREFIX v: <https://slovník.gov.cz/veřejný-sektor/pojem/>
-PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/90/1995/pojem/>
-PREFIX a: <https://slovník.gov.cz/agendový/ukparliament/pojem/>
-PREFIX d: <https://slovník.gov.cz/datový/ukparliament/pojem/>
-PREFIX pspb: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/ukparliament/>
-PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-
-CONSTRUCT {
-  ?node pspb:navrhuje ?tisk .
-
-  ?tisk a l:sněmovní-tisk ;
-    rdfs:label ?label ;
-    browser:class "tisk", ?classDruh, ?classStav .
-
-  pspb:navrhuje browser:class "navrhuje" .    
-} WHERE {
-   
-  ?podani a l:podání-návrhu ;
-    z:má-účastníka ?tisk .
-
-  ?poslanec owl:sameAs ?node .
-
-  {
-    ?podani z:je-vykonána ?navrhovatel .
-    ?navrhovatel a l:skupina-poslanců-jako-navrhovatel ;
-      a:má-člena-skupiny ?clen .
-    ?poslanec a:je-členem-skupiny ?clen .
-  } UNION {
-    ?podani z:je-vykonána ?poslanec .
-  }
-
-  ?tisk d:má-zkrácený-název-tisku ?label ;
-    a:má-druh-tisku ?druhTisku ;
-    a:má-stav-tisku/a:má-typ-stavu ?typStavu .
-
-  OPTIONAL {    
-    ?vyhlaseni a l:vyhlášení-ve-sbírce-zákonů ;
-      z:má-účastníka ?tisk .
-  }
-    
-  BIND(
-    IF(
-      ?druhTisku = <https://ukparliament.opendata.cz/zdroj/druh-tisku/1>,
-      "vladniNavrhZakona",
-      IF(
-        ?druhTisku = <https://ukparliament.opendata.cz/zdroj/druh-tisku/2>,
-        "navrhZakona",
-        IF(
-          ?druhTisku = <https://ukparliament.opendata.cz/zdroj/druh-tisku/3>,
-          "statniRozpocet",
-          "tisk"
-        )
-      )
-    )
-  AS ?classDruh)
+  ?incumbency a ukp:GovernmentIncumbency ;
+              ukp:governmentIncumbencyHasGovernmentPosition ?node ;
+              ukp:governmentIncumbencyHasGovernmentPerson ?person .
   
-  BIND(
-    IF(
-      ?typStavu = <https://ukparliament.opendata.cz/zdroj/typ-stavu/6>,
-      IF(
-        BOUND(?vyhlaseni),
-        "prijatyTisk",
-        "neprijatyTisk"
-      ),
-      "neukoncenyTisk"
-    )
-  AS ?classStav)
-
-}""" .
-
-<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/positiony-kde-je-zpravodajem> a browser:ExpansionQuery ;
-  dct:title "Sněmovní tisky, jejichž je poslanec zpravodajem" ;
-  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
-  browser:query """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
-PREFIX v: <https://slovník.gov.cz/veřejný-sektor/pojem/>
-PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/90/1995/pojem/>
-PREFIX a: <https://slovník.gov.cz/agendový/ukparliament/pojem/>
-PREFIX d: <https://slovník.gov.cz/datový/ukparliament/pojem/>
-PREFIX pspb: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/ukparliament/>
-PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-
-CONSTRUCT {
-  ?tisk pspb:má-zpravodaje-tisku ?node .
-
-  ?tisk a l:sněmovní-tisk ;
-    rdfs:label ?label ;
-    browser:class "tisk", ?classDruh, ?classStav .
-
-  pspb:má-zpravodaje-tisku browser:class "maZpravodaje" .    
-} WHERE {
+  ?person a ukp:Member ;
+          ukp:personGivenName ?givenName ;
+          ukp:personFamilyName ?familyName .
+  BIND(CONCAT(STR(?givenName), " ", STR(?familyName)) AS ?personName)
   
-  ?poslanec owl:sameAs ?node .
+  ?personwd ukp:wikidataResourceHasEquivalentWikidataThing ?person .
+}""" .
 
-  ?tisk d:má-zkrácený-název-tisku ?label ;
-    a:má-druh-tisku ?druhTisku ;
-    a:má-stav-tisku/a:má-typ-stavu ?typStavu ;
-    a:má-následný-tisk/l:má-zpravodaje-tisku ?poslanec .
-
-  OPTIONAL {    
-    ?vyhlaseni a l:vyhlášení-ve-sbírce-zákonů ;
-      z:má-účastníka ?tisk .
-  }
-    
-  BIND(
-    IF(
-      ?druhTisku = <https://ukparliament.opendata.cz/zdroj/druh-tisku/1>,
-      "vladniNavrhZakona",
-      IF(
-        ?druhTisku = <https://ukparliament.opendata.cz/zdroj/druh-tisku/2>,
-        "navrhZakona",
-        IF(
-          ?druhTisku = <https://ukparliament.opendata.cz/zdroj/druh-tisku/3>,
-          "statniRozpocet",
-          "tisk"
-        )
-      )
-    )
-  AS ?classDruh)
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/government-positions-of-member> a browser:ExpansionQuery ;
+  dct:title "Vládní pozice člena parlamentu Spojeného království"@cs, "Government positions of member of UK parliament"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
+  browser:query """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ukp: <https://id.parliament.uk/schema/>
+PREFIX ukpb: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/ukparliament/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?position a ukp:GovernmentPosition ;
+    rdfs:label ?name ;
+    browser:class "ukgovernmentposition" .
   
-  BIND(
-    IF(
-      ?typStavu = <https://ukparliament.opendata.cz/zdroj/typ-stavu/6>,
-      IF(
-        BOUND(?vyhlaseni),
-        "prijatyTisk",
-        "neprijatyTisk"
-      ),
-      "neukoncenyTisk"
-    )
-  AS ?classStav)
-
-}""" .
-
-<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/ukparliament/poslanci-se-kterými-předložil-tisk> a browser:ExpansionQuery ;
-  dct:title "Poslanci, se kterými poslanec ve skupině předložil tisk" ;
-  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
-  browser:query """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
-PREFIX v: <https://slovník.gov.cz/veřejný-sektor/pojem/>
-PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/90/1995/pojem/>
-PREFIX a: <https://slovník.gov.cz/agendový/ukparliament/pojem/>
-PREFIX d: <https://slovník.gov.cz/datový/ukparliament/pojem/>
-PREFIX pspb: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/ukparliament/>
-PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-
-CONSTRUCT {
-
-  ?node pspb:společně-předložil-tisk-s ?osobawd .
-  ?osobawd a a:osoba ;
-    rdfs:label ?celeJmeno ;
-    browser:class "poslanec" .
-  pspb:společně-předložil-tisk-s browser:class "spolupracuje" . 
+  ?node ukpb:hasPosition ?position .
+  ukpb:hasPosition browser:class "hasukgovernmentposition" .
 } WHERE {
+  ?node ukp:wikidataResourceHasEquivalentWikidataThing ?person .
 
-  ?poslanec owl:sameAs ?node .
-
-  ?podani a l:podání-návrhu ;
-    z:je-vykonána ?navrhovatel .
-
-  ?navrhovatel a l:skupina-poslanců-jako-navrhovatel ;
-    a:má-člena-skupiny ?poslanecClen, ?osobaClen .
-
-  ?osoba a:je-členem-skupiny ?osobaClen ;
-    owl:sameAs ?osobawd ;
-    v:má-jméno ?jmeno ;
-    v:má-příjmení ?prijmeni .
-    
-  ?poslanec a:je-členem-skupiny ?poslanecClen .
-      
-  FILTER(?poslanec != ?osoba)
-     
-  BIND(CONCAT(?jmeno, " ", ?prijmeni) AS ?celeJmeno)
-
-}""" .
-
-<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/název-tisku> a browser:PreviewQuery ;
-  dct:title "Název sněmovního tisku" ;
-  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
-  browser:query """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/90/1995/pojem/>
-PREFIX d: <https://slovník.gov.cz/datový/ukparliament/pojem/>
-PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
-CONSTRUCT {
-  ?node a l:sněmovní-tisk ;
-    rdfs:label ?label ;
-    browser:class "tisk", ?classDruh, ?classStav .
-} WHERE {
-  ?node d:má-zkrácený-název-tisku ?label ;
-    a:má-druh-tisku ?druhTisku ;
-    a:má-stav-tisku/a:má-typ-stavu ?typStavu .
-
-  OPTIONAL {    
-    ?vyhlaseni a l:vyhlášení-ve-sbírce-zákonů ;
-      z:má-účastníka ?node .
-  }
-    
-  BIND(
-    IF(
-      ?druhTisku = <https://ukparliament.opendata.cz/zdroj/druh-tisku/1>,
-      "vladniNavrhZakona",
-      IF(
-        ?druhTisku = <https://ukparliament.opendata.cz/zdroj/druh-tisku/2>,
-        "navrhZakona",
-        IF(
-          ?druhTisku = <https://ukparliament.opendata.cz/zdroj/druh-tisku/3>,
-          "statniRozpocet",
-          "tiskJinehoDruhu"
-        )
-      )
-    )
-  AS ?classDruh)
+  ?incumbency a ukp:GovernmentIncumbency ;
+              ukp:governmentIncumbencyHasGovernmentPosition ?position ;
+              ukp:governmentIncumbencyHasGovernmentPerson ?person .
   
-  BIND(
-    IF(
-      ?typStavu = <https://ukparliament.opendata.cz/zdroj/typ-stavu/6>,
-      IF(
-        BOUND(?vyhlaseni),
-        "prijatyTisk",
-        "neprijatyTisk"
-      ),
-      "neukoncenyTisk"
-    )
-  AS ?classStav)
+  ?position a ukp:GovernmentPosition ;
+          ukp:name ?name .
 }""" .
 
-<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/jméno-osoby> a browser:PreviewQuery ;
-  dct:title "Jméno osoby" ;
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/government-position> a browser:PreviewQuery ;
+  dct:title "Základní přehled vládní pozice"@cs, "Basic preview of government position"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
-  browser:query """PREFIX a: <https://slovník.gov.cz/agendový/ukparliament/pojem/>
-PREFIX v: <https://slovník.gov.cz/veřejný-sektor/pojem/>
+  browser:query """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ukp: <https://id.parliament.uk/schema/>
 PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 CONSTRUCT {
-  ?node a a:osoba ;
+  ?node a ukp:GovernmentPosition ;
     rdfs:label ?label ;
-    browser:class "poslanec" .
+    browser:class "ukgovernmentposition" .
 } WHERE {
-  ?poslanec owl:sameAs ?node .
-
-  ?poslanec v:má-jméno ?jmeno ;
-    v:má-příjmení ?prijmeni .
-  BIND(CONCAT(?jmeno, " ", ?prijmeni) AS ?label)
+  ?node rdfs:label ?label .
 }""" .
 
-<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/ukparliament/position> a browser:DetailQuery ;
-  dct:title "Základní detail sněmovního tisku" ;
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/ukparliament/member> a browser:PreviewQuery ;
+  dct:title "Základní přehled člena parlamentu Spojeného království"@cs, "Basic preview of member of UK parliament"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
-  browser:query """PREFIX l: <https://slovník.gov.cz/legislativní/sbírka/90/1995/pojem/>
-PREFIX a: <https://slovník.gov.cz/agendový/ukparliament/pojem/>
+  browser:query """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ukp: <https://id.parliament.uk/schema/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
 
 CONSTRUCT {
-  ?node a:má-název-tisku ?nazev ;
-    a:má-datum-předložení-tisku ?datumPredlozeni ;
-    a:má-číslo-tisku ?cislo ;
-    a:má-číslo-tisku-za-lomítkem ?cisloZaLomitkem .
+  ?node a ukp:Member ;
+    rdfs:label ?label ;
+    browser:class "ukparliamentmember" .
 } WHERE {
-  ?node a:má-název-tisku ?nazev ;
-    a:má-datum-předložení-tisku ?datumPredlozeni ;
-    a:má-číslo-tisku ?cislo ;
-    a:má-číslo-tisku-za-lomítkem ?cisloZaLomitkem .
+  ?person rdfs:seeAlso ?node ;
+          ukp:personGivenName ?givenName ;
+          ukp:personFamilyName ?familyName .
+  OPTIONAL {?person ukp:personOtherNames ?otherNames.}
+  BIND(CONCAT(STR(?givenName), " ", COALESCE(CONCAT(STR(?otherNames), " "), ""), STR(?familyName)) AS ?label)
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/ukparliament/government-position> a browser:DetailQuery ;
+  dct:title "Základní detail vládní pozice"@cs, "Basic detail of government position"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
+  browser:query """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ukp: <https://id.parliament.uk/schema/>
+PREFIX ukpb: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/ukparliament/>
+
+CONSTRUCT {
+  ?node a ukp:GovernmentPosition ;
+    ukp:name ?label ;
+    ukpb:positionHasGroupName ?groupName .
+} WHERE {
+  ?node rdfs:label ?label ;
+        ukp:positionHasGroup ?group .
+  ?group ukp:name ?groupName .
 }""" . 
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/ukparliament/member> a browser:DetailQuery ;
-  dct:title "Základní detail poslance" ;
+  dct:title "Základní detail člena parlamentu Spojeného království"@cs, "Basic detail of member of UK parliament"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> ;
-  browser:query """PREFIX a: <https://slovník.gov.cz/agendový/ukparliament/pojem/>
-PREFIX v: <https://slovník.gov.cz/veřejný-sektor/pojem/>
-PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+  browser:query """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ukp: <https://id.parliament.uk/schema/>
+PREFIX ukpb: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/ukparliament/>
 
 CONSTRUCT {
-  ?node a a:osoba ;
-    v:má-jméno ?jmeno ;
-    v:má-příjmení ?prijmeni .
+  ?node a ukp:Member ;
+    ukp:personGivenName ?givenName ;
+    ukp:personFamilyName ?familyName ;
+    ukp:personOtherNames ?otherNames ;
+    ukp:personDateOfBirth ?birthDate ;
+    ukpb:personPartiesNames ?partyNames .
 } WHERE {
-  ?poslanec owl:sameAs ?node .
-
-  ?poslanec v:má-jméno ?jmeno ;
-    v:má-příjmení ?prijmeni .
-  BIND(CONCAT(?jmeno, " ", ?prijmeni) AS ?label)
-}""" .
+  ?person rdfs:seeAlso ?node ;
+          ukp:personGivenName ?givenName ;
+          ukp:personFamilyName ?familyName .
+  
+  OPTIONAL {?person ukp:personOtherNames ?otherNames.}
+  OPTIONAL {?person ukp:personDateOfBirth ?birthDate .}
+  OPTIONAL {
+    SELECT ?person (GROUP_CONCAT(DISTINCT ?partyName;SEPARATOR=",") AS ?partyNames)
+    WHERE {
+      ?person ukp:partyMemberHasPartyMembership/ukp:partyMembershipHasParty/rdfs:label ?partyName.
+    }
+    GROUP BY ?person
+  }
+}""" . 
 
 
 #####################################
@@ -464,56 +203,42 @@ CONSTRUCT {
 #####################################
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/ukparliament> a void:Dataset ;
-  dct:title "Píseček OpenData.cz" ;
+  dct:title "SPARQL endpoint of UK parliament" ;
   void:sparqlEndpoint <https://api.parliament.uk/sparql> ;
-  browser:accept "application/sparql-results+json" .
+  browser:accept "text/turtle" .
 
 #####################################
 # View vocabularies
 #####################################
-  
-<https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/ukparliament/navrhuje> a owl:ObjectProperty ;
-  rdfs:label "navrhuje"@cs ;
-  rdfs:comment "Poslanec, skupina poslanců, Vláda nebo Senát ČR navrhuje předpis v podobě sněmovního tisku."@cs ;
-  rdfs:domain l:navrhovatel ;
-  rdfs:range l:sněmovní-tisk .
-  
-<https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/ukparliament/má-zpravodaje-tisku> a owl:ObjectProperty ;
-  rdfs:label "má zpravodaje"@cs ;
-  rdfs:comment "Zpravodaj sněmovního tisku."@cs ;
-  rdfs:domain l:sněmovní-tisk ;
-  rdfs:range a:osoba .
-  
-<https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/ukparliament/společně-předložil-tisk-s> a owl:ObjectProperty ;
-  rdfs:label "společně předložil s"@cs ;
-  rdfs:comment "Poslanci, kteří společně předložili tisk ve skupině poslanců."@cs ;
-  rdfs:domain a:osoba ;
-  rdfs:range a:osoba .
 
+ukpb:hasPosition a owl:ObjectProperty ;
+  rdfs:label "has position"@en ;
+  rdfs:domain ukp:Member ;
+  rdfs:range ukp:Position .
+
+ukpb:positionHasGroupName a owl:DatatypeProperty ;
+  rdfs:label "group name"@en ;
+  rdfs:domain ukp:Group .
+
+ukpb:personPartiesNames a owl:DatatypeProperty ;
+  rdfs:label "parties names"@en ;
+  rdfs:domain ukp:Member .
+  
 #####################################
 # Visual styles
 #####################################
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style-sheet> a browser:VisualStyleSheet ;
-  browser:hasVisualStyle <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/vládní-návrh-zákona>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/návrh-zákona>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/státní-rozpočet>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/position-jiného-druhu>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/přijatý-tisk>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/nepřijatý-tisk>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/neukončený-tisk>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/agendový/ukparliament/pojem/osoba>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/ukparliament/navrhuje>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/ukparliament/má-zpravodaje-tisku>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/ukparliament/společně-předložil-tisk-s>,
+  browser:hasVisualStyle <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/governmentposition>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/member>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/hasposition>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/node>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/edge> .
     
 
-<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk> a browser:VisualStyle ;
+<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/governmentposition> a browser:VisualStyle ;
   browser:border-width "2px" ;
-  browser:shape "hexagon" ;
+  browser:shape "octagon" ;
   browser:label "data(label)" ;
   browser:width "20px" ;
   browser:height "20px" ;
@@ -521,50 +246,20 @@ CONSTRUCT {
   browser:text-halign "center" ;
   browser:text-valign "bottom" ;
   browser:text-margin-y "2px" ;
-  browser:background-color "#A9A5A7" ;
-  browser:border-color "#544B50" ;
+  browser:text-wrap "wrap" ;
+  browser:text-max-width "100px" ;
+  browser:background-color "#a4caf0" ;
+  browser:border-color "#407bb7" ;
   browser:border-width "2px" ;
-  browser:color "black" ;
+  browser:color "#407bb7" ;
   browser:label 'data(label)' ;
-  browser:hasSelector ".tisk" .
+  browser:hasSelector ".ukgovernmentposition" .
   
-<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/vládní-návrh-zákona> a browser:VisualStyle ;
-  browser:background-color "#dcdba8" ;
-  browser:color "#414e78" ;
-  browser:hasSelector ".vladniNavrhZakona" .
-  
-<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/návrh-zákona> a browser:VisualStyle ;
-  browser:background-color "#f9b799" ;
-  browser:color "#9d5b3d" ;
-  browser:hasSelector ".navrhZakona" .
-  
-<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/státní-rozpočet> a browser:VisualStyle ;
-  browser:background-color "#f99489" ;
-  browser:color "#9e453c" ;
-  browser:hasSelector ".statniRozpocet" .
-  
-<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/position-jiného-druhu> a browser:VisualStyle ;
-  browser:background-color "#f6e3a4" ;
-  browser:color "#86794f" ;
-  browser:hasSelector ".tiskJinehoDruhu" .
-  
-<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/přijatý-tisk> a browser:VisualStyle ;
-  browser:border-color "#228b22" ;
-  browser:hasSelector ".prijatyTisk" .
-  
-<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/nepřijatý-tisk> a browser:VisualStyle ;
-  browser:border-color "#ff0000" ;
-  browser:hasSelector ".neprijatyTisk" .
-  
-<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/neukončený-tisk> a browser:VisualStyle ;
-  browser:border-color "#87ceeb" ;
-  browser:hasSelector ".neukončenyTisk" .
-  
-<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/slovník.gov.cz/agendový/ukparliament/pojem/osoba> a browser:VisualStyle ;
+<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/member> a browser:VisualStyle ;
   browser:background-color "#e8c395" ;
   browser:border-color "#c89351" ;
   browser:border-width "2px" ;
-  browser:color "#8c6739" ;
+  browser:color "#c89351" ;
   browser:shape "round-rectangle" ;
   browser:label "data(label)" ;
   browser:width "20px" ;
@@ -573,29 +268,15 @@ CONSTRUCT {
   browser:text-halign "center" ;
   browser:text-valign "bottom" ;
   browser:text-margin-y "2px" ;
-  browser:hasSelector ".poslanec" .
+  browser:hasSelector ".ukparliamentmember" .
   
-<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/ukparliament/navrhuje> a browser:VisualStyle ;
-  browser:line-color "#7dd181" ;
+<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/hasposition> a browser:VisualStyle ;
+  browser:line-color "#8E97A0" ;
   browser:line-style "solid" ;
   browser:label "data(label)" ;
   browser:font-size "6px" ;
-  browser:hasSelector ".navrhuje" .
-  
-<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/ukparliament/má-zpravodaje-tisku> a browser:VisualStyle ;
-  browser:line-color "#759d94" ;
-  browser:line-style "solid" ;
-  browser:label "data(label)" ;
-  browser:font-size "6px" ;
-  browser:hasSelector ".maZpravodaje" .
-  
-<https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/ukparliament/společně-předložil-tisk-s> a browser:VisualStyle ;
-  browser:line-color "lawngreen" ;
-  browser:line-style "solid" ;
-  browser:label "data(label)" ;
-  browser:font-size "6px" ;
-  browser:hasSelector ".spolupracuje" .
-  
+  browser:hasSelector ".hasukgovernmentposition" .
+    
 <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/node> a browser:VisualStyle ;
   browser:hasSelector "node" .
   

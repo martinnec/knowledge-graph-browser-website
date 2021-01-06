@@ -10,14 +10,17 @@
 # Configurations
 #####################################
 
-<https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/psp-encyclopedia> a browser:Configuration ;
-  dct:title "Poslanecká sněmovna parlamentu České republiky obohacená o encyklopedická fakta o poslancích"@cs,
-    "Chamber of deputies - Parliament of the Czech Republic enriched with encyclopedic facts about members"@en;
-  browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/psp-encyclopedia/style-sheet>;
-  browser:startingNode <http://www.wikidata.org/entity/Q2382175>;
-  browser:resourceIriPattern "^https://psp\\.opendata\\.cz/zdroj/";
+<https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/parliaments> a browser:Configuration ;
+  dct:title "Poslanecké sněmovny"@cs,
+    "Parliaments"@en;
+  dct:description "Prozkoumejte poslance parlamentů různých zemí - aktuálně podporované jsou Spojené království a Česká republika. Poslance můžete prozkoumávat jak z pohledu údajů dostupných z jejich národních parlamentů, tak z pohledu faktografických údajů ve Wikidatech."@cs,
+    "Explore members of parliaments of different countries - currently supported: United Kingdom and Czechia. You can explore a MEP either from the point of view of data available from their national parliaments or from the point of view of facts about them in Wikidata."@en;
+  browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/parliaments/style-sheet>;
+  browser:startingNode <http://www.wikidata.org/entity/Q2382175>, <http://www.wikidata.org/entity/Q180589>;
   browser:hasViewSet <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/psp/tisk>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/psp/poslanec>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/ukparliament/government-position>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/ukparliament/member>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/people-by-groups/group>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/people-by-groups/person>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/personalities/work>,
@@ -48,8 +51,11 @@
 # Visual styles
 #####################################
   
-<https://linked.opendata.cz/resource/knowledge-graph-browser/psp-encyclopedia/style-sheet> a browser:VisualStyleSheet ;
-  browser:hasVisualStyle <https://linked.opendata.cz/resource/knowledge-graph-browser/psp/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk>,
+<https://linked.opendata.cz/resource/knowledge-graph-browser/parliaments/style-sheet> a browser:VisualStyleSheet ;
+  browser:hasVisualStyle <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/governmentposition>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/member>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/ukparliament/style/hasposition>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/psp/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/psp/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/vládní-návrh-zákona>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/psp/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/návrh-zákona>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/psp/style/slovník.gov.cz/legislativní/sbírka/90/1995/pojem/sněmovní-tisk/státní-rozpočet>,

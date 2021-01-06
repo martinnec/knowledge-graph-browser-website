@@ -11,8 +11,10 @@
 #####################################
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/psp> a browser:Configuration ;
-  dct:title "Poslanecká sněmovna parlamentu České republiky"@cs,
-    "Chamber of deputies - Parliament of the Czech Republic"@en;
+  dct:title "Česká poslanecká sněmovna"@cs,
+    "Czech Parliament - Chamber of Deputies"@en;
+  dct:description "Prozkoumejte poslance parlamentu České republiky."@cs,
+    "Explore members of the Czech Chamber of Deputies Parliament."@en;
   browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/psp/style-sheet>;
   browser:startingNode <http://www.wikidata.org/entity/Q2079976>;
   browser:resourceIriPattern "^https://psp\\.opendata\\.cz/zdroj/";
@@ -529,7 +531,7 @@ CONSTRUCT {
   browser:background-color "#A9A5A7" ;
   browser:border-color "#544B50" ;
   browser:border-width "2px" ;
-  browser:color "black" ;
+  browser:color "#544B50" ;
   browser:label 'data(label)' ;
   browser:hasSelector ".tisk" .
   
@@ -569,7 +571,7 @@ CONSTRUCT {
   browser:background-color "#e8c395" ;
   browser:border-color "#c89351" ;
   browser:border-width "2px" ;
-  browser:color "#8c6739" ;
+  browser:color "#c89351" ;
   browser:shape "round-rectangle" ;
   browser:label "data(label)" ;
   browser:width "20px" ;

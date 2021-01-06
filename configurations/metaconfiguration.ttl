@@ -14,8 +14,8 @@
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/czech-government> a browser:MetaConfiguration ;
   dct:title
-    "Public administration of Czechia"@en,
-    "Státní správa České republiky"@cs ;
+    "Czech public administration"@en,
+    "Česká státní správa"@cs ;
   dct:description
     "Explore knowledge graphs about state administration of Czechia."@en,
     "Procházejte znalostní grafy o státní správě České republiky."@cs ;
@@ -24,19 +24,20 @@
     <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/čsú-klasifikace>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/nkod>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/rpp>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/psp>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/psp-encyclopedia>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/sgov-full-simplified> .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/encyclopedia> a browser:MetaConfiguration ;
   dct:title
-    "Encyclopedie"@en,
-    "Encyclopedia"@cs ;
+    "Encyclopedia"@en,
+    "Encyklopedie"@cs ;
   dct:description
     "Explore encyclopedic knowledge graphs."@en,
     "Procházejte encyclopedické znalostní grafy."@cs ;
   browser:image "https://upload.wikimedia.org/wikipedia/en/8/80/Wikipedia-logo-v2.svg" ;
   browser:hasConfiguration
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/encyclopedia/animals>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/animals>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/personalities>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/people-by-groups> .
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/people-by-groups>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/ukparliament>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/psp>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/parliaments> .

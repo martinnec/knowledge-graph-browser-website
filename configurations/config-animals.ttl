@@ -15,10 +15,8 @@
 #####################################
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/animals> a browser:Configuration ;
-  dct:title "Taxonomy of animals and plants"@en,
-   "Taxonomie rostlin a živočichů"@cs;
-  dct:description "Classification of all organisms, plants and animals, into taxa."@en,
-   "Možnost procházet sítí taxonů všech zvířat a rostil jež jsou na Wikipedii."@cs;
+  dct:title "Taxonomy of animals and plants"@en ;
+  dct:description "Classification of all organisms, plants and animals, into taxa."@en ;
   browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/animals/style-sheet>;
   browser:startingNode <http://www.wikidata.org/entity/Q7377>,
    <http://www.wikidata.org/entity/Q192154>;
@@ -78,7 +76,7 @@ ASK {
 # Expansion of the node is defined by the query and dataset on which the query is executed. The expansion query is a SPARQL query which returns the neighbourhood of the node which shall be visualized after the expansion. It shall return all informaton necessary to display visually the nodes in the neighbourhood so that the client does not need to request the preview operation for each node in the neighbourhood.
 #####################################
 <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/animals/taxon/broader> a browser:ExpansionQuery ;
-  dct:title "Parent taxons" ;
+  dct:title "Parent taxons"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
   browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -110,7 +108,7 @@ CONSTRUCT {
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/animals/taxon/narrower> a browser:ExpansionQuery ;
-  dct:title "Child taxons" ;
+  dct:title "Child taxons"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
   browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -148,7 +146,7 @@ CONSTRUCT {
 # Preview of the node is defined by the query and dataset on which the query is executed. The preview query is a SPARQL query which returns basic information which is necessary to display the node visually.
 #####################################
 <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/animals/taxon/basic> a browser:PreviewQuery ;
-  dct:title "Taxon basic overview" ;
+  dct:title "Taxon basic overview"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
   browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -178,7 +176,7 @@ CONSTRUCT {
 # Detail of the node is defined by the query and dataset on which the query is executed. The detail query is a SPARQL query which returns properties of the node which are displayed in the detail section for that node. Currently, we support only properties with primitive string values.
 #####################################
 <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/animals/taxon/basic> a browser:DetailQuery ;
-  dct:title "Taxon basic detail" ;
+  dct:title "Taxon basic detail"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
   browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -213,7 +211,7 @@ CONSTRUCT {
 #####################################
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> a void:Dataset ;
-  dct:title "Wikidata SPARQL endpoint" ;
+  dct:title "Wikidata SPARQL endpoint"@en ;
   void:sparqlEndpoint <https://query.wikidata.org/sparql> ;
   browser:accept "application/sparql-results+json" .
 
