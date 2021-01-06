@@ -6,7 +6,8 @@ Anyone is free to create own configuration, publish it as Linked Open Data and l
 
 This website is an accompanying website for the paper titled "Interactive and iterative visual exploration of knowledge graphs based on shareable and reusable visual configurations" which is currently in the review process.
 
-You can start exploring knowledge graphs using our [demo](https://try.kgbrowser.opendata.cz).
+**You can start exploring knowledge graphs using our [demo](https://try.kgbrowser.opendata.cz).**
+
 There are predefined configurations.
 Just choose one and start browsing.
 
