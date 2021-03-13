@@ -16,7 +16,7 @@
 <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/sgov-full-simplified> a browser:Configuration ;
   dct:title "Semantic vocabulary (SGOV)"@en,
     "Sémantický slovník (SGOV)"@cs;
-  browser:autocomplete <https://raw.githubusercontent.com/martinnec/kgbrowser/master/configurations/sgov-autocomplete.json> ;
+  browser:autocomplete <https://raw.githubusercontent.com/linkedpipes/kgbrowser/master/configurations/sgov-autocomplete.json> ;
   browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov-full-simplified/style-sheet>;
   browser:resourceIriPattern "^https://slovník\\.gov\\.cz/";
   browser:hasViewSet <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/sgov-full-simplified/object>,
