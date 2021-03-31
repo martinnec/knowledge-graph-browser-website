@@ -11,9 +11,9 @@
 #####################################
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/personalities> a browser:Configuration ;
-  dct:title "Slavné osobnosti"@en,
+  dct:title "Slavné osobnosti"@cs,
     "Famous personalities"@en;
-  dct:description "Objevujte slavné osobnosti, vztahy mezi nimi, jejich dílo, ocenění a objevy."@en,
+  dct:description "Objevujte slavné osobnosti, vztahy mezi nimi, jejich dílo, ocenění a objevy."@cs,
     "Discover famous personalities, relationships between them, their work, awards and discoveries."@en;
   browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style-sheet>;
   browser:startingNode <http://www.wikidata.org/entity/Q51068>,
