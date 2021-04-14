@@ -1,0 +1,250 @@
+@prefix browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/> .
+@prefix sc: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/> .
+@prefix scw: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists-works/> .
+@prefix scwg: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists-works-groups/> .
+
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+
+#####################################
+# Configurations
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists-works-groups> a browser:Configuration ;
+  dct:title "Scientists in groups"@en;
+  dct:description "Discover famous scientists, relationships between them, their scientific works and their groups."@en;
+  browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists-works-groups/style-sheet>;
+  browser:startingNode <http://www.wikidata.org/entity/Q937>,
+    <http://www.wikidata.org/entity/Q7186>,
+    <http://www.wikidata.org/entity/Q1035> ;
+  browser:resourceIriPattern "^http://www\\.wikidata\\.org/entity/Q[1-9][0-9]*$";
+  browser:hasViewSet
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/scientists-works-groups/scientist>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/scientists-works-groups/group>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/scientists/institution>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/scientists/country>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/scientists-works/work> .
+
+#####################################
+# ViewSets
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/scientists-works-groups/scientist> a browser:ViewSet ;
+  dct:title "Scientist"@en ;
+  browser:hasView
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/colleague>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/awarded-scientist>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists-works/scientist> ,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists-works-groups/scientist> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists-works-groups/scientist> ;
+  browser:hasCondition """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+ASK {
+  ?node wdt:P106/wdt:P279* wd:Q901 .
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/scientists-works-groups/group> a browser:ViewSet ;
+  dct:title "Group of scientists"@en ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists-works-groups/group> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists-works-groups/group> ;
+  browser:hasCondition """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dct: <http://purl.org/dc/terms/>
+
+ASK {
+  ?node skos:prefLabel ?label .
+  FILTER(LANG(?label) = "en")
+
+  FILTER EXISTS {
+    ?person a dbo:Scientist .
+   
+    {
+      ?person dct:subject ?node .
+    } UNION {
+      ?person dct:subject/skos:broader ?node .
+    } UNION {
+      ?person dct:subject/skos:broader/skos:broader ?node .
+    }
+  }
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/dbpedia> .  
+
+
+#####################################
+# Views
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists-works-groups/scientist> a browser:View ;
+  dct:title "Scientist in groups"@en ;
+  dct:description "Shows a scientist in groups of scientists."@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/scientists-works-groups/groups> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/scientists/scientist> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/scientists/scientist> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists-works-groups/group> a browser:View ;
+  dct:title "Group of scientists"@en ;
+  dct:description "Shows a group of scientists and scientists in the group."@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/scientists-works-groups/scientists> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/scientists-works-groups/group> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/scientists-works-groups/group> .
+
+#####################################
+# Queries
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/scientists-works-groups/groups> a browser:ExpansionQuery ;
+  dct:title "Groups of the scientist"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/dbpedia> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+PREFIX sc: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX scwg: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists-works-groups/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?group a scwg:group ;
+    rdfs:label ?label ;
+    browser:class "group" .
+
+  ?node scwg:belongsTo ?group .
+  
+  scwg:belongsTo browser:class "work" .
+} WHERE {
+  ?scientist owl:sameAs ?node ;
+    dct:subject ?group .
+
+  ?group skos:prefLabel ?label .
+  FILTER(LANG(?label ) = "en")    
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/scientists-works-groups/scientists> a browser:ExpansionQuery ;
+  dct:title "Scientists in the group"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/dbpedia> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+PREFIX sc: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX scwg: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists-works-groups/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?scientistwd a sc:scientist ;
+    rdfs:label ?name ;
+    scwg:belongsTo ?node ;
+    browser:class "scientist" . 
+  scwg:belongsTo browser:class "work" .
+} WHERE {
+  ?scientist a dbo:Scientist ;
+    owl:sameAs ?scientistwd ;
+    dct:subject ?node ;
+    foaf:name ?name .
+  FILTER(STRSTARTS(STR(?scientistwd), "http://www.wikidata.org/entity/"))
+}""" .
+
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/scientists-works-groups/group> a browser:PreviewQuery ;
+  dct:title "Group of scientists"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/dbpedia> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+PREFIX scwg: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists-works-groups/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node a scwg:group ;
+    rdfs:label ?label ;
+    browser:class "group" .
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER(LANG(?label) = "en")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/scientists-works-groups/group> a browser:DetailQuery ;
+  dct:title "Group of scientists"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/dbpedia> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+PREFIX scwg: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists-works-groups/>
+
+CONSTRUCT {
+  ?node rdfs:label ?label ;
+    scwg:number-of-people ?numberOfPeople .  
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER(LANG(?label) = "en")
+
+  OPTIONAL {
+    SELECT ?node (COUNT(*) AS ?numberOfPeople1)
+    WHERE {
+      ?person a dbo:Scientist ;
+        dct:subject ?node .
+    }
+    GROUP BY ?node
+  }
+  BIND(COALESCE(?numberOfPeople1, 0) AS ?numberOfPeople)
+}""" .
+
+#####################################
+# Datasets
+#####################################
+
+
+#####################################
+# View vocabularies
+#####################################
+  
+scwg:group a owl:Class ;
+  rdfs:label "group of scientists"@en ;
+  rdfs:comment "group of scientists"@en .
+
+scwg:number-of-people a owl:DatatypeProperty ;
+  rdfs:label "number of scientists"@en ;
+  rdfs:comment "number of scientists in the group"@en ;
+  rdfs:domain scwg:group ;
+  rdfs:range rdfs:Literal .
+
+scwg:belongsTo a owl:ObjectProperty ;
+  rdfs:label "belongs to"@en ;
+  rdfs:comment "a scientist belongs to a group of scientists"@en ;
+  rdfs:domain sc:scientist ;
+  rdfs:range scwg:group .
+
+#####################################
+# Visual styles
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists-works-groups/style-sheet> a browser:VisualStyleSheet ;
+  browser:hasVisualStyle <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists-works-groups/style/group>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/scientist>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/institution>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/country>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists-works/style/scientific-work>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/family>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/work>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/node>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/edge> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists-works-groups/style/group> a browser:VisualStyle ;
+  browser:background-color "#bbdcbc" ;
+  browser:border-color "#59775a" ;
+  browser:shape "round-rectangle" ;  
+  browser:border-width "2px" ;
+  browser:width "120px" ;
+  browser:height "40px" ;
+  browser:padding "4px" ;
+  browser:text-halign "center" ;
+  browser:text-valign "center" ;
+  browser:text-wrap "wrap" ;
+  browser:text-max-width "80px" ;
+  browser:color "black" ;
+  browser:label "data(label)" ;
+  browser:font-size "9px" ;
+  browser:hasSelector ".group" .

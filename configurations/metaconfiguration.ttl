@@ -10,7 +10,8 @@
     "Seznam všech podporovaných konfigurací knowledge graph browseru."@cs ;
   browser:hasMetaConficuration
     <https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/czech-government>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/encyclopedia> .
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/encyclopedia>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/scientists> .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/czech-government> a browser:MetaConfiguration ;
   dct:title
@@ -41,3 +42,16 @@
     <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/ukparliament>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/psp>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/parliaments> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/scientists> a browser:MetaConfiguration ;
+  dct:title
+    "Scientists"@en,
+    "Vědci"@cs ;
+  dct:description
+    "Explore knowledge graphs about scientists."@en,
+    "Procházejte znalostní grafy o vědcích."@cs ;
+  browser:image "https://upload.wikimedia.org/wikipedia/en/8/80/Wikipedia-logo-v2.svg" ;
+  browser:hasConfiguration
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists-works>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists-works-groups> .
