@@ -396,7 +396,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
 
 CONSTRUCT {
-  ?node rdfs:domain ?domain .
+  ?node rdfs:domain ?element .
     
   ?element a z:typ-objektu ;
     skos:prefLabel ?label ;
@@ -495,7 +495,7 @@ CONSTRUCT {
     
   rdfs:domain browser:class "domain" .
   
-  ?node rdfs:range ?range .
+  ?node rdfs:range ?rangeElement .
     
   ?rangeElement a z:typ-objektu ;
     skos:prefLabel ?rangeLabel ;

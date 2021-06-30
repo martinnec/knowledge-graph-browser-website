@@ -11,7 +11,8 @@
   browser:hasMetaConficuration
     <https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/czech-government>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/encyclopedia>,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/scientists> .
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/scientists>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/controlled-vocabularies> .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/czech-government> a browser:MetaConfiguration ;
   dct:title
@@ -55,3 +56,15 @@
     <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists-works>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists-works-groups> .
+
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/meta-configuration/controlled-vocabularies> a browser:MetaConfiguration ;
+  dct:title
+    "Controlled vocabularies"@en,
+    "Řízené slovníky"@cs ;
+  dct:description
+    "Explore knowledge graphs with controlled vocabularies."@en,
+    "Procházejte znalostní grafy s řízenými slovníky."@cs ;
+  browser:image "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Hominoid_taxonomy_7-2.svg/320px-Hominoid_taxonomy_7-2.svg.pngg" ;
+  browser:hasConfiguration
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/eurovoc> .

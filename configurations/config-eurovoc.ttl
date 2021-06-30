@@ -1,0 +1,401 @@
+@prefix browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+
+#####################################
+# Configurations
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/eurovoc> a browser:Configuration ;
+  dct:title "EuroVoc browser"@en ;
+  browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style-sheet>;
+  browser:startingNode <http://eurovoc.europa.eu/3030>, <http://eurovoc.europa.eu/4514>;
+  browser:hasViewSet <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/eurovoc/scheme>, <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/eurovoc/concept> .
+
+#####################################
+# ViewSets
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/eurovoc/scheme> a browser:ViewSet ;
+  dct:title "Concept Scheme"@en ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/eurovoc/scheme> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/eurovoc/scheme> ;
+  browser:hasCondition """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+ASK {
+  ?node a skos:ConceptScheme .
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/eu/cellar> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/eurovoc/concept> a browser:ViewSet ;
+  dct:title "Concept"@en ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/eurovoc/broader>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/eurovoc/narrower>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/eurovoc/related>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/eurovoc/in-scheme>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/eurovoc/is-top-concept-of> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/eurovoc/broader> ;
+  browser:hasCondition """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+ASK {
+  ?node a skos:Concept .
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/eu/cellar> .
+
+#####################################
+# Views
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/eurovoc/scheme> a browser:View ;
+  dct:title "Concept Scheme"@en ;
+  dct:description "View on a SKOS concept scheme with its top concepts."@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/eurovoc/scheme> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/eurovoc/scheme> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/eurovoc/scheme> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/eurovoc/broader> a browser:View ;
+  dct:title "Broader concepts"@en ;
+  dct:description "View on a SKOS concept with its broader concepts."@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/eurovoc/broader> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/eurovoc/concept> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/eurovoc/concept> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/eurovoc/narrower> a browser:View ;
+  dct:title "Narrower concepts"@en ;
+  dct:description "View on a SKOS concept with its narrower concepts."@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/eurovoc/narrower> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/eurovoc/concept> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/eurovoc/concept> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/eurovoc/related> a browser:View ;
+  dct:title "Related concepts"@en ;
+  dct:description "View on a SKOS concept with its related concepts."@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/eurovoc/related> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/eurovoc/concept> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/eurovoc/concept> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/eurovoc/in-scheme> a browser:View ;
+  dct:title "Concept schemes it belongs to"@en ;
+  dct:description "View on a SKOS concept with its concept schemes."@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/eurovoc/in-scheme> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/eurovoc/concept> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/eurovoc/concept> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/eurovoc/is-top-concept-of> a browser:View ;
+  dct:title "Concept schemes it is a top concept of"@en ;
+  dct:description "View on a SKOS concept with concept schemes where it is a top concept."@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/eurovoc/is-top-concept-of> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/eurovoc/concept> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/eurovoc/concept> .
+
+#####################################
+# Queries
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/eurovoc/scheme> a browser:ExpansionQuery ;
+  dct:title "Concept scheme with its top concepts"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/eu/cellar> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?concept a skos:Concept ;
+    skos:prefLabel ?conceptLabel ;
+    browser:class "concept" .
+
+  ?node skos:hasTopConcept ?concept .
+
+  skos:hasTopConcept browser:class "hasTopConcept" .
+      
+} WHERE {
+  ?node skos:hasTopConcept ?concept .
+  ?concept skos:prefLabel ?conceptLabel .
+  FILTER (LANG(?conceptLabel) = "en")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/eurovoc/scheme> a browser:PreviewQuery ;
+  dct:title "Concept scheme preview"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/eu/cellar> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node a skos:ConceptScheme ;
+    skos:prefLabel ?label ;
+    browser:class "scheme" .
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER (LANG(?label) = "en")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/eurovoc/scheme> a browser:DetailQuery ;
+  dct:title "Concept scheme detail"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/eu/cellar> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node skos:prefLabel ?label .
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER (LANG(?label) = "en")
+}""" .
+
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/eurovoc/broader> a browser:ExpansionQuery ;
+  dct:title "Broader concepts"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/eu/cellar> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node skos:broader ?broaderConcept .
+  
+  ?broaderConcept a skos:Concept ;
+    skos:prefLabel ?broaderLabel ;
+    browser:class "concept" .
+
+  skos:broader browser:class "broader" .
+  
+} WHERE {
+  ?node skos:broader ?broaderConcept .
+  ?broaderConcept skos:prefLabel ?broaderLabel .
+  FILTER (LANG(?broaderLabel) = "en")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/eurovoc/narrower> a browser:ExpansionQuery ;
+  dct:title "Narrower concepts"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/eu/cellar> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?narrowerConcept skos:broader ?node .
+  
+  ?narrowerConcept a skos:Concept ;
+    skos:prefLabel ?narrowerLabel ;
+    browser:class "concept" .
+
+  skos:broader browser:class "broader" .
+  
+} WHERE {
+  ?node skos:narrower ?narrowerConcept .
+  ?narrowerConcept skos:prefLabel ?narrowerLabel .
+  FILTER (LANG(?narrowerLabel) = "en")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/eurovoc/related> a browser:ExpansionQuery ;
+  dct:title "Related concepts"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/eu/cellar> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node ?nodeRelated ?relatedConcept .
+
+  ?relatedConcept ?conceptRelated ?node .
+  
+  ?relatedConcept a skos:Concept ;
+    skos:prefLabel ?relatedLabel ;
+    browser:class "concept" .
+
+  skos:related browser:class "related" .
+  
+} WHERE {
+  {
+    ?node skos:related ?relatedConcept .
+    FILTER(STR(?node)<STR(?relatedConcept))
+    BIND(skos:related AS ?nodeRelated)
+  } UNION {
+    ?node skos:related ?relatedConcept .
+    FILTER(STR(?relatedConcept)<STR(?node))
+    BIND(skos:related AS ?conceptRelated)
+  }
+  ?relatedConcept skos:prefLabel ?relatedLabel .
+  FILTER (LANG(?relatedLabel) = "en")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/eurovoc/in-scheme> a browser:ExpansionQuery ;
+  dct:title "Concept schemes of a concept"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/eu/cellar> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?scheme a skos:ConceptScheme ;
+    skos:prefLabel ?schemeLabel ;
+    browser:class "scheme" .
+
+  ?node skos:inScheme ?scheme .
+
+  skos:inScheme browser:class "inScheme" .
+  
+} WHERE {
+  ?node skos:inScheme ?scheme .
+  ?scheme skos:prefLabel ?schemeLabel .
+  FILTER (LANG(?schemeLabel) = "en")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/eurovoc/is-top-concept-of> a browser:ExpansionQuery ;
+  dct:title "Concept schemes with a top concept"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/eu/cellar> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?scheme a skos:ConceptScheme ;
+    skos:prefLabel ?schemeLabel ;
+    skos:hasTopConcept ?node ;
+    browser:class "scheme" .
+
+  skos:hasTopConcept browser:class "hasTopConcept" .
+  
+} WHERE {
+  ?scheme skos:hasTopConcept ?node .
+  ?scheme skos:prefLabel ?schemeLabel .
+  FILTER (LANG(?schemeLabel) = "en")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/eurovoc/concept> a browser:PreviewQuery ;
+  dct:title "Concept preview"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/eu/cellar> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+PREFIX z-sgov: <https://slovník.gov.cz/základní/pojem/>
+
+CONSTRUCT {
+  ?node a skos:Concept ;
+    skos:prefLabel ?label ;
+    browser:class "concept" .
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER (LANG(?label) = "en")  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/eurovoc/concept> a browser:DetailQuery ;
+  dct:title "Concept detail"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/eu/cellar> ;
+  browser:query """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+  ?node skos:prefLabel ?label ;
+    skos:altLabel ?altLabel ;
+    skos:notation ?notation .
+} WHERE {
+  ?node skos:prefLabel ?label .
+  FILTER (LANG(?label) = "en")
+
+  OPTIONAL {
+    ?node skos:altLabel ?altLabel .
+    FILTER (LANG(?altLabel) = "en")
+  }
+
+  OPTIONAL {
+    ?node skos:notation ?notation .
+  }
+  
+}""" .
+
+#####################################
+# Datasets
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/eu/cellar> a void:Dataset ;
+  dct:title "Cellar SPARQL endpoint" ;
+  void:sparqlEndpoint <http://publications.europa.eu/webapi/rdf/sparql> ;
+  browser:accept "text/turtle" .
+
+#####################################
+# Visual styles
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style-sheet> a browser:VisualStyleSheet ;
+  browser:hasVisualStyle
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/scheme>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/concept>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/broader>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/related>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/hasTopConcept>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/inScheme>, 
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/node>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/edge> .  
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/scheme> a browser:VisualStyle ;
+  browser:background-color "#FDE4D8" ;
+  browser:border-color "#AE3E09" ;
+  browser:color "#AE3E09" ;
+  browser:text-wrap "wrap";
+  browser:text-max-width "78px";
+  browser:width "80px" ;
+  browser:height "32px" ;
+  browser:hasSelector ".scheme" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/concept> a browser:VisualStyle ;
+  browser:background-color "#FCF2D9" ;
+  browser:border-color "#97700C" ;
+  browser:color "#97700C" ;
+  browser:text-wrap "wrap";
+  browser:text-max-width "58px";
+  browser:width "60px" ;
+  browser:height "16px" ;
+  browser:hasSelector ".concept" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/broader> a browser:VisualStyle ;
+  browser:line-color "#84620B" ;
+  browser:color "#84620B" ;
+  browser:line-style "solid" ;
+  browser:width "2px" ;
+  browser:source-arrow-shape "none" ;
+  browser:target-arrow-color "#84620B" ;
+  browser:target-arrow-shape "vee" ;
+  browser:curve-style "taxi" ;
+  browser:hasSelector ".broader" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/related> a browser:VisualStyle ;
+  browser:line-color "#84620B" ;
+  browser:color "#84620B" ;
+  browser:line-style "dotted" ;
+  browser:source-arrow-shape "none" ;
+  browser:target-arrow-shape "none" ;
+  browser:width "2px" ;
+  browser:curve-style "bezier" ;
+  browser:hasSelector ".related" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/hasTopConcept> a browser:VisualStyle ;
+  browser:line-color "#F9AE8B" ;
+  browser:color "#F9AE8B" ;
+  browser:line-style "solid" ;
+  browser:source-arrow-shape "none" ;
+  browser:target-arrow-color "#F9AE8B" ;
+  browser:target-arrow-shape "vee" ;
+  browser:curve-style "bezier" ;
+  browser:hasSelector ".hasTopConcept" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/inScheme> a browser:VisualStyle ;
+  browser:line-color "#F9AE8B" ;
+  browser:color "#F9AE8B" ;
+  browser:line-style "dotted" ;
+  browser:source-arrow-shape "none" ;
+  browser:target-arrow-color "#F9AE8B" ;
+  browser:target-arrow-shape "vee" ;
+  browser:curve-style "bezier" ;
+  browser:hasSelector ".inScheme" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/node> a browser:VisualStyle ;
+  browser:border-width "2px" ;
+  browser:shape "round-rectangle" ;
+  browser:padding "2px" ;
+  browser:text-halign "center" ;
+  browser:text-valign "center" ;
+  browser:font-size "8px" ;
+  browser:hasSelector "node" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/eurovoc/style/edge> a browser:VisualStyle ;
+  browser:width "1px" ;
+  browser:curve-style "straight" ;
+  browser:font-size "7px" ;
+  browser:text-outline-color "#FFFFFF" ;
+  browser:text-outline-opacity "0.5" ;
+  browser:text-outline-width "1px" ;
+  browser:label "" ;
+  browser:hasSelector "edge" .
