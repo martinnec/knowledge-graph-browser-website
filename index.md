@@ -31,5 +31,5 @@ Anyone is free to create own configuration, publish it as Linked Open Data and l
 If you are interested in the raw visual configurations demonstrated in the paper, you can browse them using the links below:
 
 - scientists: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-scientists.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists)
-- scientists: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-scientists-works.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists-works)
-- scientists: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-scientists-works-groups.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists-works-groups)
+- scientists with their works: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-scientists-works.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists-works)
+- scientists with their works and groups: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-scientists-works-groups.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists-works-groups)

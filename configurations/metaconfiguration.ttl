@@ -65,6 +65,6 @@
   dct:description
     "Explore knowledge graphs with controlled vocabularies."@en,
     "Procházejte znalostní grafy s řízenými slovníky."@cs ;
-  browser:image "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Hominoid_taxonomy_7-2.svg/320px-Hominoid_taxonomy_7-2.svg.pngg" ;
+  browser:image "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Hominoid_taxonomy_7-2.svg/320px-Hominoid_taxonomy_7-2.svg.png" ;
   browser:hasConfiguration
     <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/eurovoc> .

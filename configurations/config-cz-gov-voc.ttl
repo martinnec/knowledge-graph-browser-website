@@ -32,11 +32,47 @@
   browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov/object/specializes> ,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov/object/generalizes> ,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov/object/has-attributes> ,
-    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov/object/has-relations> ;
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov/object/has-complex-attributes> ,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov/object/has-out-relations> ,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov/object/has-in-relations> ;
   browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov/object/has-attributes> ;
   browser:hasCondition """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
 ASK {  
-  ?node a z:typ-objektu .
+  {
+    ?node a z:typ-objektu .
+  } UNION {
+    ?node a z:typ-vlastnosti .
+    {
+        SELECT ?node (COUNT(*) AS ?count)
+        WHERE {
+            {
+                ?restriction rdfs:subClassOf [
+                    owl:allValuesFrom ?node ;
+                    owl:onProperty z:je-vlastností
+                ]
+            } UNION {
+                ?restriction rdfs:subClassOf [
+                    owl:allValuesFrom ?ancestor ;
+                    owl:onProperty z:je-vlastností
+                ] .
+                ?node rdfs:subClassOf+ ?ancestor .
+                FILTER (?ancestor NOT IN (<https://slovník.gov.cz/základní/pojem/vlastnost>, <https://slovník.gov.cz/základní/pojem/proměnný-prvek>, <https://slovník.gov.cz/základní/pojem/prvek>))
+            } UNION {
+                ?node rdfs:subClassOf [
+                    owl:allValuesFrom [] ;
+                    owl:onProperty z:má-vlastnost
+                ] .
+            } UNION {
+                ?ancestor rdfs:subClassOf [
+                    owl:allValuesFrom [] ;
+                    owl:onProperty z:má-vlastnost
+                ] .
+                ?node rdfs:subClassOf+ ?ancestor .
+                FILTER (?ancestor NOT IN (<https://slovník.gov.cz/základní/pojem/vlastnost>, <https://slovník.gov.cz/základní/pojem/proměnný-prvek>, <https://slovník.gov.cz/základní/pojem/prvek>))  
+            }
+        }
+    }
+  }
 }""" ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> .
   
@@ -47,6 +83,37 @@ ASK {
   browser:hasCondition """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
 ASK {  
   ?node a z:typ-vlastnosti .
+  OPTIONAL {
+        SELECT ?node (COUNT(*) AS ?count)
+        WHERE {
+            {
+                ?restriction rdfs:subClassOf [
+                    owl:allValuesFrom ?node ;
+                    owl:onProperty z:je-vlastností
+                ]
+            } UNION {
+                ?restriction rdfs:subClassOf [
+                    owl:allValuesFrom ?ancestor ;
+                    owl:onProperty z:je-vlastností
+                ] .
+                ?node rdfs:subClassOf+ ?ancestor .
+                FILTER (?ancestor NOT IN (<https://slovník.gov.cz/základní/pojem/vlastnost>, <https://slovník.gov.cz/základní/pojem/proměnný-prvek>, <https://slovník.gov.cz/základní/pojem/prvek>))
+            } UNION {
+                ?node rdfs:subClassOf [
+                    owl:allValuesFrom [] ;
+                    owl:onProperty z:má-vlastnost
+                ] .
+            } UNION {
+                ?ancestor rdfs:subClassOf [
+                    owl:allValuesFrom [] ;
+                    owl:onProperty z:má-vlastnost
+                ] .
+                ?node rdfs:subClassOf+ ?ancestor .
+                FILTER (?ancestor NOT IN (<https://slovník.gov.cz/základní/pojem/vlastnost>, <https://slovník.gov.cz/základní/pojem/proměnný-prvek>, <https://slovník.gov.cz/základní/pojem/prvek>))  
+            }
+        }
+    }
+    FILTER(BOUND(?count)=false)
 }""" ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> .
   
@@ -70,11 +137,25 @@ ASK {
   browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/object/has-attributes> ;
   browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/object> ;
   browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/object> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov/object/has-complex-attributes> a browser:View ;
+  dct:title "Složené atributy"@cs ;
+  dct:description "Složené atributy objektu"@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/object/has-complex-attributes> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/object> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/object> .
   
-<https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov/object/has-relations> a browser:View ;
-  dct:title "Vztahy"@cs ;
-  dct:description "Vztahy, kterých se objekt účastní."@cs ;
-  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/object/has-relations> ;
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov/object/has-out-relations> a browser:View ;
+  dct:title "Vztahy z"@cs ;
+  dct:description "Vztahy, kterých se objekt účastní jako doména."@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/object/has-out-relations> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/object> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/object> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/sgov/object/has-in-relations> a browser:View ;
+  dct:title "Vztahy do"@cs ;
+  dct:description "Vztahy, kterých se objekt účastní jako obor hodnot."@cs ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/object/has-in-relations> ;
   browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/object> ;
   browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/object> .
     
@@ -110,8 +191,8 @@ ASK {
 # Queries
 #####################################
 
-<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/object/has-relations> a browser:ExpansionQuery ;
-  dct:title "Vztahy"@cs ;
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/object/has-out-relations> a browser:ExpansionQuery ;
+  dct:title "Vztahy z"@cs ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> ;
   browser:query """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -119,77 +200,167 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
 
 CONSTRUCT {    
-  ?outwardsRelation a z:typ-vztahu ;
+  ?outRel a z:typ-vztahu ;
     rdfs:domain ?node ;
-    rdfs:range ?rangeElement ;
-    skos:prefLabel ?outwardsRelationLabel ;
-    browser:class ?outwardsRelationStylesheetClass, ?outwardsRelationGlossaryClass, ?outwardsRelationLGlossaryClass .
+    rdfs:range ?rngElem ;
+    skos:prefLabel ?outRelLabel ;
+    rdfs:subPropertyOf ?parOutRel ;
+    browser:class ?outRelStyshClass, ?outRelGlossClass, ?outRelLGlossClass .
 
-  ?inwardsRelation a z:typ-vztahu ;
-    rdfs:domain ?domainElement ;
+  rdfs:domain browser:class "domain" .
+  rdfs:range browser:class "range" .
+  rdfs:subPropertyOf browser:class ?subPropertyClass .
+
+  ?rngElem a z:typ-objektu ;
+    skos:prefLabel ?rngLabel ;
+    browser:class "object", ?rngGlossClass, ?rngLGlossClass .
+  
+} WHERE {
+    ?outRel a z:typ-vztahu ;
+      skos:prefLabel ?outRelLabel ;
+      skos:inScheme ?outRelGlossary .
+
+    {
+        ?outRel rdfs:subClassOf [
+            owl:allValuesFrom ?node ;
+            owl:onProperty z:má-vztažený-prvek-1 
+        ]
+    } UNION {
+        ?ancOutRel rdfs:subClassOf [
+            owl:allValuesFrom ?node ;
+            owl:onProperty z:má-vztažený-prvek-1 
+        ] .
+        ?outRel rdfs:subClassOf+ ?ancOutRel .
+    }
+
+    {
+        ?outRel rdfs:subClassOf [
+            owl:allValuesFrom ?rngElem ;
+            owl:onProperty z:má-vztažený-prvek-2
+        ]
+    } UNION {
+        ?outRel rdfs:subClassOf/rdfs:subClassOf [
+            owl:allValuesFrom ?rngElem ;
+            owl:onProperty z:má-vztažený-prvek-2
+        ]
+        FILTER NOT EXISTS {
+            ?outRel rdfs:subClassOf/owl:onProperty z:má-vztažený-prvek-2 .
+        }
+    } UNION {
+        ?outRel rdfs:subClassOf+/rdfs:subClassOf ?rngDef .
+        ?rngDef owl:allValuesFrom ?rngElem ;
+            owl:onProperty z:má-vztažený-prvek-2 .
+        FILTER NOT EXISTS {
+            ?outRel rdfs:subClassOf+ ?specOutRel .
+            ?specOutRel rdfs:subClassOf+ ?rngDef ;
+                rdfs:subClassOf ?rngDef1 .
+            ?rngDef1 owl:onProperty z:má-vztažený-prvek-2 .
+        }
+    }
+
+    BIND("relation" AS ?outRelStyshClass)
+    BIND(REPLACE(STR(?outRelGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?outRelGlossClass)
+    BIND(REPLACE(STR(?outRelGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?outRelLGlossClass)
+
+    ?rngElem skos:prefLabel ?rngLabel ;
+      skos:inScheme ?rngGloss .
+    FILTER (LANG(?rngLabel) = "cs")
+    BIND(REPLACE(STR(?rngGloss), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?rngGlossClass)
+    BIND(REPLACE(STR(?rngGloss), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?rngLGlossClass)
+
+    OPTIONAL {
+        ?outRel rdfs:subClassOf ?parOutRel .
+        ?parOutRel a z:typ-vztahu.
+        FILTER(?parOutRel != <https://slovník.gov.cz/základní/pojem/vztah>)
+        BIND("sub-class-of" AS ?subPropertyClass)
+    }
+
+  FILTER (!BOUND(?outRelLabel) || LANG(?outRelLabel) = "cs")
+
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/object/has-in-relations> a browser:ExpansionQuery ;
+  dct:title "Vztahy do"@cs ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> ;
+  browser:query """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {    
+  ?inRel a z:typ-vztahu ;
+    rdfs:domain ?domElem ;
     rdfs:range ?node ;
-    skos:prefLabel ?inwardsRelationLabel ;
-    browser:class ?inwardsRelationStylesheetClass, ?inwardsRelationGlossaryClass, ?inwardsRelationLGlossaryClass .
+    skos:prefLabel ?inRelLabel ;
+    rdfs:subPropertyOf ?parInRel ;
+    browser:class ?inRelStyshClass, ?inRelGlossClass, ?inRelLGlossClass .
     
   rdfs:domain browser:class "domain" .
   rdfs:range browser:class "range" .
+  rdfs:subPropertyOf browser:class ?subPropertyClass .
 
-  ?domainElement a z:typ-objektu ;
+  ?domElem a z:typ-objektu ;
     skos:prefLabel ?domainLabel ;
-    browser:class "object", ?domainGlossaryClass, ?domainLGlossaryClass .
+    browser:class "object", ?domainGlossClass, ?domainLGlossClass .
 
-  ?rangeElement a z:typ-objektu ;
-    skos:prefLabel ?rangeLabel ;
-    browser:class "object", ?rangeGlossaryClass, ?rangeLGlossaryClass .
-  
-} WHERE {
-  OPTIONAL {
-    ?outwardsRelation a z:typ-vztahu ;
-      skos:prefLabel ?outwardsRelationLabel ;
-      skos:inScheme ?outwardsRelationGlossary ;
-      rdfs:subClassOf [
-        owl:allValuesFrom ?node ;
-        owl:onProperty z:má-vztažený-prvek-1
-      ] ;
-      rdfs:subClassOf [
-        owl:allValuesFrom ?rangeElement ;
-        owl:onProperty z:má-vztažený-prvek-2
+} WHERE {  
+  ?inRel a z:typ-vztahu ;
+    skos:prefLabel ?inRelLabel ;
+    skos:inScheme ?inRelGlossary .
+
+  {
+      ?inRel rdfs:subClassOf ?rngDef .
+      ?rngDef owl:allValuesFrom ?node ;
+          owl:onProperty z:má-vztažený-prvek-2 .
+  } UNION {
+      ?ancInRel rdfs:subClassOf [
+          owl:allValuesFrom ?node ;
+          owl:onProperty z:má-vztažený-prvek-2 
       ] .
-    BIND("relation" AS ?outwardsRelationStylesheetClass)
-    BIND(REPLACE(STR(?outwardsRelationGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?outwardsRelationGlossaryClass)
-    BIND(REPLACE(STR(?outwardsRelationGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?outwardsRelationLGlossaryClass)
-
-    ?rangeElement skos:prefLabel ?rangeLabel ;
-      skos:inScheme ?rangeGlossary .
-    FILTER (LANG(?rangeLabel) = "cs")
-    BIND(REPLACE(STR(?rangeGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?rangeGlossaryClass)
-    BIND(REPLACE(STR(?rangeGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?rangeLGlossaryClass)
+      ?inRel rdfs:subClassOf+ ?ancInRel .
   }
-  FILTER (!BOUND(?outwardsRelationLabel) || LANG(?outwardsRelationLabel) = "cs")
-  
+
+  {
+      ?inRel rdfs:subClassOf ?domDef .
+      ?domDef owl:allValuesFrom ?domElem ;
+          owl:onProperty z:má-vztažený-prvek-1 .
+  } UNION {
+      ?inRel rdfs:subClassOf/rdfs:subClassOf ?domDef .
+      ?domDef owl:allValuesFrom ?domElem ;
+          owl:onProperty z:má-vztažený-prvek-1 .
+      FILTER NOT EXISTS {
+          ?inRel rdfs:subClassOf/owl:onProperty z:má-vztažený-prvek-1 .
+      }
+  } UNION {
+      ?inRel rdfs:subClassOf+/rdfs:subClassOf ?domDef .
+      ?domDef owl:allValuesFrom ?domDef ;
+          owl:onProperty z:má-vztažený-prvek-1 .
+      FILTER NOT EXISTS {
+          ?inRel rdfs:subClassOf+ ?specInRel .
+          ?specInRel rdfs:subClassOf+ ?domDef ;
+              rdfs:subClassOf ?domDef1 .
+          ?domDef1 owl:onProperty z:má-vztažený-prvek-1 .
+      }
+  }
+
+  BIND("relation" AS ?inRelStyshClass)
+  BIND(REPLACE(STR(?inRelGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?inRelGlossClass)
+  BIND(REPLACE(STR(?inRelGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?inRelLGlossClass)
+
+  ?domElem skos:prefLabel ?domainLabel ;
+    skos:inScheme ?domainGlossary .
+  FILTER (LANG(?domainLabel) = "cs")
+  BIND(REPLACE(STR(?domainGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?domainGlossClass)
+  BIND(REPLACE(STR(?domainGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?domainLGlossClass)
+
   OPTIONAL {
-    ?inwardsRelation a z:typ-vztahu ;
-      skos:prefLabel ?inwardsRelationLabel ;
-      skos:inScheme ?inwardsRelationGlossary ;
-      rdfs:subClassOf [
-        owl:allValuesFrom ?domainElement ;
-        owl:onProperty z:má-vztažený-prvek-1
-      ] ;
-      rdfs:subClassOf [
-        owl:allValuesFrom ?node ;
-        owl:onProperty z:má-vztažený-prvek-2
-      ] .
-    BIND("relation" AS ?inwardsRelationStylesheetClass)
-    BIND(REPLACE(STR(?inwardsRelationGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?inwardsRelationGlossaryClass)
-    BIND(REPLACE(STR(?inwardsRelationGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?inwardsRelationLGlossaryClass)
-
-    ?domainElement skos:prefLabel ?domainLabel ;
-      skos:inScheme ?domainGlossary .
-    FILTER (LANG(?domainLabel) = "cs")
-    BIND(REPLACE(STR(?domainGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?domainGlossaryClass)
-    BIND(REPLACE(STR(?domainGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?domainLGlossaryClass)
+      ?inRel rdfs:subClassOf ?parInRel .
+      ?parInRel a z:typ-vztahu.
+      FILTER(?parInRel != <https://slovník.gov.cz/základní/pojem/vztah>)
+      BIND("sub-class-of" AS ?subPropertyClass)
   }
-  FILTER (!BOUND(?inwardsRelationLabel) || LANG(?inwardsRelationLabel) = "cs")
+
+  FILTER (!BOUND(?inRelLabel) || LANG(?inRelLabel) = "cs")
 
 }""" .
 
@@ -205,20 +376,187 @@ CONSTRUCT {
   ?attribute a z:typ-vlastnosti ;
     rdfs:domain ?node ;
     skos:prefLabel ?attributeLabel ;
-    browser:class "attribute", ?attributeGlossaryClass, ?attributeLGlossaryClass .
+    rdfs:subPropertyOf ?parentAttribute ;
+    browser:class "attribute", ?attributeGlossClass, ?attributeLGlossClass .
     
   rdfs:domain browser:class "domain" .
+  rdfs:subPropertyOf browser:class ?subPropertyClass .
 } WHERE {
-  ?attribute a z:typ-vlastnosti ;
-    skos:prefLabel ?attributeLabel ;
-    skos:inScheme ?attributeGlossary ;
-    rdfs:subClassOf [
-      owl:allValuesFrom ?node ;
-      owl:onProperty z:je-vlastností
-    ] .
-  BIND(REPLACE(STR(?attributeGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?attributeGlossaryClass)
-  BIND(REPLACE(STR(?attributeGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?attributeLGlossaryClass)
+    {
+        ?attribute rdfs:subClassOf [
+            owl:allValuesFrom ?node ;
+            owl:onProperty z:je-vlastností
+        ] .
+    } UNION {
+        ?ancestorAttribute rdfs:subClassOf [
+            owl:allValuesFrom ?node ;
+            owl:onProperty z:je-vlastností
+        ] .
+        ?attribute rdfs:subClassOf+ ?ancestorAttribute .
+    } UNION {
+       ?node rdfs:subClassOf [
+            owl:allValuesFrom  ?attribute ;
+            owl:onProperty z:má-vlastnost
+        ] .
+    } UNION {
+       ?node rdfs:subClassOf [
+            owl:allValuesFrom  ?ancestorAttribute ;
+            owl:onProperty z:má-vlastnost
+        ] .
+        ?attribute rdfs:subClassOf+ ?ancestorAttribute .
+    }
+
+    ?attribute a z:typ-vlastnosti ;
+        skos:prefLabel ?attributeLabel ;
+        skos:inScheme ?attributeGlossary .
+
+    OPTIONAL {
+        SELECT ?attribute (COUNT(*) AS ?count)
+        WHERE {
+            {
+                ?restriction rdfs:subClassOf [
+                    owl:allValuesFrom ?attribute ;
+                    owl:onProperty z:je-vlastností
+                ]
+            } UNION {
+                ?restriction rdfs:subClassOf [
+                    owl:allValuesFrom ?ancestor ;
+                    owl:onProperty z:je-vlastností
+                ] .
+                ?attribute rdfs:subClassOf+ ?ancestor .
+                FILTER (?ancestor NOT IN (<https://slovník.gov.cz/základní/pojem/vlastnost>, <https://slovník.gov.cz/základní/pojem/proměnný-prvek>, <https://slovník.gov.cz/základní/pojem/prvek>))
+            } UNION {
+                ?attribute rdfs:subClassOf [
+                    owl:allValuesFrom [] ;
+                    owl:onProperty z:má-vlastnost
+                ] .
+            } UNION {
+                ?ancestor rdfs:subClassOf [
+                    owl:allValuesFrom [] ;
+                    owl:onProperty z:má-vlastnost
+                ] .
+                ?attribute rdfs:subClassOf+ ?ancestor .
+                FILTER (?ancestor NOT IN (<https://slovník.gov.cz/základní/pojem/vlastnost>, <https://slovník.gov.cz/základní/pojem/proměnný-prvek>, <https://slovník.gov.cz/základní/pojem/prvek>))  
+            }
+        }
+    }
+    FILTER(BOUND(?count)=false)
+
+    OPTIONAL {
+        ?attribute rdfs:subClassOf ?parentAttribute .
+        ?parentAttribute a z:typ-vlastnosti .
+        FILTER(?parentAttribute != <https://slovník.gov.cz/základní/pojem/vlastnost>)
+        BIND("sub-class-of" AS ?subPropertyClass)
+    }
+
+
+  BIND(REPLACE(STR(?attributeGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?attributeGlossClass)
+  BIND(REPLACE(STR(?attributeGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?attributeLGlossClass)
   FILTER (LANG(?attributeLabel) = "cs")
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/object/has-complex-attributes> a browser:ExpansionQuery ;
+  dct:title "Složené atributy"@cs ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/sgov> ;
+  browser:query """PREFIX z: <https://slovník.gov.cz/základní/pojem/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+
+CONSTRUCT {
+    ?outwardsRelation a z:typ-vztahu ;
+        rdfs:domain ?node ;
+        rdfs:range ?rangeElement ;
+        skos:prefLabel ?outwardsRelationLabel ;
+        browser:class ?outRelStyshClass, ?outRelGlossClass, ?outRelLGlossClass .
+
+    rdfs:domain browser:class "domain" .
+    rdfs:range browser:class "range" .
+    rdfs:subPropertyOf browser:class ?subPropertyClass .
+        
+    ?rangeElement a z:typ-objektu ;
+        skos:prefLabel ?rangeLabel ;
+        rdfs:subPropertyOf ?parentRelation ;
+        browser:class "object", ?rngGlossClass, ?rngLGlossClass .
+} WHERE {
+    {
+        ?attribute rdfs:subClassOf [
+            owl:allValuesFrom ?node ;
+            owl:onProperty z:je-vlastností
+        ] .
+    } UNION {
+        ?ancestorAttribute rdfs:subClassOf [
+            owl:allValuesFrom ?node ;
+            owl:onProperty z:je-vlastností
+        ] .
+        ?attribute rdfs:subClassOf+ ?ancestorAttribute .
+    } UNION {
+       ?node rdfs:subClassOf [
+            owl:allValuesFrom  ?attribute ;
+            owl:onProperty z:má-vlastnost
+        ] .
+    } UNION {
+       ?node rdfs:subClassOf [
+            owl:allValuesFrom  ?ancestorAttribute ;
+            owl:onProperty z:má-vlastnost
+        ] .
+        ?attribute rdfs:subClassOf+ ?ancestorAttribute .
+    }
+
+    ?attribute a z:typ-vlastnosti ;
+        skos:prefLabel ?attributeLabel ;
+        skos:inScheme ?attributeGlossary .
+    FILTER (LANG(?attributeLabel) = "cs")
+    
+    BIND("relation" AS ?outRelStyshClass)
+    BIND(REPLACE(STR(?attributeGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?outRelGlossClass)
+    BIND(REPLACE(STR(?attributeGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?outRelLGlossClass)
+    BIND(REPLACE(STR(?attributeGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?rngGlossClass)
+    BIND(REPLACE(STR(?attributeGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?rngLGlossClass)
+
+    {
+        ?restriction rdfs:subClassOf [
+            owl:allValuesFrom ?attribute ;
+            owl:onProperty z:je-vlastností
+        ]
+    } UNION {
+        ?restriction rdfs:subClassOf [
+            owl:allValuesFrom ?ancestor ;
+            owl:onProperty z:je-vlastností
+        ] .
+        ?attribute rdfs:subClassOf+ ?ancestor .
+        FILTER (?ancestor NOT IN (<https://slovník.gov.cz/základní/pojem/vlastnost>, <https://slovník.gov.cz/základní/pojem/proměnný-prvek>, <https://slovník.gov.cz/základní/pojem/prvek>))
+    } UNION {
+        ?attribute rdfs:subClassOf [
+            owl:allValuesFrom [] ;
+            owl:onProperty z:má-vlastnost
+        ] .
+    } UNION {
+        ?ancestor rdfs:subClassOf [
+            owl:allValuesFrom [] ;
+            owl:onProperty z:má-vlastnost
+        ] .
+        ?attribute rdfs:subClassOf+ ?ancestor .
+        FILTER (?ancestor NOT IN (<https://slovník.gov.cz/základní/pojem/vlastnost>, <https://slovník.gov.cz/základní/pojem/proměnný-prvek>, <https://slovník.gov.cz/základní/pojem/prvek>))  
+    }
+
+    OPTIONAL {
+        ?attribute rdfs:subClassOf ?parentAttribute .
+        ?parentAttribute a z:typ-vlastnosti .
+        FILTER(?parentAttribute != <https://slovník.gov.cz/základní/pojem/vlastnost>)
+        BIND("sub-class-of" AS ?subPropertyClass)
+    }
+
+    BIND(IRI(REPLACE(STR(?attribute), "/pojem/", "/pojem-z-cim-transformace/")) AS ?outwardsRelation)
+    BIND(?attribute AS ?rangeElement)
+    BIND(?attributeLabel AS ?outwardsRelationLabel)
+    BIND(?attributeDefinition AS ?outwardsRelationDefinition)
+    BIND(?attributeGlossary AS ?outwardsRelationGlossary)
+    BIND(?parentAttribute AS ?parentRelation)
+    BIND(?attributeLabel  AS ?rangeLabel)
+    BIND(?attributeDefinition AS ?rangeDefinition)
+    BIND(?attributeGlossary AS ?rangeGlossary)
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/object/specializes> a browser:ExpansionQuery ;
@@ -233,15 +571,15 @@ CONSTRUCT {
   ?node rdfs:subClassOf ?parent .
   ?parent a z:typ-objektu ;
     skos:prefLabel ?parentLabel ;
-    browser:class "object", ?parentGlossaryClass, ?parentLGlossaryClass .
+    browser:class "object", ?parentGlossClass, ?parentLGlossClass .
 
   rdfs:subClassOf browser:class "sub-class-of" .    
 } WHERE {
   ?node rdfs:subClassOf ?parent .
   ?parent skos:prefLabel ?parentLabel ;
     skos:inScheme ?parentGlossary .
-  BIND(REPLACE(STR(?parentGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?parentGlossaryClass)
-  BIND(REPLACE(STR(?parentGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?parentLGlossaryClass)
+  BIND(REPLACE(STR(?parentGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?parentGlossClass)
+  BIND(REPLACE(STR(?parentGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?parentLGlossClass)
   FILTER (LANG(?parentLabel) = "cs")
 }""" .
 
@@ -257,15 +595,15 @@ CONSTRUCT {
   ?child a z:typ-objektu ;
     rdfs:subClassOf ?node ;
     skos:prefLabel ?childLabel ;
-    browser:class "object", ?childGlossaryClass, ?childLGlossaryClass .
+    browser:class "object", ?childGlossClass, ?childLGlossClass .
     
   rdfs:subClassOf browser:class "sub-class-of" .    
 } WHERE {
   ?child rdfs:subClassOf ?node ;
     skos:prefLabel ?childLabel ;
     skos:inScheme ?childGlossary .
-  BIND(REPLACE(STR(?childGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?childGlossaryClass)
-  BIND(REPLACE(STR(?childGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?childLGlossaryClass)
+  BIND(REPLACE(STR(?childGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?childGlossClass)
+  BIND(REPLACE(STR(?childGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?childLGlossClass)
   FILTER (LANG(?childLabel) = "cs")
 }""" .
 
@@ -280,13 +618,13 @@ PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
 CONSTRUCT {
   ?node a z:typ-objektu ;
     skos:prefLabel ?label ;
-    browser:class "object", ?glossaryClass, ?lglossaryClass .
+    browser:class "object", ?glossClass, ?lglossClass .
 } WHERE {
   ?node skos:prefLabel ?label ;
     skos:inScheme ?glossary .
   FILTER (LANG(?label) = "cs")
-  BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?glossaryClass) 
-  BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?lglossaryClass)
+  BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?glossClass) 
+  BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?lglossClass)
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/object> a browser:DetailQuery ;
@@ -338,6 +676,7 @@ CONSTRUCT {
     SELECT ?node (COUNT(DISTINCT ?child) AS ?numberOfChildren)
     WHERE {
       ?child rdfs:subClassOf ?node .
+      FILTER(!isBlank(?node))
     }
     GROUP BY ?node
   }
@@ -346,6 +685,7 @@ CONSTRUCT {
     SELECT ?node (COUNT(DISTINCT ?parent) AS ?numberOfParents)
     WHERE {
       ?node rdfs:subClassOf ?parent .
+      FILTER(!isBlank(?parent))
     }
     GROUP BY ?node
   }
@@ -400,7 +740,7 @@ CONSTRUCT {
     
   ?element a z:typ-objektu ;
     skos:prefLabel ?label ;
-    browser:class "object", ?glossaryClass, ?lglossaryClass .
+    browser:class "object", ?glossClass, ?lglossClass .
     
   rdfs:domain browser:class "domain" .
 
@@ -413,8 +753,8 @@ CONSTRUCT {
     ?element skos:prefLabel ?label ;
       skos:inScheme ?glossary .
     FILTER (LANG(?label) = "cs")
-    BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?glossaryClass)
-    BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?lglossaryClass)
+    BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?glossClass)
+    BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?lglossClass)
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/attribute> a browser:PreviewQuery ;
@@ -428,13 +768,13 @@ PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
 CONSTRUCT {
   ?node a z:typ-vlasnosti ;
     skos:prefLabel ?label ;
-    browser:class "attribute", ?glossaryClass, ?lglossaryClass .
+    browser:class "attribute", ?glossClass, ?lglossClass .
 } WHERE {
   ?node skos:prefLabel ?label ;
     skos:inScheme ?glossary .
   FILTER (LANG(?label) = "cs")
-  BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?glossaryClass)
-  BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?lglossaryClass) 
+  BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?glossClass)
+  BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?lglossClass) 
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/attribute> a browser:DetailQuery ;
@@ -487,44 +827,44 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
 
 CONSTRUCT {
-  ?node rdfs:domain ?domainElement .
+  ?node rdfs:domain ?domElem .
     
-  ?domainElement a z:typ-objektu ;
+  ?domElem a z:typ-objektu ;
     skos:prefLabel ?domainLabel ;
-    browser:class "object", ?domainGlossaryClass, ?domainLGlossaryClass .
+    browser:class "object", ?domainGlossClass, ?domainLGlossClass .
     
   rdfs:domain browser:class "domain" .
   
-  ?node rdfs:range ?rangeElement .
+  ?node rdfs:range ?rngElem .
     
-  ?rangeElement a z:typ-objektu ;
-    skos:prefLabel ?rangeLabel ;
-    browser:class "object", ?rangeGlossaryClass, ?rangeLGlossaryClass .
+  ?rngElem a z:typ-objektu ;
+    skos:prefLabel ?rngLabel ;
+    browser:class "object", ?rngGlossClass, ?rngLGlossClass .
     
   rdfs:range browser:class "range" .
 
 } WHERE {  
     ?node rdfs:subClassOf [
-      owl:allValuesFrom ?domainElement ;
+      owl:allValuesFrom ?domElem ;
       owl:onProperty z:má-vztažený-prvek-1
     ] .
 
-    ?domainElement skos:prefLabel ?domainLabel ;
+    ?domElem skos:prefLabel ?domainLabel ;
       skos:inScheme ?domainGlossary .
     FILTER (LANG(?domainLabel) = "cs")
-    BIND(REPLACE(STR(?domainGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?domainGlossaryClass)
-    BIND(REPLACE(STR(?domainGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?domainLGlossaryClass)
+    BIND(REPLACE(STR(?domainGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?domainGlossClass)
+    BIND(REPLACE(STR(?domainGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?domainLGlossClass)
 
     ?node rdfs:subClassOf [
-      owl:allValuesFrom ?rangeElement ;
+      owl:allValuesFrom ?rngElem ;
       owl:onProperty z:má-vztažený-prvek-2
     ] .
 
-    ?rangeElement skos:prefLabel ?rangeLabel ;
-      skos:inScheme ?rangeGlossary .
-    FILTER (LANG(?rangeLabel) = "cs")
-    BIND(REPLACE(STR(?rangeGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?rangeGlossaryClass)
-    BIND(REPLACE(STR(?rangeGlossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?rangeLGlossaryClass)
+    ?rngElem skos:prefLabel ?rngLabel ;
+      skos:inScheme ?rngGloss .
+    FILTER (LANG(?rngLabel) = "cs")
+    BIND(REPLACE(STR(?rngGloss), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?rngGlossClass)
+    BIND(REPLACE(STR(?rngGloss), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?rngLGlossClass)
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/relation> a browser:PreviewQuery ;
@@ -538,13 +878,13 @@ PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
 CONSTRUCT {
   ?node a z:typ-vztahu ;
     skos:prefLabel ?label ;
-    browser:class "relation", ?glossaryClass, ?lglossaryClass .
+    browser:class "relation", ?glossClass, ?lglossClass .
 } WHERE {
   ?node skos:prefLabel ?label ;
     skos:inScheme ?glossary .
   FILTER (LANG(?label) = "cs")
-  BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?glossaryClass)
-  BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?lglossaryClass) 
+  BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/([a-z])[^\\\\/]+\\\\/.+$", "$1sgov") AS ?glossClass)
+  BIND(REPLACE(STR(?glossary), "^https:\\\\/\\\\/slovník.gov.cz\\\\/legislativní\\\\/sbírka\\\\/([0-9]+)\\\\/([0-9]+)\\\\/.+$", "lsgov$1$2") AS ?lglossClass) 
 }""" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/relation> a browser:DetailQuery ;
@@ -702,87 +1042,60 @@ browser-sgov:legal a owl:DatatypeProperty ;
   browser:hasSelector ".relation" .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/zsgov> a browser:VisualStyle ;
-  browser:background-color "#191B24" ;
-  browser:border-color "#434860" ;
-  browser:color "#FFFFFF" ;
+  browser:border-width "2px" ;
+  browser:border-style "dotted" ;
   browser:hasSelector ".zsgov" .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/vsgov> a browser:VisualStyle ;
-  browser:background-color "#181010" ;
-  browser:border-color "#493131" ;
-  browser:color "#FFFFFF" ;
+  browser:border-style "dashed" ;
   browser:hasSelector ".vsgov" .
-  
-<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/gsgov> a browser:VisualStyle ;
-  browser:background-color "#181010" ;
-  browser:border-color "#493131" ;
-  browser:color "#FFFFFF" ; 
-  browser:hasSelector ".gsgov" .
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/lsgov> a browser:VisualStyle ;
-  browser:background-color "#F2F2F8" ;
-  browser:border-color "#AFAFD4" ;
-  browser:color "#000000" ;
+  browser:border-width "2px" ;
   browser:hasSelector ".lsgov" .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/asgov> a browser:VisualStyle ;
-  browser:background-color "#FFFFFF" ;
-  browser:border-color "#90F651" ;
-  browser:color "#90F651" ;
+  browser:border-width "1px" ;
   browser:hasSelector ".asgov" .
-  
+
 <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/dsgov> a browser:VisualStyle ;
-  browser:background-color "#FFFFFF" ;
-  browser:border-color "#444444" ;
-  browser:color "#444444" ;
-  browser:font-family "monospace" ;
-  browser:hasSelector ".datový" .
+  browser:border-width "1px" ;
+  browser:font-family "courier" ;
+  browser:hasSelector ".dsgov" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/gsgov> a browser:VisualStyle ;
+  browser:border-width "1px" ;
+  browser:border-style "dashed" ;
+  browser:font-family "courier" ;
+  browser:hasSelector ".gsgov" .
 
 # občanský zákoník
 <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/lsgov892012> a browser:VisualStyle ;
-  browser:border-color "#6CA3DA" ;
-  browser:background-color "#DFEBF7" ;
-  browser:color "#000000" ;
   browser:hasSelector ".lsgov892012" .
 
 # zákon o obchodních korporacích
 <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/lsgov902012> a browser:VisualStyle ;
-  browser:border-color "#6BA368" ;
-  browser:background-color "#CDE0CC" ;
-  browser:color "#000000" ;
   browser:hasSelector ".lsgov902012" .
 
 # zákon o veřejných rejstřících
 <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/lsgov3042013> a browser:VisualStyle ;
-  browser:border-color "#897EA0" ;
-  browser:background-color "#DFDCE5" ;
-  browser:color "#000000" ;
   browser:hasSelector ".lsgov3042013" .
 
 # zákon o základních registrech
 <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/lsgov1112009> a browser:VisualStyle ;
-  browser:border-color "#D27486" ;
-  browser:background-color "#F5E0E4" ;
-  browser:color "#000000" ;
   browser:hasSelector ".lsgov1112009" .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/lsgov562001> a browser:VisualStyle ;
-  browser:border-color "#FF6961" ;
-  browser:color "#000000" ;
   browser:hasSelector ".lsgov562001" .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/lsgov3612000> a browser:VisualStyle ;
-  browser:border-color "#191970" ;
-  browser:color "#000000" ;
   browser:hasSelector ".lsgov3612000" .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/lsgov1852001> a browser:VisualStyle ;
-  browser:border-color "#33331a" ;
-  browser:color "#000000" ;
   browser:hasSelector ".lsgov1852001" .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/sgov/style/node> a browser:VisualStyle ;
-  browser:border-width "3px" ;
+  browser:border-width "1px" ;
   browser:text-wrap "wrap";
   browser:text-max-width "180px";
   browser:label "data(label)" ;
@@ -791,8 +1104,8 @@ browser-sgov:legal a owl:DatatypeProperty ;
   browser:padding "5px" ;
   browser:text-halign "center" ;
   browser:text-valign "center" ;
-  browser:background-color "#A9A5A7" ;
-  browser:border-color "#544B50" ;
+  browser:background-color "white" ;
+  browser:border-color "black" ;
   browser:color "black" ;
   browser:shape "rectangle" ;
   browser:hasSelector "node" .
