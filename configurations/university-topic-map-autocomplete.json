@@ -14168,8 +14168,7 @@
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/1449","label":"Pneumologická klinika 1. LF UK a FTN","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/1450","label":"Sekretariát","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/1451","label":"Studijní oddělení","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
-"https://cu.opendata.cz/resource/prvek-organizační-struktury/1452","Oddělení 
-komunikace","https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"
+{"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/1452","label":"Oddělení komunikace","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/1453","label":"Gynekologicko-porodnická klinika 1. LF UK a FNB","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/1454","label":"Chirurgická klinika 1. LF UK a FNB","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/1455","label":"Personální oddělení","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
@@ -14662,8 +14661,7 @@ komunikace","https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Prac
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/600","label":"Centrum pro výzkum výživy, metabolismu a diabetu  3. LF UK","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/603","label":"Klinika pracovního a cestovního lékařství 3. LF UK a FNKV","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/604","label":"Dermatovenerologická klinika 3. LF UK a FNKV","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
-"https://cu.opendata.cz/resource/prvek-organizační-struktury/606","Klinika dětí a dorostu 
-3. LF UK a FNKV","https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"
+{"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/606","label":"Klinika dětí a dorostu 3. LF UK a FNKV","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/607","label":"Klinika nukleární medicíny 3. LF UK a FNKV","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/608","label":"Radiodiagnostická klinika 3. LF UK a FNKV","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/609","label":"Onkologická klinika 3. LF UK a FNKV","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
@@ -14676,8 +14674,7 @@ komunikace","https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Prac
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/616","label":"Klinika psychiatrie a lékařské psychologie 3. LF UK a NÚDZ","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/617","label":"Psychiatrická klinika","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/618","label":"Oddělení lékařské psychologie","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
-"https://cu.opendata.cz/resource/prvek-organizační-struktury/619","Gynekologicko-porodnická klinika 
-3. LF UK a FNKV","https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"
+{"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/619","label":"Gynekologicko-porodnická klinika 3. LF UK a FNKV","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/620","label":"Oddělení nádorové biologie","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/621","label":"Oddělení molekulární biologie a patologie buňky","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/622","label":"Ústav pro péči o matku a dítě","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
