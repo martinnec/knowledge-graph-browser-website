@@ -1,4 +1,5 @@
 {
+"items": [
 {"@id":"https://cu.opendata.cz/resource/keyword/1.ro","label":"1.ro","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Téma"},
 {"@id":"https://cu.opendata.cz/resource/keyword/2.filosofie","label":"2.filosofie","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Téma"},
 {"@id":"https://cu.opendata.cz/resource/keyword/a2-b1.normativn","label":"a2-b1.normativn","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Téma"},
@@ -14995,4 +14996,4 @@ komunikace","https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Prac
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/973","label":"Sekretariát proděkana pro vnější vztahy a zahraniční záležitosti","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/976","label":"Sekretariát tajemníka","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"},
 {"@id":"https://cu.opendata.cz/resource/prvek-organizační-struktury/977","label":"PPM - student","type":"https://linked.opendata.cz/ontology/knowledge-graph-browser/uk/Pracoviště"}
-}
+]}
