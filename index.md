@@ -23,11 +23,11 @@ If you are interested in the raw visual configurations demonstrated in the paper
 
 <a id="demo"></a>
 ## Demo
-**You can start exploring knowledge graphs using our [demo](https://try.kgbrowser.opendata.cz).**
+You can start exploring knowledge graphs using our [demo](https://try.kgbrowser.opendata.cz).
 
-We prepared various knowledge graph visualisations if you want to see something quickly.
-They are not just images.
-They are interactive graph visualisations you can use as a starting point for your own exploration.
+We also prepared various knowledge graph visualisations so that you can see what's possible to achieve with our tool.
+The visualisations are not just images.
+They are interactive and you can use them as a starting point for your own exploration.
 
 You can start with famous personalities:
 
