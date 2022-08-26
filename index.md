@@ -1,3 +1,7 @@
+## Table of contents
+1. [Introduction](#introduction)
+2. [Tutorial link]()
+
 Knowledge Graph Browser is a tool for visual exploration of knowledge graphs.
 
 **You can start exploring knowledge graphs using our [demo](https://try.kgbrowser.opendata.cz).**
@@ -18,6 +22,9 @@ You can start with famous personalities:
 - [What do Madeleine Albright, Bill Clinton, George W. Bush, Táňa Fischerová, Miloš Zeman, Mick Jagger, Charlie Watts, Keith Richards have in common?](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/common-albright-clinton-bush-fischerova-zeman-jagger-richards-watts.kgvb)
 
 You can also try to explore MEPs (members of parliaments):
+
+## This is the introduction <a id="introduction"></a>
+Some introduction text, formatted in heading 2 style
 
 - [London and Prague mayors who were or are MEPs in their national parliaments](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/london-prague-mayors-as-meps.kgvb)
 - [Aristocratic MEPs of the Czech Parliament](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/aristocratic-members-of-chamber-of-deputies-of-czechia.kgvb)
