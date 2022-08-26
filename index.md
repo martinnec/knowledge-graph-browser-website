@@ -1,8 +1,8 @@
+Knowledge Graph Browser is a tool for visual exploration of knowledge graphs.
+
 ## Table of contents
 1. [Introduction](#introduction)
 2. [Tutorial link]()
-
-Knowledge Graph Browser is a tool for visual exploration of knowledge graphs.
 
 **You can start exploring knowledge graphs using our [demo](https://try.kgbrowser.opendata.cz).**
 
