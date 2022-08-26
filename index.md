@@ -1,8 +1,13 @@
 Knowledge Graph Browser is a tool for visual exploration of knowledge graphs.
 
 ## Table of contents
-1. [Introduction](#introduction)
-2. [Tutorial link]()
+- [Project information](#project-info)
+- [Tutorial](#tutorial)
+- [Useful links](#useful-links)
+
+<a id="project-info"></a>
+## Project information
+
 
 **You can start exploring knowledge graphs using our [demo](https://try.kgbrowser.opendata.cz).**
 
@@ -22,10 +27,6 @@ You can start with famous personalities:
 - [What do Madeleine Albright, Bill Clinton, George W. Bush, Táňa Fischerová, Miloš Zeman, Mick Jagger, Charlie Watts, Keith Richards have in common?](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/common-albright-clinton-bush-fischerova-zeman-jagger-richards-watts.kgvb)
 
 You can also try to explore MEPs (members of parliaments):
-
-## This is the introduction <a id="introduction"></a>
-Some introduction text, formatted in heading 2 style
-
 - [London and Prague mayors who were or are MEPs in their national parliaments](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/london-prague-mayors-as-meps.kgvb)
 - [Aristocratic MEPs of the Czech Parliament](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/aristocratic-members-of-chamber-of-deputies-of-czechia.kgvb)
 - [Moviemakers and writters in the Czech Parliament](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/moviemakers-and-writers-as-members-of-chamber-of-deputies.kgvb)
@@ -40,3 +41,10 @@ If you are interested in the raw visual configurations demonstrated in the paper
 - scientists: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-scientists.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists)
 - scientists with their works: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-scientists-works.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists-works)
 - scientists with their works and groups: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-scientists-works-groups.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists-works-groups)
+
+<a id="tutorial"></a>
+## Tutorial
+
+
+<a id="useful-links"></a>
+## Useful links
