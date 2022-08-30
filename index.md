@@ -65,13 +65,17 @@ To select a configuration you can:
 > **Note**  
 > A meta-configuration is a set of specific configurations.
 
-If you opted for **A** then you will also have to select a specific configuration as shown in the following screenshot (it shows how it looks when you choose the *Scientists* meta-configuration):  
+If you opt for **A** then you will also have to select a specific configuration as shown in the following screenshot (it shows how it looks when you choose the *Scientists* meta-configuration):  
 <br>
 ![Selecting a configuration](https://github.com/JiriResler/knowledge-graph-browser-website/blob/main/tutorial-screenshots/selecting_a_configuration.png)  
 <br>
 After that you will be asked to choose a starting node for your exploration (the following screenshot was taken after choosing the *Scientists* configuration):  
 <br>
 ![Selecting a starting node](https://github.com/JiriResler/knowledge-graph-browser-website/blob/main/tutorial-screenshots/selecting_a_starting_node.png)  
+<br>
+If you choose Albert Einstein, you will end up with this screen:  
+<br>
+![Initial screen with a graph](https://github.com/JiriResler/knowledge-graph-browser-website/blob/main/tutorial-screenshots/initial_screen_with_a_graph.png)  
 <br>
 
 <a id="basic-operations-on-graph"></a>
