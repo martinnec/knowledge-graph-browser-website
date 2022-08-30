@@ -55,7 +55,7 @@ You can also try to explore MEPs (members of parliaments):
 To start exploring a knowledge graph you first need to select a configuration.
 This can be done in various ways as depicted on the following screenshot:  
 <br>
-![Selecting a meta-configuration](https://github.com/JiriResler/knowledge-graph-browser-website/blob/main/tutorial-screenshots/selecting_a_meta-configuration.png)  
+![Selecting a meta-configuration](/tutorial-screenshots/selecting_a_meta-configuration.png)  
 <br>
 To select a configuration you can:  
 **A)** Choose one of our existing meta-configurations  
@@ -67,15 +67,15 @@ To select a configuration you can:
 
 If you opt for **A** then you will also have to select a specific configuration as shown in the following screenshot (it shows how it looks when you choose the *Scientists* meta-configuration):  
 <br>
-![Selecting a configuration](https://github.com/JiriResler/knowledge-graph-browser-website/blob/main/tutorial-screenshots/selecting_a_configuration.png)  
+![Selecting a configuration](/tutorial-screenshots/selecting_a_configuration.png)  
 <br>
 After that you will be asked to choose a starting node for your exploration (the following screenshot was taken after choosing the *Scientists* configuration):  
 <br>
-![Selecting a starting node](https://github.com/JiriResler/knowledge-graph-browser-website/blob/main/tutorial-screenshots/selecting_a_starting_node.png)  
+![Selecting a starting node](/tutorial-screenshots/selecting_a_starting_node.png)  
 <br>
 If you choose Albert Einstein, you will end up with this screen:  
 <br>
-![Initial screen with a graph](https://github.com/JiriResler/knowledge-graph-browser-website/blob/main/tutorial-screenshots/initial_screen_with_a_graph.png)  
+![Initial screen with a graph](/tutorial-screenshots/initial_screen_with_a_graph.png)  
 <br>
 
 <a id="basic-operations-on-graph"></a>
