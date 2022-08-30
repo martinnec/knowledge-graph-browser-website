@@ -45,6 +45,19 @@ You can also try to explore MEPs (members of parliaments):
 
 <a id="tutorial"></a>
 ## Tutorial
+### Table of contents of the tutorial
+- [Creating a new graph](#creating-graph)
+- [Basic operations on a graph](#basic-operations-on-graph)
+- [Faceted filtering](#faceted-filtering)
+
+<a id="creating-graph"></a>
+### Creating a new graph
+
+<a id="basic-operations-on-graph"></a>
+### Basic operations on a graph
+
+<a id="faceted-filtering"></a>
+### Faceted filtering
 
 <a id="useful-links"></a>
 ## Useful links
