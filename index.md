@@ -80,6 +80,13 @@ If you choose Albert Einstein, you will end up with this screen:
 
 <a id="basic-operations-on-graph"></a>
 ### Basic operations on a graph
+You can interact with the tool in the following ways as shown in the following screenshot:  
+<br>
+![Basic operations on a graph](/tutorial-screenshots/basic_operations_on_a_graph.png)  
+<br>
+**A)** Menu - There you can find settings and perform various actions  
+**B)** Search bar - You can search for a node in the graph  
+**C)** Node's views - You can use the *expand* buttons to incrementally expand the node   
 
 <a id="faceted-filtering"></a>
 ### Faceted filtering
