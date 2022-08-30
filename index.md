@@ -90,6 +90,13 @@ You can interact with the tool in the following ways as shown in the following s
 
 <a id="faceted-filtering"></a>
 ### Faceted filtering
-
+When you want to filter a graph you can click the **filtering** tab next to the menu.  
+<br>
+![Filtering](/tutorial-screenshots/filtering.png)  
+<br>
+Here's what the buttons do:
+- Filter - filters nodes in the graph using filtering criteria that you have set
+- Reset - shows all hidden nodes and also unchecks all checkboxes and sets sliders to their extrema
+- Reload facets - when you delete nodes some of the facets may end up in an inconsistent state (there may be some information in the facets that aren't in the graph anymore). After clicking this button the facets will be recomputed and they will be in a correct state
 <a id="useful-links"></a>
 ## Useful links
