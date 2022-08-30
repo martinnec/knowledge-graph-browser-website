@@ -52,6 +52,27 @@ You can also try to explore MEPs (members of parliaments):
 
 <a id="creating-graph"></a>
 ### Creating a new graph
+To start exploring a knowledge graph you first need to select a configuration.
+This can be done in various ways as depicted on the following screenshot:  
+<br>
+![Selecting a meta-configuration](https://github.com/JiriResler/knowledge-graph-browser-website/blob/main/tutorial-screenshots/selecting_a_meta-configuration.png)  
+<br>
+To select a configuration you can:  
+**A)** Choose one of our existing meta-configurations  
+**B)** Manually set the configuration using its IRI  
+**C)** Open an existing graph which has a configuration already selected  
+
+> **Note**  
+> A meta-configuration is a set of specific configurations.
+
+If you opted for **A** then you will also have to select a specific configuration as shown in the following screenshot (it shows how it looks when you choose the *Scientists* meta-configuration):  
+<br>
+![Selecting a configuration](https://github.com/JiriResler/knowledge-graph-browser-website/blob/main/tutorial-screenshots/selecting_a_configuration.png)  
+<br>
+After that you will be asked to choose a starting node for your exploration (the following screenshot was taken after choosing the *Scientists* configuration):  
+<br>
+![Selecting a starting node](https://github.com/JiriResler/knowledge-graph-browser-website/blob/main/tutorial-screenshots/selecting_a_starting_node.png)  
+<br>
 
 <a id="basic-operations-on-graph"></a>
 ### Basic operations on a graph
