@@ -4,7 +4,6 @@ This website is an accompanying website for the paper titled "Interactive and it
 - [Project information](#project-info)
 - [Demo](#demo)
 - [Tutorial](#tutorial)
-- [Useful links](#useful-links)
 
 <a id="project-info"></a>
 ## Project information
@@ -45,11 +44,16 @@ You can also try to explore MEPs (members of parliaments):
 
 <a id="tutorial"></a>
 ## Tutorial
-### Table of contents of the tutorial
-- [Creating a new graph](#creating-graph)
-- [Basic operations on a graph](#basic-operations-on-graph)
-- [Faceted filtering](#faceted-filtering)
+This tutorial will teach you how to use our tool to start exploring a knowledge graph. It contains instructions on how to create a new graph and do basic operations on it. There are also separate chapters on more advanced topics.
 
+### Table of contents of the tutorial
+- Basics
+  - [Creating a new graph](#creating-graph)
+  - [Basic operations on a graph](#basic-operations-on-graph)
+- [Faceted filtering](#faceted-filtering)
+- [Grouping of nodes](#grouping-of-nodes)
+
+### Basics
 <a id="creating-graph"></a>
 ### Creating a new graph
 To start exploring a knowledge graph you first need to select a configuration.
@@ -91,12 +95,20 @@ You can interact with the tool in the following ways as shown in the following s
 <a id="faceted-filtering"></a>
 ### Faceted filtering
 When you want to filter a graph you can click the **filtering** tab next to the menu.  
-<br>
+
 ![Filtering](/tutorial-screenshots/filtering.png)  
-<br>
+
 Here's what the buttons do:
 - Filter - filters nodes in the graph using filtering criteria that you have set
 - Reset - shows all hidden nodes and also unchecks all checkboxes and sets sliders to their extrema
 - Reload facets - when you delete nodes some of the facets may end up in an inconsistent state (there may be some information in the facets that aren't in the graph anymore). After clicking this button the facets will be recomputed and they will be in a correct state
-<a id="useful-links"></a>
-## Useful links
+
+There are two categories of facets although they are indistinguishable in the tool:
+- Facets loaded from a configuration
+  - they are specific for a configuration
+  - these facets take some time to load because the tool communicates with a dataset which the graph is based on
+- Facets found locally in the graph
+  - they contain graph information that are the same for every graph (e.g. number of node's edges or the type of a node)
+
+<a id="grouping-of-nodes"></a>
+### Grouping of nodes
