@@ -69,7 +69,7 @@ One possible way to visualize such relationships is to create an edge between pa
 Figure 1 below shows an example with universities and departments:
 
 <p align="center">
-    <img src="img/child_parent_relation.png" alt="parent-child-relationship" title="Parent-child relationship" width="600"/><br/>
+    <img src="tutorial-screenshots/child_parent_relation.png" alt="parent-child-relationship" title="Parent-child relationship" width="600"/><br/>
     <em>Figure 1. Parent-child relationship</em>
 </p>
 
@@ -90,7 +90,7 @@ Each such node hierarchy represents a [hierarchical group](#hierarchical-group-g
 For example, "the department teaches the subject" relationship can be visualized as non-hierarchical. An example is shown in the Figure 2 below.
 
 <p align="center">
-    <img src="img/non_hierarchical_edge.png" alt="non-hierarchical-edge" title="Non-hierarchical edge" width="600"/><br/>
+    <img src="tutorial-screenshots/non_hierarchical_edge.png" alt="non-hierarchical-edge" title="Non-hierarchical edge" width="600"/><br/>
     <em>Figure 2. Non-hierarchical edge</em>
 </p>
 
@@ -104,7 +104,7 @@ For example, "the department teaches the subject" relationship can be visualized
 A hierarchical class, if it exists, is shown along with a label of a node on the detail panel. See Figure 3 below for more details.
 
 <p align="center">
-    <img src="img/hierarchical_class.png" alt="hierarchical-class" title="Hierarchical class" width="350"/><br/>
+    <img src="tutorial-screenshots/hierarchical_class.png" alt="hierarchical-class" title="Hierarchical class" width="350"/><br/>
     <em>Figure 3. Hierarchical class</em>
 </p>
 
@@ -148,7 +148,7 @@ An example of one such hierarchical group is shown in Figure 1 above.
 An example of a visual group is shown in the Figure 4 below. The "pseudo-parent" node is a gray node with white nodes inside.
 
 <p align="center">
-    <img src="img/visual_group.png" alt="visual-group" title="Visual group" width="600"/><br/>
+    <img src="tutorial-screenshots/visual_group.png" alt="visual-group" title="Visual group" width="600"/><br/>
     <em>Figure 4. Visual group</em>
 </p>
 
@@ -163,7 +163,7 @@ Each node in a visual group must have an additional visual group class represent
 An example of two visual groups "pracovisteVisualGroup" and "tema" is shown in Figure 5 below (later on we will use "pracovisteVisualGroup" as the visual group).
 
 <p align="center">
-    <img src="img/visual_groups.png" alt="visual-groups" title="Visual groups" width="600"/><br/>
+    <img src="tutorial-screenshots/visual_groups.png" alt="visual-groups" title="Visual groups" width="600"/><br/>
     <em>Figure 5. Visual groups. To the left is "pracovisteVisualGroup" visual group and to the right is "tema" visual group</em>
 </p>
 
@@ -185,7 +185,7 @@ An example of two visual groups "pracovisteVisualGroup" and "tema" is shown in F
 The "Scaling options" checkbox is used to choose whether to group clusters or to zoom. It is placed in the right top corner of the graph area. See the Figure 6 below for more detail.
 
 <p align="center">
-    <img src="img/scaling_options.png" alt="scaling-options" title="Scaling options" width="200"/><br/>
+    <img src="tutorial-screenshots/scaling_options.png" alt="scaling-options" title="Scaling options" width="200"/><br/>
     <em>Figure 6. Scaling options</em>
 </p>
 
@@ -220,14 +220,14 @@ Two cases can occur at the end of filtering:
 - In the first case (an example is shown in the Figure 7 below), at the end of the filtering there are several nodes that can be clustered and grouped (within same parent). The algorithm then simply clusters and groups filtered nodes.
 
 <p align="center">
-    <img src="img/grouping_of_clusters_several_child_nodes.png" alt="grouping-of-clusters-several-child-nodes" title="Grouping of clusters - several child nodes" width="600"/><br/>
+    <img src="tutorial-screenshots/grouping_of_clusters_several_child_nodes.png" alt="grouping-of-clusters-several-child-nodes" title="Grouping of clusters - several child nodes" width="600"/><br/>
     <em>Figure 7. Grouping of clusters (use-case of several child nodes)</em>
 </p>
 
 - In the second case, only one child node (per parent) remains at the end of the filtering (an example is shown in the Figure 8 below). 
 
   <p align="center">
-      <img src="img/grouping_of_clusters_one_child_node.png" alt="grouping-of-clusters-one-child-node" title="Grouping of clusters with one child node" width="600"/><br/>
+      <img src="tutorial-screenshots/grouping_of_clusters_one_child_node.png" alt="grouping-of-clusters-one-child-node" title="Grouping of clusters with one child node" width="600"/><br/>
       <em>Figure 8. Grouping of clusters (use-case of one child node)</em>
   </p>
 
@@ -265,14 +265,14 @@ This guide will explain and teach you how the "Grouping of clusters" extension w
 **1)** Choose "Charles Explorer" meta-configuration. See the Figure 9 below.
 
 <p align="center">
-    <img src="img/meta_configuration_selection.png" alt="meta-configuration-selection" title="Meta-Configuration selection" width="600"/><br/>
+    <img src="tutorial-screenshots/meta_configuration_selection.png" alt="meta-configuration-selection" title="Meta-Configuration selection" width="600"/><br/>
     <em>Figure 9. Meta-Configuration selection</em>
 </p>
 
 **2)** Choose "Browsing topics cultivated at Charles University (with constraints)" configuration. See the Figure 10 below.
 
 <p align="center">
-    <img src="img/configuration_selection.png" alt="configuration-selection" title="Configuration selection" width="600"/><br/>
+    <img src="tutorial-screenshots/configuration_selection.png" alt="configuration-selection" title="Configuration selection" width="600"/><br/>
     <em>Figure 10. Meta-Configuration selection</em>
 </p>
 
@@ -282,7 +282,7 @@ This guide will explain and teach you how the "Grouping of clusters" extension w
 > Wait for the starting node to fully load (the loading sign will disappear and the starting node will look like at the picture below). This is a necessary step for the extension to work correctly. See the Figure 11 below.
 
 <p align="center">
-    <img src="img/starting_node.png" alt="starting-node" title="Starting node" width="600"/><br/>
+    <img src="tutorial-screenshots/starting_node.png" alt="starting-node" title="Starting node" width="600"/><br/>
     <em>Figure 11. Starting node</em>
 </p>
 
@@ -309,7 +309,7 @@ The hierarchical and non-hierarchical expansions are listed below and shown in t
   - "Sdílená témata pracoviště"
 
 <p align="center">
-    <img src="img/hierarchical_non_hierarchical_expansions.png" alt="hierarchical-and-non-hierarchical-expansions" title="Hierarchical and non hierarchical expansions" width="530"/><br/>
+    <img src="tutorial-screenshots/hierarchical_non_hierarchical_expansions.png" alt="hierarchical-and-non-hierarchical-expansions" title="Hierarchical and non hierarchical expansions" width="530"/><br/>
     <em>Figure 12. Hierarchical and non-hierarchical expansions</em>
 </p>
 
@@ -338,14 +338,14 @@ Below is shown an example of the node [removal](#node-removal-glossary):
 Before removal of the "Informaticka sekce":
 
 <p align="center">
-    <img src="img/before_removal.png" alt="before-removal" title="Before removal" width="750"/><br/>
+    <img src="tutorial-screenshots/before_removal.png" alt="before-removal" title="Before removal" width="750"/><br/>
     <em>Figure 13. Before removal (the node "Informaticka sekce" is selected for deletion)</em>
 </p>
 
 After removal:
 
 <p align="center">
-    <img src="img/after_removal.png" alt="after-removal" title="After removal" width="350"/><br/>
+    <img src="tutorial-screenshots/after_removal.png" alt="after-removal" title="After removal" width="350"/><br/>
     <em>Figure 14. After removal</em>
 </p>
 
