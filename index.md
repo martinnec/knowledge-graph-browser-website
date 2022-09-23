@@ -1,27 +1,13 @@
-Knowledge Graph Browser is a tool for visual exploration of knowledge graphs.
-
-**You can start exploring knowledge graphs using our [demo](https://try.kgbrowser.opendata.cz).**
-
 This website is an accompanying website for the paper titled "Interactive and iterative visual exploration of knowledge graphs based on shareable and reusable visual configurations" which is currently under review.
 
-We prepared various knowledge graph visualisations if you want to see something quickly.
-They are not just images.
-They are interactive graph visualisations you can use as a starting point for your own exploration.
+## Table of contents
+- [Project information](#project-info)
+- [Demo](#demo)
+- [Tutorial](#tutorial)
 
-You can start with famous personalities:
-
-- [European Commissioners from Czechia and Germany](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/czech-and-german-european-commissioners.kgvb)
-- [Signatories of Charter 77](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/charter-77-signatories.kgvb)
-- [Marie Curie-Skłodowská's family and work](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/curie-family-and-work.kgvb)
-- [Chemical elements in the periodic table and their discoverers](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/periodic-table.kgvb)
-- [Family tree of Charles I of Austria](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/charles-I-of-austria-family-tree.kgvb)
-- [What do Madeleine Albright, Bill Clinton, George W. Bush, Táňa Fischerová, Miloš Zeman, Mick Jagger, Charlie Watts, Keith Richards have in common?](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/common-albright-clinton-bush-fischerova-zeman-jagger-richards-watts.kgvb)
-
-You can also try to explore MEPs (members of parliaments):
-
-- [London and Prague mayors who were or are MEPs in their national parliaments](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/london-prague-mayors-as-meps.kgvb)
-- [Aristocratic MEPs of the Czech Parliament](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/aristocratic-members-of-chamber-of-deputies-of-czechia.kgvb)
-- [Moviemakers and writters in the Czech Parliament](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/moviemakers-and-writers-as-members-of-chamber-of-deputies.kgvb)
+<a id="project-info"></a>
+## Project information
+Knowledge Graph Browser is a tool for visual exploration of knowledge graphs.
 
 The basic principle of the browser is to enable users to discover different knowledge graphs through different views defined by various browsing configurations.
 Real knowledge graphs are often too complex for human users and generic tools for knowledge graph visualisation and visual exploration are therefore quite hard to use.
@@ -33,6 +19,96 @@ If you are interested in the raw visual configurations demonstrated in the paper
 - scientists: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-scientists.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists)
 - scientists with their works: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-scientists-works.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists-works)
 - scientists with their works and groups: [file](https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/configurations/config-scientists-works-groups.ttl) [resource](https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists-works-groups)
+
+<a id="demo"></a>
+## Demo
+You can start exploring knowledge graphs using our [demo](https://try.kgbrowser.opendata.cz).
+
+We also prepared various knowledge graph visualisations so that you can see what's possible to achieve with our tool.
+The visualisations are not just images.
+They are interactive and you can use them as a starting point for your own exploration.
+
+You can start with famous personalities:
+
+- [European Commissioners from Czechia and Germany](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/czech-and-german-european-commissioners.kgvb)
+- [Signatories of Charter 77](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/charter-77-signatories.kgvb)
+- [Marie Curie-Skłodowská's family and work](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/curie-family-and-work.kgvb)
+- [Chemical elements in the periodic table and their discoverers](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/periodic-table.kgvb)
+- [Family tree of Charles I of Austria](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/charles-I-of-austria-family-tree.kgvb)
+- [What do Madeleine Albright, Bill Clinton, George W. Bush, Táňa Fischerová, Miloš Zeman, Mick Jagger, Charlie Watts, Keith Richards have in common?](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/common-albright-clinton-bush-fischerova-zeman-jagger-richards-watts.kgvb)
+
+You can also try to explore MEPs (members of parliaments):
+- [London and Prague mayors who were or are MEPs in their national parliaments](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/london-prague-mayors-as-meps.kgvb)
+- [Aristocratic MEPs of the Czech Parliament](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/aristocratic-members-of-chamber-of-deputies-of-czechia.kgvb)
+- [Moviemakers and writters in the Czech Parliament](https://try.kgbrowser.opendata.cz/?load=https://raw.githubusercontent.com/martinnec/knowledge-graph-browser-website/main/examples/moviemakers-and-writers-as-members-of-chamber-of-deputies.kgvb)
+
+<a id="tutorial"></a>
+## Tutorial
+This tutorial will teach you how to use our tool to start exploring a knowledge graph. It contains instructions on how to create a new graph and do basic operations on it. There are also separate chapters on more advanced topics.
+
+### Table of contents of the tutorial
+- Basics
+  - [Creating a new graph](#creating-graph)
+  - [Basic operations on a graph](#basic-operations-on-graph)
+- [Faceted filtering](#faceted-filtering)
+- [Grouping of clusters extension](#grouping-of-clusters-extension)
+
+### Basics
+<a id="creating-graph"></a>
+### Creating a new graph
+To start exploring a knowledge graph you first need to select a configuration.
+This can be done in various ways as depicted on the following screenshot:  
+<br>
+![Selecting a meta-configuration](/tutorial-screenshots/selecting_a_meta-configuration.png)  
+<br>
+To select a configuration you can:  
+**A)** Choose one of our existing meta-configurations  
+**B)** Manually set the configuration using its IRI  
+**C)** Open an existing graph which has a configuration already selected  
+
+> **Note**  
+> A meta-configuration is a set of specific configurations.
+
+If you opt for **A** then you will also have to select a specific configuration as shown in the following screenshot (it shows how it looks when you choose the *Scientists* meta-configuration):  
+<br>
+![Selecting a configuration](/tutorial-screenshots/selecting_a_configuration.png)  
+<br>
+After that you will be asked to choose a starting node for your exploration (the following screenshot was taken after choosing the *Scientists* configuration):  
+<br>
+![Selecting a starting node](/tutorial-screenshots/selecting_a_starting_node.png)  
+<br>
+If you choose Albert Einstein, you will end up with this screen:  
+<br>
+![Initial screen with a graph](/tutorial-screenshots/initial_screen_with_a_graph.png)  
+<br>
+
+<a id="basic-operations-on-graph"></a>
+### Basic operations on a graph
+You can interact with the tool in the following ways as shown in the following screenshot:  
+<br>
+![Basic operations on a graph](/tutorial-screenshots/basic_operations_on_a_graph.png)  
+<br>
+**A)** Menu - There you can find settings and perform various actions  
+**B)** Search bar - You can search for a node in the graph  
+**C)** Node's views - You can use the *expand* buttons to incrementally expand the node   
+
+<a id="faceted-filtering"></a>
+### Faceted filtering
+When you want to filter a graph you can click the **filtering** tab next to the menu.  
+
+![Filtering](/tutorial-screenshots/filtering.png)  
+
+Here's what the buttons do:
+- Filter - filters nodes in the graph using filtering criteria that you have set
+- Reset - shows all hidden nodes and also unchecks all checkboxes and sets sliders to their extrema
+- Reload facets - when you delete nodes some of the facets may end up in an inconsistent state (there may be some information in the facets that aren't in the graph anymore). After clicking this button the facets will be recomputed and they will be in a correct state
+
+There are two categories of facets although they are indistinguishable in the tool:
+- Facets loaded from a configuration
+  - they are specific for a configuration
+  - these facets take some time to load because the tool communicates with a dataset which the graph is based on
+- Facets found locally in the graph
+  - they contain graph information that are the same for every graph (e.g. number of node's edges or the type of a node)
 
 <h1 id="grouping-of-clusters-extension">Grouping of clusters extension</h1>
 
