@@ -15,7 +15,7 @@
     "Register of rights and obligations of the Czech Republic"@en;
   browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/rpp/style-sheet>;
   browser:resourceIriPattern "^https://rpp-opendata\\.egon\\.gov\\.cz/";
-  browser:autocomplete <https://raw.githubusercontent.com/martinnec/kgbrowser/master/configurations/rpp-autocomplete.json> ;
+  browser:autocomplete <https://raw.githubusercontent.com/linkedpipes/knowledge-graph-browser-website/main/configurations/config-cz-gov-autocomplete.json> ;
   browser:hasViewSet <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/rpp/agenda>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/rpp/činnost>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/rpp/ovm>,

@@ -11,9 +11,9 @@
 #####################################
 
 <https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/personalities> a browser:Configuration ;
-  dct:title "Slavné osobnosti"@en,
+  dct:title "Slavné osobnosti"@cs,
     "Famous personalities"@en;
-  dct:description "Objevujte slavné osobnosti, vztahy mezi nimi, jejich dílo, ocenění a objevy."@en,
+  dct:description "Objevujte slavné osobnosti, vztahy mezi nimi, jejich dílo, ocenění a objevy."@cs,
     "Discover famous personalities, relationships between them, their work, awards and discoveries."@en;
   browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style-sheet>;
   browser:startingNode <http://www.wikidata.org/entity/Q51068>,
@@ -26,6 +26,7 @@
   browser:resourceIriPattern "^http://www\\.wikidata\\.org/entity/Q[1-9][0-9]*$";
   browser:hasViewSet
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/personalities/person>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/personalities/school>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/personalities/work>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/personalities/award>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/personalities/discovery>,
@@ -38,6 +39,7 @@
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/personalities/person> a browser:ViewSet ;
   dct:title "Personality"@en ;
   browser:hasView
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/educatedperson>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/author>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/awarded-person>,
     #<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/influenced-person>,
@@ -70,7 +72,18 @@ ASK {
   }
 }""" ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> .
-  
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/personalities/school> a browser:ViewSet ;
+  dct:title "School"@en ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/school> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/school> ;
+  browser:hasCondition """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+ASK {  
+  [] wdt:P69 ?node .
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> .
+
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/personalities/award> a browser:ViewSet ;
   dct:title "Award"@en ;
   browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/award> ;
@@ -104,6 +117,13 @@ ASK {
   browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/personalities/person> ;
   browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/personalities/person> .
   
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/educatedperson> a browser:View ;
+  dct:title "Educated person"@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/personalities/educatedperson> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/personalities/person> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/personalities/person> .
+  #browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/personalities/author> .
+
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/author> a browser:View ;
   dct:title "Author"@en ;
   dct:description "Pohled ukazující osobnost jako autora s díly, která vytvořil."@en ;
@@ -142,6 +162,12 @@ ASK {
   browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/personalities/work> ;
   browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/personalities/work> ;
   browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/personalities/work> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/school> a browser:View ;
+  dct:title "School"@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/personalities/school> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/personalities/school> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/personalities/school> .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/personalities/award> a browser:View ;
   dct:title "Award"@en ;
@@ -229,6 +255,32 @@ CONSTRUCT {
   }
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/personalities/educatedperson> a browser:ExpansionQuery ;
+  dct:title "Schools of education"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/personalities/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {  
+  ?school a av:school ;
+    rdfs:label ?schoolLabel ;
+    browser:class "school" .
+    
+  ?node av:educatedAt ?school .
+  
+  av:educatedAt browser:class "educatedAt" .
+    
+} WHERE { 
+
+  ?node wdt:P69 ?school .
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,cs". }
   
 }""" .
 
@@ -416,6 +468,31 @@ CONSTRUCT {
   
 }""" .
 
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/personalities/school> a browser:ExpansionQuery ;
+  dct:title "Educated persons"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/personalities/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {  
+  ?educatedPerson a av:personality ;
+    rdfs:label ?educatedPersonLabel ;
+    av:educatedAt ?node ;
+    browser:class "personality" .
+  
+  av:educatedAt browser:class "educatedAt" .
+    
+} WHERE { 
+  
+  ?educatedPerson wdt:P69 ?node .
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,cs". }
+  
+}""" .
+
 <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/personalities/award> a browser:ExpansionQuery ;
   dct:title "Awarded persons"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
@@ -515,6 +592,23 @@ CONSTRUCT {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } 
 }""" .
 
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/personalities/school> a browser:PreviewQuery ;
+  dct:title "School preview"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/personalities/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?node a av:school ;
+    rdfs:label ?nodeLabel ;
+    browser:class "school" .  
+} WHERE {
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } 
+}""" .
+
 <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/personalities/discovery> a browser:PreviewQuery ;
   dct:title "Discovery preview"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
@@ -546,9 +640,11 @@ PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
 CONSTRUCT {
   ?node rdfs:label ?nodeLabel ;
     dct:description ?description ;
-    wdt:P18 ?p18 .
+    wdt:P18 ?p18 ;
+    wdt:P19 ?p19 ;
+    wdt:P20 ?p20 ;
+    wdt:P119 ?p119 .
 } WHERE {
-    
   {
     ?node rdfs:label ?nodeLabel .
     FILTER (LANG(?nodeLabel) = "en")
@@ -557,6 +653,12 @@ CONSTRUCT {
     FILTER (LANG(?description) = "en")
   } UNION {
     ?node wdt:P18 ?p18 .
+  } UNION {
+    ?node wdt:P19/wdt:P625 ?p19 .
+  } UNION {
+    ?node wdt:P20/wdt:P625 ?p20 .
+  } UNION {
+    ?node wdt:P119/wdt:P625 ?p119 .
   }
 
 }""" .
@@ -845,6 +947,38 @@ CONSTRUCT {
   
 }""" .
 
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/personalities/school> a browser:DetailQuery ;
+  dct:title "School detail"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/personalities/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?node rdfs:label ?nodeLabel ;
+    dct:description ?description ;
+    wdt:P18 ?p18 ;
+    wdt:P625 ?p625 .
+} WHERE {
+  OPTIONAL {
+    ?node schema:description ?description .
+    FILTER (LANG(?description) = "cs" || LANG(?description) = "en")
+  }
+  OPTIONAL {
+    ?node wdt:P18 ?p18 .
+  }
+  OPTIONAL {
+    ?node wdt:P625 ?p625 .
+  }
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } 
+  
+}""" .
+
 <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/personalities/award> a browser:DetailQuery ;
   dct:title "Award detail"@en ;
   browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
@@ -951,7 +1085,11 @@ CONSTRUCT {
 <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/personalities/work> a owl:Class ;
   rdfs:label "creative work"@en ;
   rdfs:comment "creative work"@en .
-  
+
+<https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/personalities/school> a owl:Class ;
+  rdfs:label "school"@en ;
+  rdfs:comment "school"@en .
+
 <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/personalities/award> a owl:Class ;
   rdfs:label "award"@en ;
   rdfs:comment "award"@en .
@@ -1025,6 +1163,12 @@ CONSTRUCT {
   rdfs:comment "author"@en ;
   rdfs:domain av:work ;
   rdfs:range av:personality .
+
+<https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/personalities/educatedAt> a owl:ObjectProperty ;
+  rdfs:label "educated at"@en ;
+  rdfs:comment "educated at"@en ;
+  rdfs:domain av:personality ;
+  rdfs:range av:school .
   
 <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/personalities/actor> a owl:ObjectProperty ;
   rdfs:label "actor"@en ;
@@ -1117,6 +1261,7 @@ CONSTRUCT {
 <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style-sheet> a browser:VisualStyleSheet ;
   browser:hasVisualStyle <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/personality>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/work>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/school>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/award>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/discovery>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/father>,
@@ -1124,6 +1269,7 @@ CONSTRUCT {
     <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/spouse>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/sibling>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/author>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/educatedAt>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/discoverer>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/receivedAward>,
     <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/actor>,
@@ -1166,6 +1312,23 @@ CONSTRUCT {
   browser:label "data(label)" ;
   browser:font-size "9px" ;
   browser:hasSelector ".work" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/school> a browser:VisualStyle ;
+  browser:background-color "#D3B2FB" ;
+  browser:border-color "#A617E8" ;
+  browser:shape "ellipse" ;  
+  browser:border-width "2px" ;
+  browser:width "50px" ;
+  browser:height "50px" ;
+  browser:padding "4px" ;
+  browser:text-halign "center" ;
+  browser:text-valign "center" ;
+  browser:text-wrap "wrap" ;
+  browser:text-max-width "80px" ;
+  browser:color "black" ;
+  browser:label "data(label)" ;
+  browser:font-size "9px" ;
+  browser:hasSelector ".school" .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/award> a browser:VisualStyle ;
   browser:background-color "#FFECC6" ;
@@ -1274,6 +1437,18 @@ CONSTRUCT {
   browser:control-point-step-size "40" ;
   browser:target-arrow-shape "none" ;
   browser:hasSelector ".author" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/educatedAt> a browser:VisualStyle ;
+  browser:line-color "#DF2EF3";
+  browser:width "1";
+  browser:curve-style "straight" ;
+  browser:line-style "solid" ;
+  browser:label "data(label)" ;
+  browser:font-size "8px" ;
+  browser:curve-style "bezier" ;
+  browser:control-point-step-size "40" ;
+  browser:target-arrow-shape "none" ;
+  browser:hasSelector ".educatedAt" .
   
 <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/personalities/style/receivedAward> a browser:VisualStyle ;
   browser:line-color "#E6B03F";

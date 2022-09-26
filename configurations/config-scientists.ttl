@@ -1,0 +1,736 @@
+@prefix browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/> .
+@prefix av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/> .
+
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+
+#####################################
+# Configurations
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/configuration/wikidata/scientists> a browser:Configuration ;
+  dct:title "Scientists"@en;
+  dct:description "Discover famous scientists and relationships between them."@en;
+  browser:hasVisualStyleSheet <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style-sheet>;
+  browser:startingNode <http://www.wikidata.org/entity/Q937>,
+    <http://www.wikidata.org/entity/Q7186>,
+    <http://www.wikidata.org/entity/Q1035> ;
+  browser:resourceIriPattern "^http://www\\.wikidata\\.org/entity/Q[1-9][0-9]*$";
+  browser:hasViewSet
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/scientists/scientist>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/scientists/institution>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/scientists/country> .
+
+#####################################
+# ViewSets
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/scientists/scientist> a browser:ViewSet ;
+  dct:title "Scientist"@en ;
+  browser:hasView
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/family-member>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/colleague>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/awarded-scientist> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/awarded-scientist> ;
+  browser:hasCondition """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+ASK {  
+  ?node wdt:P106/wdt:P279* wd:Q901 .
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/scientists/institution> a browser:ViewSet ;
+  dct:title "Institution"@en ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/institution> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/institution> ;
+  browser:hasCondition """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+ASK {  
+  [] wdt:P1027 ?node .
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view-set/wikidata/scientists/country> a browser:ViewSet ;
+  dct:title "Country"@en ;
+  browser:hasView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/country> ;
+  browser:hasDefaultView <https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/country> ;
+  browser:hasCondition """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+ASK {  
+  [] wdt:P31 wd:Q56291528 ;
+    wdt:P17 ?node .
+}""" ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> .
+
+
+#####################################
+# Views
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/family-member> a browser:View ;
+  dct:title "Family member"@en ;
+  dct:description "Shows a scientist as a colleague of other scientist."@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/scientists/family> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/scientists/scientist> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/scientists/family-member> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/colleague> a browser:View ;
+  dct:title "Colleague"@en ;
+  dct:description "Shows a scientist as a colleague of other scientist."@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/scientists/colleagues> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/scientists/scientist> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/scientists/scientist> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/awarded-scientist> a browser:View ;
+  dct:title "Awarded scientist"@en ;
+  dct:description "Shows a scientist as an awarded scientist with awarding institutions and countries."@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/scientists/awarding-institutions-countries> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/scientists/scientist> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/scientists/awarded-scientist> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/institution> a browser:View ;
+  dct:title "Institution"@en ;
+  dct:description "Shows an institution as an awarding institutions with awarded scientists."@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/scientists/awarded-by-institution> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/scientists/institution> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/scientists/institution> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/view/wikidata/scientists/country> a browser:View ;
+  dct:title "Country"@en ;
+  dct:description "Shows a country with scientists by a state order of that country."@en ;
+  browser:hasExpansion <https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/scientists/awarded-by-country> ;
+  browser:hasPreview <https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/scientists/country> ;
+  browser:hasDetail <https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/scientists/country> .
+
+#####################################
+# Queries
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/scientists/family> a browser:ExpansionQuery ;
+  dct:title "Family"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?parent a av:scientist ;
+    rdfs:label ?parentLabel ;
+    browser:class "scientist", ?parentSexClass .
+  
+  ?child a av:scientist ;
+    rdfs:label ?childLabel ;
+    browser:class "scientist", ?childSexClass .
+  
+  ?spouse a av:scientist ;
+    rdfs:label ?spouseLabel ;
+    browser:class "scientist", ?spouseSexClass .
+    
+  ?node av:parent ?parent ;
+        av:spouse ?spouse .
+
+  ?child av:parent ?node .
+  
+  av:parent browser:class ?parentClass .  
+  av:spouse browser:class ?spouseClass .
+} WHERE {
+  {
+    ?node wdt:P22 ?parent .
+    BIND("family" AS ?parentClass)
+    ?parent wdt:P106/wdt:P279* wd:Q901 .
+    ?parent wdt:P21 ?sex .
+    BIND(IF(?sex=wd:Q6581072, "female", IF(?sex=wd:Q6581097, "male", "unknownsex")) AS ?parentSexClass)
+  } UNION {
+    ?node wdt:P25 ?parent .
+    BIND("family" AS ?parentClass)
+    ?parent wdt:P106/wdt:P279* wd:Q901 .
+    ?parent wdt:P21 ?sex .
+    BIND(IF(?sex=wd:Q6581072, "female", IF(?sex=wd:Q6581097, "male", "unknownsex")) AS ?parentSexClass)
+  } UNION {
+    ?node wdt:P40 ?child .
+    ?child wdt:P106/wdt:P279* wd:Q901 .
+    BIND("family" AS ?parentClass)
+    ?child wdt:P21 ?sex .
+    BIND(IF(?sex=wd:Q6581072, "female", IF(?sex=wd:Q6581097, "male", "unknownsex")) AS ?childSexClass)
+  } UNION {
+    ?node wdt:P26 ?spouse .
+    ?spouse wdt:P106/wdt:P279* wd:Q901 .
+    BIND("family" AS ?spouseClass)
+    ?spouse wdt:P21 ?sex .
+    BIND(IF(?sex=wd:Q6581072, "female", IF(?sex=wd:Q6581097, "male", "unknownsex")) AS ?spouseSexClass)
+  }
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/scientists/colleagues> a browser:ExpansionQuery ;
+  dct:title "Colleagues"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?colleague a av:scientist ;
+    rdfs:label ?colleagueLabel ;
+    browser:class "scientist", ?sexClass .
+    
+  ?node av:colleague ?colleague .
+
+  av:colleague browser:class "work" .  
+} WHERE {
+  {
+    ?node wdt:P184 ?colleague .
+  } UNION {
+    ?node wdt:P185 ?colleague .
+  } UNION {
+    [] wdt:P50 ?node, ?colleague .
+    FILTER (?node != ?colleague)
+  }
+  ?colleague wdt:P106/wdt:P279* wd:Q901 ;
+    wdt:P21 ?sex .
+  BIND(IF(?sex=wd:Q6581072, "female", IF(?sex=wd:Q6581097, "male", "unknownsex")) AS ?sexClass)
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/scientists/awarding-institutions-countries> a browser:ExpansionQuery ;
+  dct:title "Awarding institutions and countries"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?institution a av:institution ;
+    rdfs:label ?institutionLabel ;
+    browser:class "institution" .
+    
+  ?node av:awardedByInstitution ?institution .
+  av:awardedByInstitution browser:class ?awardedByInstitution .  
+
+  ?country a av:country ;
+    rdfs:label ?countryLabel ;
+    browser:class "country" .
+    
+  ?node av:awardedByCountry ?country .
+  av:awardedByCountry browser:class ?awardedByCountry .  
+} WHERE {
+  {
+    ?node wdt:P166/wdt:P1027 ?institution .
+    BIND("work" AS ?awardedByInstitution)
+  } UNION {
+    ?node wdt:P166 [
+      wdt:P31 wd:Q56291528 ;
+      wdt:P17 ?country
+    ]
+    BIND("work" AS ?awardedByCountry)
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/scientists/awarded-by-institution> a browser:ExpansionQuery ;
+  dct:title "Awarded scientists"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?scientist a av:scientist ;
+    rdfs:label ?scientistLabel ;
+    browser:class "scientist", ?sexClass .
+    
+  ?scientist av:awardedBy ?node .
+
+  av:awardedBy browser:class "work" .  
+} WHERE {
+  ?scientist wdt:P166/wdt:P1027 ?node ;
+    wdt:P106/wdt:P279* wd:Q901 ;
+    wdt:P21 ?sex .
+  BIND(IF(?sex=wd:Q6581072, "female", IF(?sex=wd:Q6581097, "male", "unknownsex")) AS ?sexClass)
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+  
+}""" .
+
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/expansion-query/wikidata/scientists/awarded-by-country> a browser:ExpansionQuery ;
+  dct:title "Awarded scientists"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?scientist a av:scientist ;
+    rdfs:label ?scientistLabel ;
+    browser:class "scientist", ?sexClass .
+    
+  ?scientist av:awardedBy ?node .
+
+  av:awardedBy browser:class "work" .  
+} WHERE {
+  ?scientist wdt:P166 [
+    wdt:P31 wd:Q56291528 ;
+    wdt:P17 ?node
+  ] ;
+    wdt:P106/wdt:P279* wd:Q901;
+    wdt:P21 ?sex .
+  BIND(IF(?sex=wd:Q6581072, "female", IF(?sex=wd:Q6581097, "male", "unknownsex")) AS ?sexClass)
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/scientists/scientist> a browser:PreviewQuery ;
+  dct:title "Scientist"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?node a av:scientist ;
+    rdfs:label ?nodeLabel ;
+    browser:class "scientist", ?sexClass .
+} WHERE {
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } 
+
+  ?node wdt:P21 ?sex .
+  BIND(IF(?sex=wd:Q6581072, "female", IF(?sex=wd:Q6581097, "male", "unknownsex")) AS ?sexClass)
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/scientists/institution> a browser:PreviewQuery ;
+  dct:title "Institution preview"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?node a av:institution ;
+    rdfs:label ?nodeLabel ;
+    browser:class "institution" .  
+} WHERE {
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } 
+  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/preview-query/wikidata/scientists/country> a browser:PreviewQuery ;
+  dct:title "Country preview"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?node a av:country ;
+    rdfs:label ?nodeLabel ;
+    browser:class "country" .  
+} WHERE {
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } 
+  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/scientists/family-member> a browser:DetailQuery ;
+  dct:title "Personality detail"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?node rdfs:label ?nodeLabel ;
+    dct:description ?description ;
+    wdt:P18 ?p18 ;
+    av:burialCoordinateLocation ?burialCoordinateLocation .
+} WHERE {
+    
+  {
+    ?node rdfs:label ?nodeLabel .
+    FILTER (LANG(?nodeLabel) = "en")
+  } UNION {
+    ?node schema:description ?description .
+    FILTER (LANG(?description) = "en")
+  } UNION {
+    ?node wdt:P18 ?p18 .
+  } UNION {
+    ?node p:P119 ?statement .
+    ?statement ps:P119 ?p119 .
+    FILTER NOT EXISTS {?statement pq:P582 [] .}
+    
+    ?p119 wdt:P625 ?burialCoordinateLocation
+  }
+
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/scientists/scientist> a browser:DetailQuery ;
+  dct:title "Personality detail"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?node rdfs:label ?nodeLabel ;
+    dct:description ?description ;
+    wdt:P18 ?p18 .
+} WHERE {
+    
+  {
+    ?node rdfs:label ?nodeLabel .
+    FILTER (LANG(?nodeLabel) = "en")
+  } UNION {
+    ?node schema:description ?description .
+    FILTER (LANG(?description) = "en")
+  } UNION {
+    ?node wdt:P18 ?p18 .
+  }
+
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/scientists/awarded-scientist> a browser:DetailQuery ;
+  dct:title "Awarded scientist"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?node rdfs:label ?nodeLabel ;
+    dct:description ?description ;
+    wdt:P18 ?p18 ;
+    wdt:P569 ?p569 ;
+    av:numberOfAwards ?numberOfAwards ;
+    av:burialCoordinateLocation ?burialCoordinateLocation .
+} WHERE {
+  OPTIONAL {
+    SELECT ?node (COUNT(DISTINCT(?award)) AS ?numberOfAwards1)
+    WHERE {
+      ?node wdt:P166 ?award .
+    }
+    GROUP BY ?node
+  }
+  BIND(COALESCE(?numberOfAwards1, 0) AS ?numberOfAwards)
+  
+  OPTIONAL {
+    ?node schema:description ?description .
+    FILTER (LANG(?description) = "en")
+  }
+  OPTIONAL {
+    ?node wdt:P18 ?p18 .
+  }
+  OPTIONAL {
+    ?node wdt:P569 ?p569 .
+  } 
+  OPTIONAL {
+    ?node p:P119 ?statement .
+    ?statement ps:P119 ?p119 .
+    FILTER NOT EXISTS {?statement pq:P582 [] .}
+    
+    ?p119 wdt:P625 ?burialCoordinateLocation
+  }
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } 
+  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/scientists/institution> a browser:DetailQuery ;
+  dct:title "Institution"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?node rdfs:label ?nodeLabel ;
+    dct:description ?description ;
+    wdt:P18 ?p18 ;
+    wdt:P571 ?p571 ;
+    av:numberOfInstitutionAwardees ?numberOfAwardees .  
+} WHERE {
+  OPTIONAL {
+    SELECT ?node (COUNT(DISTINCT(?scientist)) AS ?numberOfAwardees1)
+    WHERE {
+      ?scientist wdt:P166/wdt:P1027 ?node .
+    }
+    GROUP BY ?node
+  }
+  BIND(COALESCE(?numberOfAwardees1, 0) AS ?numberOfAwardees)
+  
+  OPTIONAL {
+    ?node schema:description ?description .
+    FILTER (LANG(?description) = "en")
+  }
+  OPTIONAL {
+    ?node wdt:P18 ?p18 .
+  }
+  OPTIONAL {
+    ?node wdt:P571 ?p571 .
+  }
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } 
+  
+}""" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/detail-query/wikidata/scientists/country> a browser:DetailQuery ;
+  dct:title "Country"@en ;
+  browser:hasDataset <https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> ;
+  browser:query """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX av: <https://linked.opendata.cz/resource/vocabulary/knowledge-graph-browser/wikidata/scientists/>
+PREFIX browser: <https://linked.opendata.cz/ontology/knowledge-graph-browser/>
+CONSTRUCT {
+  ?node rdfs:label ?nodeLabel ;
+    dct:description ?description ;
+    wdt:P41 ?p41 ;
+    av:numberOfCountryAwardees ?numberOfAwardees .  
+} WHERE {
+  OPTIONAL {
+    SELECT ?node (COUNT(DISTINCT(?scientist)) AS ?numberOfAwardees1)
+    WHERE {
+      ?scientist wdt:P166 [
+        wdt:P31 wd:Q56291528 ;
+        wdt:P17 ?node
+      ]
+    }
+    GROUP BY ?node
+  }
+  BIND(COALESCE(?numberOfAwardees1, 0) AS ?numberOfAwardees)
+  
+  OPTIONAL {
+    ?node schema:description ?description .
+    FILTER (LANG(?description) = "en")
+  }
+  OPTIONAL {
+    ?node p:P41 ?statement .
+    ?statement ps:P41 ?p41 .
+    FILTER NOT EXISTS {?statement pq:P582 [] .}
+  }
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } 
+  
+}""" .
+
+#####################################
+# Datasets
+#####################################
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/dataset/wikidata> a void:Dataset ;
+  dct:title "Wikidata SPARQL endpoint" ;
+  void:sparqlEndpoint <https://query.wikidata.org/sparql> ;
+  browser:accept "application/sparql-results+json" .
+
+#####################################
+# View vocabularies
+#####################################
+  
+av:scientist a owl:Class ;
+  rdfs:label "scientist"@en ;
+  rdfs:comment "scientist"@en .
+
+av:institution a owl:Class ;
+  rdfs:label "institution"@en ;
+  rdfs:comment "institution"@en .
+
+av:country a owl:Class ;
+  rdfs:label "country"@en ;
+  rdfs:comment "country"@en .
+  
+av:colleague a owl:ObjectProperty ;
+  rdfs:label "colleague"@en ;
+  rdfs:comment "colleague"@en ;
+  rdfs:domain av:scientist ;
+  rdfs:range av:scientist .
+
+av:parent a owl:ObjectProperty ;
+  rdfs:label "parent"@en ;
+  rdfs:comment "parent"@en ;
+  rdfs:domain av:scientist ;
+  rdfs:range av:scientist .
+
+av:spouse a owl:ObjectProperty ;
+  rdfs:label "spouse"@en ;
+  rdfs:comment "spouse"@en ;
+  rdfs:domain av:scientist ;
+  rdfs:range av:scientist .
+
+av:awardedByInstitution a owl:ObjectProperty ;
+  rdfs:label "awarded by"@en ;
+  rdfs:comment "awarded by institution"@en ;
+  rdfs:domain av:scientist ;
+  rdfs:range av:institution .
+
+av:awardedByCountry a owl:ObjectProperty ;
+  rdfs:label "awarded by"@en ;
+  rdfs:comment "awarded by country"@en ;
+  rdfs:domain av:scientist ;
+  rdfs:range av:country .
+
+av:numberOfAwards a owl:DatatypeProperty ;
+  rdfs:label "number of awards"@en ;
+  rdfs:comment "number of awards"@en ;
+  rdfs:domain av:scientist ;
+  rdfs:range rdfs:Literal .
+
+av:numberOfInstitutionAwardees a owl:DatatypeProperty ;
+  rdfs:label "number of awardees"@en ;
+  rdfs:comment "number of awardees awarded by an instittuion"@en ;
+  rdfs:domain av:scientist ;
+  rdfs:range rdfs:Literal .
+
+av:numberOfCountryAwardees a owl:DatatypeProperty ;
+  rdfs:label "number of awardees"@en ;
+  rdfs:comment "number of awardees awarded by a country"@en ;
+  rdfs:domain av:scientist ;
+  rdfs:range rdfs:Literal .
+
+av:burialCoordinateLocation a owl:DatatypeProperty ;
+  rdfs:label "burial coordinate location"@en ;
+  rdfs:comment "coordinate location of the last burial place of a scientist"@en ;
+  rdfs:domain av:scientist ;
+  rdfs:range rdfs:Literal .
+
+#####################################
+# Visual styles
+#####################################
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style-sheet> a browser:VisualStyleSheet ;
+  browser:hasVisualStyle <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/scientist>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/male>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/female>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/unknownsex>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/institution>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/country>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/family>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/work>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/node>,
+    <https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/edge> .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/scientist> a browser:VisualStyle ;
+  browser:background-color "#b9e9e9" ;
+  browser:border-color "#2e8e8e" ;
+  browser:border-width "3px" ;
+  browser:shape "ellipse" ;  
+  browser:width "50px" ;
+  browser:height "50px" ;
+  browser:padding "4px" ;
+  browser:text-halign "center" ;
+  browser:text-valign "center" ;
+  browser:text-wrap "wrap" ;
+  browser:text-max-width "80px" ;
+  browser:color "black" ;
+  browser:label "data(label)" ;
+  browser:font-size "9px" ;
+  browser:hasSelector ".scientist" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/male> a browser:VisualStyle ;
+  browser:hasSelector ".male" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/female> a browser:VisualStyle ;
+  browser:font-weight "bold" ;
+  browser:hasSelector ".female" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/unknownsex> a browser:VisualStyle ;
+  browser:hasSelector ".unknownsex" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/institution> a browser:VisualStyle ;
+  browser:background-color "#cae9cb" ;
+  browser:border-color "#49ad4d" ;
+  browser:shape "round-rectangle" ;  
+  browser:border-width "2px" ;
+  browser:width "120px" ;
+  browser:height "40px" ;
+  browser:padding "4px" ;
+  browser:text-halign "center" ;
+  browser:text-valign "center" ;
+  browser:text-wrap "wrap" ;
+  browser:text-max-width "80px" ;
+  browser:color "black" ;
+  browser:label "data(label)" ;
+  browser:font-size "9px" ;
+  browser:hasSelector ".institution" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/country> a browser:VisualStyle ;
+  browser:background-color "#e8f0cd" ;
+  browser:border-color "#aec951" ;
+  browser:shape "round-rectangle" ;  
+  browser:border-width "2px" ;
+  browser:width "120px" ;
+  browser:height "40px" ;
+  browser:padding "4px" ;
+  browser:text-halign "center" ;
+  browser:text-valign "center" ;
+  browser:text-wrap "wrap" ;
+  browser:text-max-width "80px" ;
+  browser:color "black" ;
+  browser:label "data(label)" ;
+  browser:font-size "9px" ;
+  browser:hasSelector ".country" .
+  
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/family> a browser:VisualStyle ;
+  browser:line-color "#00ba9b";
+  browser:width "1";
+  browser:target-arrow-shape "triangle" ;
+  browser:curve-style "straight" ;
+  browser:line-style "solid" ;
+  browser:label "data(label)" ;
+  browser:font-size "8px" ;
+  browser:curve-style "bezier" ;
+  browser:control-point-step-size "40" ;
+  browser:hasSelector ".family" .
+
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/work> a browser:VisualStyle ;
+  browser:line-color "#afd25f";
+  browser:width "1";
+  browser:target-arrow-shape "triangle-backcurve" ;
+  browser:curve-style "straight" ;
+  browser:line-style "solid" ;
+  browser:label "data(label)" ;
+  browser:font-size "8px" ;
+  browser:curve-style "bezier" ;
+  browser:control-point-step-size "40" ;
+  browser:hasSelector ".work" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/node> a browser:VisualStyle ;
+  browser:hasSelector "node" .
+  
+<https://linked.opendata.cz/resource/knowledge-graph-browser/wikidata/scientists/style/edge> a browser:VisualStyle ;
+  browser:hasSelector "edge" .

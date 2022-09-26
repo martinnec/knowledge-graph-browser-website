@@ -15,8 +15,44 @@ WHERE {
   BIND(LCASE(CONCAT(STR(?pojemLabel), " - ", ?slovnikTitle)) AS ?label)
 }
 
+
+PREFIX l-sgov-sbírka-111-2009-pojem: <https://slovník.gov.cz/legislativní/sbírka/111/2009/pojem/> 
+
+SELECT ?id ?label ?type
+WHERE {
+  ?id a l-sgov-sbírka-111-2009-pojem:agenda .
+  OPTIONAL { ?id l-sgov-sbírka-111-2009-pojem:má-název-agendy ?MaNazevAgendy . FILTER (LANG(?MaNazevAgendy) = "cs") } 
+  OPTIONAL { ?id l-sgov-sbírka-111-2009-pojem:má-kód-agendy ?MaKodAgendy . } 
+  
+  BIND(l-sgov-sbírka-111-2009-pojem:agenda AS ?type)
+  BIND(CONCAT(STR(?MaKodAgendy), " - ", STR(?MaNazevAgendy)) AS ?label)
+}
+LIMIT 100
+
+PREFIX a-sgov-104-pojem: <https://slovník.gov.cz/agendový/104/pojem/>
+
+SELECT ?id ?label ?type
+WHERE {
+  ?id a a-sgov-104-pojem:objekt-nebo-subjekt-údajů .
+  OPTIONAL { ?id a-sgov-104-pojem:má-kód-objektu-nebo-subjektu-údajů ?MaKodObjektuNeboSubjektuUdaju . } 
+  OPTIONAL { ?id a-sgov-104-pojem:má-název-objektu-nebo-subjektu-údajů ?MaNazevObjektuNeboSubjektuUdaju . FILTER (LANG(?MaNazevObjektuNeboSubjektuUdaju) = "cs") } 
+  
+  BIND(a-sgov-104-pojem:objekt-nebo-subjekt-údajů AS ?type)
+  BIND(CONCAT(STR(?MaKodObjektuNeboSubjektuUdaju), " - ", STR(?MaNazevObjektuNeboSubjektuUdaju)) AS ?label)
+}
+
 Replace v PSPadu
 
 ^"([^"]+)","([^"]+)","([^"]+)"$
 
 {"@id":"$1","label":"$2","type":"$3"},
+
+Na začátek
+
+{
+"items": [
+
+Na konec místo poslední ,
+
+]
+}
