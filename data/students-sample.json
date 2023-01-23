@@ -1,0 +1,192 @@
+{
+    "@context": {
+        "@version": 1.1,
+        "id": "@id",
+        "type": "@type",
+        "Person": {
+            "@id": "https://schema.org/Person",
+            "@context": {
+            "givenName": {
+                "@id": "https://schema.org/givenName",
+                "@type": "xsd:string"
+            },
+            "familyName": {
+                "@id": "https://schema.org/familyName",
+                "@type": "xsd:string"
+            },
+            "nationality": {
+                "@id": "https://schema.org/nationality",
+                "@type": "@id"
+            },
+            "birthDate": {
+                "@id": "https://schema.org/birthDate",
+                "@type": "xsd:date"
+            },
+            "birthPlace": {
+                "@id": "https://schema.org/birthPlace",
+                "@type": "@id",
+                "@context": {
+                "Place": {
+                    "@id": "https://schema.org/Place",
+                    "@context": {
+                    "address": {
+                        "@id": "https://schema.org/address",
+                        "@type": "@id",
+                        "@context": {
+                        "[A] Range of address": {
+                            "@id": "https://dataspecer.com/cim/abstract-class-union-range/https://schema.org/address",
+                            "@context": {
+                            "title": {
+                                "@id": "http://purl.org/dc/terms/title",
+                                "@type": "xsd:string"
+                            }
+                            }
+                        }
+                        }
+                    }
+                    }
+                }
+                }
+            },
+            "alumniOf": {
+                "@id": "https://schema.org/alumniOf",
+                "@container": "@set",
+                "@context": {
+                "[A] Range of alumniOf": {
+                    "@id": "https://dataspecer.com/cim/abstract-class-union-range/https://schema.org/alumniOf",
+                    "@context": {
+                    "title": {
+                        "@id": "http://purl.org/dc/terms/title",
+                        "@container": "@language"
+                    }
+                    }
+                }
+                }
+            },
+            "knowsLanguage": {
+                "@id": "https://schema.org/knowsLanguage",
+                "@container": "@set",
+                "@context": {
+                "[A] Range of knowsLanguage": {
+                    "@id": "https://dataspecer.com/cim/abstract-class-union-range/https://schema.org/knowsLanguage",
+                    "@context": {
+                    "title": {
+                        "@id": "http://purl.org/dc/terms/title",
+                        "@container": "@language"
+                    }
+                    }
+                }
+                }
+            },
+            "attends": {
+                "@reverse": "https://schema.org/attendee",
+                "@container": "@set",
+                "@context": {
+                "Event": {
+                    "@id": "https://schema.org/Event",
+                    "@context": {
+                    "schedule": {
+                        "@id": "https://schema.org/eventSchedule",
+                        "@type": "@id",
+                        "@context": {
+                        "Schedule": {
+                            "@id": "https://schema.org/Schedule",
+                            "@context": {
+                            "byDay": {
+                                "@id": "https://schema.org/byDay",
+                                "@type": "@id"
+                            },
+                            "byMonth": {
+                                "@id": "https://schema.org/byMonth",
+                                "@type": "@id"
+                            },
+                            "byMonthDay": {
+                                "@id": "https://schema.org/byMonthDay",
+                                "@type": "@id"
+                            },
+                            "byMonthWeek": {
+                                "@id": "https://schema.org/byMonthWeek",
+                                "@type": "@id"
+                            },
+                            "repeatCount": {
+                                "@id": "https://schema.org/repeatCount",
+                                "@type": "@id"
+                            }
+                            }
+                        }
+                        }
+                    },
+                    "maxCapacity": {
+                        "@id": "https://schema.org/maximumPhysicalAttendeeCapacity",
+                        "@type": "@id"
+                    }
+                    }
+                }
+                }
+            }
+            }
+        }
+    },
+    "@graph": [
+        {
+            "id":"https://cu.opendata.cz/sis/resource/student/12345678",
+            "type":"Person",
+            "givenName":"Joe",
+            "familyName":"White",
+            "nationality":"http://www.wikidata.org/entity/Q213",
+            "birthDate":"1900-01-01",
+            "birthPlace":{
+                "id":"http://www.wikidata.org/entity/Q851419",
+                "type":"Place",
+                "address":{
+                    "id":"https://www.nemlib.cz/turnov/",
+                    "type":"[A] Range of address",
+                    "title":"Nemocnice Turnov, 28. října 1000, 511 01 Turnov"
+                }
+            },
+            "alumniOf":[
+                {
+                    "id":"http://www.wikidata.org/entity/Q31519",
+                    "type":"[A] Range of alumniOf",
+                    "title":[
+                        {
+                            "cs":"Univerzita Karlova",
+                            "en":"Charles University"
+                        }
+                    ]
+                }
+            ],
+            "knowsLanguage":[
+                {
+                    "id":"http://www.wikidata.org/entity/Q9056",
+                    "type":"",
+                    "title":[
+                        {
+                            "cs":"čeština",
+                            "en":"Czech"
+                        }
+                    ]
+                }
+            ],
+            "attends":[
+                {
+                    "id":"https://cu.opendata.cz/sis/resource/course/nswi041",
+                    "type":"Event",
+                    "schedule":{
+                        "id":"https://cu.opendata.cz/sis/resource/course/nswi041/schedule/23",
+                        "type":"Schedule"
+                    },
+                    "maxCapacity":"100"
+                },{
+                    "id":"https://cu.opendata.cz/sis/resource/course/nswi140",
+                    "type":"Event",
+                    "schedule":{
+                        "id":"https://cu.opendata.cz/sis/resource/course/nswi140/schedule/23",
+                        "type":"Schedule"
+                    },
+                    "maxCapacity":"59"
+                }
+            ]
+        }
+    ]
+}
